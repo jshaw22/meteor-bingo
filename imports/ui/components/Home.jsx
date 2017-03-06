@@ -7,10 +7,6 @@ class Home extends Component {
 	constructor(props){
 		super(props);
 	}
-	componentWillMount () {
-		// if(Meteor.userId() === null)
-		// 	browserHistory.push('/');
-	}
 
 	render() {
 		

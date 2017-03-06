@@ -19,7 +19,7 @@ export default class LoginPage extends Component {
 			if(err){
 				this.setState({error: err.reason});
 			} else {
-				browserHistory.push('/');
+				browserHistory.push('/onboarding');
 			}
 		});
 	}
