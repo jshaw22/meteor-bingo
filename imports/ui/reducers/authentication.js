@@ -10,7 +10,8 @@ export default (state = initialState, action) => {
 		case types.GET_CURRENT_USER:
 			return {
 				...state,
-				currentUser: action.currentUser
+				currentUser: action.currentUser,
+				isAuthenticated: action.isAuthenticated
 			};
 		default:
 			return state;

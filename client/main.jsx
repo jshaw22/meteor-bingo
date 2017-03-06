@@ -20,16 +20,3 @@ Meteor.startup(() => {
   </Provider>
   , document.getElementById('target'));
 });
-
-
-// ReactDOM.render(
-//   <Provider store={store}>
-//     {renerRoutes()}
-//   </Provider>
-//   , document.querySelector('.container'));
-
-
-
-// Meteor.startup(() => {
-// 	render(renderRoutes(), document.getElementById('target'));
-// });

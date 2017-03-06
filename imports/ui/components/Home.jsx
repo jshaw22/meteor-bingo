@@ -3,23 +3,22 @@ import {browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-class MainPage extends Component {
+class Home extends Component {
 	constructor(props){
 		super(props);
 	}
 	componentWillMount () {
-		if(Meteor.userId() !==null){
-			browserHistory.push('/home');
-		}
-
+		// if(Meteor.userId() === null)
+		// 	browserHistory.push('/');
 	}
+
 	render() {
-		console.log("Mainpage props", this.props);
+		
 		return (
 			<div> 
 				<div className="container">
 					<h1 className='text-center'>
-						`You logged in, ${currentUser.username}!`
+						You logged in, bro!!
 					</h1>
 				</div>
 			</div>
@@ -27,7 +26,7 @@ class MainPage extends Component {
 	}
 }
 
-MainPage.PropTypes = {
+Home.PropTypes = {
 	username: React.PropTypes.string
 }
 
@@ -42,4 +41,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

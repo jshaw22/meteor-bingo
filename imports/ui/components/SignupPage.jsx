@@ -13,10 +13,9 @@ export default class LoginPage extends Component {
 
 	handleSubmit(e){
 		e.preventDefault();
-		let name = document.getElementById("signup-name").value;
-		let email = document.getElementById('signup-email').value;
+		let username = document.getElementById('signup-username').value;
 		let password = document.getElementById('signup-password').value;
-		Accounts.createUser({email, username: name, password: password}, (err)=>{
+		Accounts.createUser({username, password}, (err)=>{
 			if(err){
 				this.setState({error: err.reason});
 			} else {
@@ -45,16 +44,9 @@ export default class LoginPage extends Component {
 							<div className="form-group">
 								<input
 									type="text"
-									id="signup-name"
+									id="signup-username"
 									className="form-control input-lg"
-									placeholder="name" />
-							</div>
-							<div className="form-group">
-								<input
-									type="email"
-									id="signup-email"
-									className="form-control input-lg"
-									placeholder="email" />
+									placeholder="username" />
 							</div>
 							<div className="form-group">
 								<input

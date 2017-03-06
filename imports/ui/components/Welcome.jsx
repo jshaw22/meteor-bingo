@@ -3,23 +3,22 @@ import {browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-class MainPage extends Component {
+class Welcome extends Component {
 	constructor(props){
 		super(props);
 	}
 	componentWillMount () {
-		if(Meteor.userId() !==null){
+		if(Meteor.userId() !== null)
 			browserHistory.push('/home');
-		}
-
 	}
+
 	render() {
-		console.log("Mainpage props", this.props);
+		
 		return (
 			<div> 
 				<div className="container">
 					<h1 className='text-center'>
-						`You logged in, ${currentUser.username}!`
+						Welcome to Bingo Smash! Get an account or log in!
 					</h1>
 				</div>
 			</div>
@@ -27,7 +26,7 @@ class MainPage extends Component {
 	}
 }
 
-MainPage.PropTypes = {
+Welcome.PropTypes = {
 	username: React.PropTypes.string
 }
 
@@ -42,4 +41,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
