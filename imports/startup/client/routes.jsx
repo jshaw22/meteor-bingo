@@ -11,6 +11,7 @@ import Home from '../../ui/components/Home.jsx';
 import Welcome from '../../ui/components/Welcome.jsx';
 import PageNotFound from '../../ui/components/PageNotFound.jsx';
 import Onboarding from '../../ui/components/Onboarding.jsx';
+import Profile from '../../ui/components/Profile.jsx';
 
 export const renderRoutes = (store) => (
 	<Router history={browserHistory}>
@@ -20,7 +21,7 @@ export const renderRoutes = (store) => (
 			<Route path="signup" component={SignupPage} />
 			<Route path='home' component={requireAuth(Home)} />
 			<Route path='onboarding' component={requireAuth(Onboarding)} />
-
+			<Route path='profile' component={requireAuth(Profile)} />
 		</Route>
 		<Route path='*' component={PageNotFound} />
 	</Router>

@@ -7,50 +7,30 @@ class Onboarding extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			myOrientation: "Choose your gender",
-			matchOrientation: "Choose gender",
+			myGender: "Choose your gender",
+			matchGender: "Choose gender",
 			bdayDay: "Day",
 			bdayMonth: "Month",
-			bdayYear: "Year"
+			bdayYear: "Year",
+			sterilized: "Pick one",
 
 		}
-		this.setMyGender = this.setMyGender.bind(this);
-	}
-	
-	setMyGender(e) {
-		e.preventDefault();
-		this.setState({myOrientation: e.currentTarget.value});
-	}
-
-	setMatchGender(e) {
-		e.preventDefault();
-		this.setState({matchOrientation: e.currentTarget.value});
-	}
-
-	setMonth(e){
-		e.preventDefault();
-		this.setState({bdayMonth: e.currentTarget.value});
-	}
-
-	setDay(e){
-		e.preventDefault();
-		this.setState({bdayDay: e.currentTarget.value});
-	}
-
-	setYear(e){
-		e.preventDefault();
-		this.setState({bdayYear: e.currentTarget.value});
+		this.formChange = this.formChange.bind(this);
+		this.submitForm = this.submitForm.bind(this);
 	}
 
 	renderDays() {
 		let daysOptions = [];
-		for (var i = 1; i<=31; i++) {
+		for (var i = 0; i<=31; i++) {
 			daysOptions.push({
 				value: i,
 				text: `${i}`
 			});
 		}
 		return daysOptions.map((val)=>{
+			if(val.value === 0){
+				return (<option value="default">Day</option>)
+			}
 			return (
 				<option key={val.value} value={val.value}>{val.text}</option>
 			)
@@ -66,21 +46,37 @@ class Onboarding extends Component {
 			});
 		}
 		return yearOptions.map((val)=>{
+			if( val.value === 1999) // TODO change this to be more dynamic with Moment
+				return (<option value="default">Year</option>)
 			return (
 				<option key={val.value} value={val.value}>{val.text}</option>
 			)
 		})
 	}
 
+	formChange(e){
+		let change = {};
+		change[e.target.name] = e.target.value;
+		this.setState(change, () => console.log(this.state));
+	}
+
+	submitForm(e){
+		e.preventDefault();
+		Meteor.call("updateUser", this.state);
+	}
+
 	render() {
+		// Use Moment to render age 
+		const age = 28;
 		return (
 			<div> 
-				<div className="container">
+				<div className="container" onChange={this.formChange}>
 					<h2>Lets get your profile set up</h2>
 					When's your birthday?
 					<form className="form-inline">
 					    <div className="form-group">
-					    	<select onChange={this.setMonth} selected={this.state.bdayMonth} className="form-control" id="bdayMonth">
+					    	<select onChange={this.setMonth} name="bdayMonth" selected={this.state.bdayMonth} className="form-control" id="bdayMonth">
+						        <option value='default'>Month</option>
 						        <option value='1'>Jan</option>
 						        <option value='2'>Feb</option>
 						        <option value='3'>Mar</option>
@@ -96,20 +92,22 @@ class Onboarding extends Component {
 					     	</select>
 					    </div>
 					    <div className="form-group">
-					    	<select onChange={this.setDay} selected={this.state.bdayDay} className="form-control" id="bdayDay">
+					    	<select name="bdayDay" selected={this.state.bdayDay} className="form-control" id="bdayDay">
 					    		{this.renderDays()}
 					    	</select>
 					    </div>
 					    <div className="form-group">
-					    	<select onChange={this.setYear} selected={this.state.bdayYear} className="form-control" id="bdayYear">
+					    	<select onChange={this.setYear} name="bdayYear" selected={this.state.bdayYear} className="form-control" id="bdayYear">
 					    		{this.renderYears()}
 					    	</select>
 					    </div>
 
 					 </form>
+					 <p>Ah, {age}. Great age to be child free!</p> 
 					I am a
 					<div className="form-group">
-					  <select onChange={this.setMyGender} selected={this.state.myOrientation} className="form-control" id="yourGender">
+					  <select name="myGender" selected={this.state.myOrientation} className="form-control" id="myGender">
+					     <option value='default'>Choose one</option>
 					    <option value='male'>Male</option>
 					    <option value='female'>Female</option>
 					    <option value='other'>Other</option>
@@ -117,13 +115,25 @@ class Onboarding extends Component {
 					</div>
 					Looking for a
 					<div className="form-group">
-					  <select onChange={this.setMatchGender} selected={this.state.matchOrientation} className="form-control" id="yourGender">
+					  <select name="matchGender" selected={this.state.matchOrientation} className="form-control" id="matchGender">
+					    <option value='default'>Choose one</option>
 					    <option value='male'>Male</option>
 					    <option value='female'>Female</option>
 					    <option value='other'>Other</option>
 					  </select>
-					</div>		
+					</div>	
+					Sterilized? 
+					<div className="form-group">
+					  <select name="sterilized" selected={this.state.sterilized} className="form-control" id="sterilized">
+					    <option value='default'>Choose one</option>
+					    <option value='yes'>Yes</option>
+					    <option value='no'>No</option>
+					    <option value='plan'>Not yet, but plan to be</option>
+					  </select>
+					</div>
+					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>	
 				</div>
+
 			</div>
 		);
 	}

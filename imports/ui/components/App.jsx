@@ -10,12 +10,18 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.logout = this.logout.bind(this);
-		this.state = this.loggedIn();
+		this.state = 
+			{
+				isAuthenticated: Meteor.userId() !== null,
+				error: ""
+			}
+		this.handleLogin = this.handleLogin.bind(this);
+		this.logout = this.logout.bind(this);
 	}
 
 	loggedIn () {
 		return {
-			isAuthenticated: Meteor.userId() !== null
+			isAuthenticated: Meteor.userId() !== null,
 		}
 	}
 
@@ -36,10 +42,28 @@ class App extends Component {
 		// 	browserHistory.push('/login');
 	}
 
+	handleLogin(e){
+		e.preventDefault();
+		let username = document.getElementById('username').value;
+		let password = document.getElementById('password').value;
+		Meteor.loginWithPassword(username, password, (err) => {
+			if(err)
+				this.setState({error:err.reason});
+			else {
+				browserHistory.push('/home');
+			}
+		});
+	}
+
 	logout(e){
 		e.preventDefault();
 		Meteor.logout();
 		browserHistory.push('/');
+	}
+
+	renderErrors () {
+		if(this.state.error.length > 0)
+			return <li className="alert alert-danger fade in">{this.state.error}</li>
 	}
 
 	loginLogOut () {
@@ -49,16 +73,32 @@ class App extends Component {
 		if (loggedIn){
 			return (
 				<ul className="nav navbar-nav navbar-right">
-					<li>Welcome, {currentUser.username}</li>
-					<a href="#" onClick={this.logout}> Logout</a>
+					<li>Welcome, {currentUser.username}&nbsp;</li>
+					<a href="#" onClick={this.logout}>Logout</a>
 				</ul>
 			)
 		} else {
 			return (
 				<ul className="nav navbar-nav navbar-right">
-					<li><Link to="/login">Sign In</Link></li>
+					<form role="form" id="signin" className="navbar-form navbar-right">
+						<div className="input-group">
+							<span className="input-group-addon">
+								<i className="fa fa-user"></i>
+							</span>
+							<input type="text" ref="username" placeholder="username" id="username" className="form-control"></input>
+						</div>
+						<div className="input-group">
+							<span className="input-group-addon">
+								<i className="fa fa-user"></i>
+							</span>
+							<input type="password" ref="password" placeholder="password" id="password" className="form-control"></input>
+						</div>
+						<button onClick={this.handleLogin} className="btn btn-primary">Log in</button>
+					</form>
 					<li><Link to="/signup">Sign Up</Link></li>
+					{this.renderErrors()}	
 				</ul>
+
 			)
 		}
 	}
@@ -67,7 +107,6 @@ class App extends Component {
 		let currentUser = this.props.authentication.currentUser;
 		let userDataAvailable = (this.props.authentication.currentUser != '');
 		let loggedIn = (currentUser && userDataAvailable);
-
 		return (
 			<div>
 				<nav className="navbar navbar-default navbar-static-top">
