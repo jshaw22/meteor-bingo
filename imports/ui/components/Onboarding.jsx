@@ -2,18 +2,20 @@ import React, { Component, PropTypes } from 'react';
 import {browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import moment from 'moment'; 
+import * as actions from '../actions/authentication';
 
 class Onboarding extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			myGender: "Choose your gender",
-			matchGender: "Choose gender",
-			bdayDay: "Day",
-			bdayMonth: "Month",
-			bdayYear: "Year",
-			sterilized: "Pick one",
-
+			myGender: null,
+			matchGender: null,
+			bdayDay: null,
+			bdayMonth: null,
+			bdayYear: null,
+			sterilized: null,
+			zipCode: null
 		}
 		this.formChange = this.formChange.bind(this);
 		this.submitForm = this.submitForm.bind(this);
@@ -29,7 +31,7 @@ class Onboarding extends Component {
 		}
 		return daysOptions.map((val)=>{
 			if(val.value === 0){
-				return (<option value="default">Day</option>)
+				return (<option key="default" value="default">Day</option>)
 			}
 			return (
 				<option key={val.value} value={val.value}>{val.text}</option>
@@ -47,7 +49,7 @@ class Onboarding extends Component {
 		}
 		return yearOptions.map((val)=>{
 			if( val.value === 1999) // TODO change this to be more dynamic with Moment
-				return (<option value="default">Year</option>)
+				return (<option key="default" value="default">Year</option>)
 			return (
 				<option key={val.value} value={val.value}>{val.text}</option>
 			)
@@ -65,9 +67,32 @@ class Onboarding extends Component {
 		Meteor.call("updateUser", this.state);
 	}
 
+	calcAge(){
+		let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
+		if (this.state.bdayYear !==null && this.state.bdayMonth !==null && this.state.bdayDay !== null) {
+			let age = moment().diff(dateOfBirth, 'years');
+			return `Ah, ${age}. What a great age to be childfree!`;
+		}
+	}
+
+	findCityByZipCode() {
+		const zip = parseInt(this.state.zipCode);
+		if (zip.toString().length === 5) {
+			this.props.actions.getZip(zip);
+		}
+	}
+
+	showLocation() {
+		const location = this.props.authentication.location;
+		if (location === "error")
+			return "Hmm, seems to be an error with this location."
+		else if (location)
+			return `Ah, ${location}. Hopefully some promising matches waiting for you there!`
+		else
+			return;
+	}
+
 	render() {
-		// Use Moment to render age 
-		const age = 28;
 		return (
 			<div> 
 				<div className="container" onChange={this.formChange}>
@@ -101,9 +126,8 @@ class Onboarding extends Component {
 					    		{this.renderYears()}
 					    	</select>
 					    </div>
-
 					 </form>
-					 <p>Ah, {age}. Great age to be child free!</p> 
+					 <p>{this.calcAge()}</p> 
 					I am a
 					<div className="form-group">
 					  <select name="myGender" selected={this.state.myOrientation} className="form-control" id="myGender">
@@ -131,6 +155,12 @@ class Onboarding extends Component {
 					    <option value='plan'>Not yet, but plan to be</option>
 					  </select>
 					</div>
+					Lastly, where are you from?
+					<div className="form-group">
+						<input type="text" pattern="[0-9]*" maxLength="5" required name="zipCode" id="zip" />
+						{this.findCityByZipCode()}
+					</div>
+					<p>{this.showLocation()}</p>
 					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>	
 				</div>
 
@@ -145,7 +175,7 @@ Onboarding.PropTypes = {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		//actions: bindActionCreators(actions, dispatch),
+		actions: bindActionCreators(actions, dispatch)
 	};
 }
 const mapStateToProps = (state) => {
