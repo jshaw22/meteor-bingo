@@ -30,7 +30,6 @@ class App extends Component {
 		//React state differs from meteor fetch state
 		Tracker.autorun(() => {
 			const currentUser = Meteor.user();
-
 			this.props.actions.getCurrentUser(currentUser);
 		})
 		// if(!this.state.isAuthenticated) 
@@ -69,7 +68,7 @@ class App extends Component {
 	loginLogOut () {
 		let currentUser = this.props.authentication.currentUser;
 		let userDataAvailable = (this.props.authentication.currentUser != '');
-		let loggedIn = (currentUser && userDataAvailable);
+		let loggedIn = (currentUser && userDataAvailable)
 		if (loggedIn){
 			return (
 				<ul className="nav navbar-nav navbar-right">

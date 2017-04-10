@@ -19,6 +19,7 @@ class Onboarding extends Component {
 		}
 		this.formChange = this.formChange.bind(this);
 		this.submitForm = this.submitForm.bind(this);
+		this.uploadFile = this.uploadFile.bind(this);
 	}
 
 	renderDays() {
@@ -64,7 +65,14 @@ class Onboarding extends Component {
 
 	submitForm(e){
 		e.preventDefault();
-		let userInfo = {...this.state, avatar: 'http://placehold.it/150x150'};
+		//Needs to be a more elegant way of sending avatar hash. because it gets uploaded first before form submit
+		user = this.props.authentication.currentUser;
+		let userInfo = {
+			...this.state, 
+			avatar: user.profile.info.avatar,
+			location: user.location
+		};
+
 		
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.info": userInfo}}, function(err){
 			if(err){
@@ -84,13 +92,13 @@ class Onboarding extends Component {
 
 	findCityByZipCode() {
 		const zip = parseInt(this.state.zipCode);
-		if (zip.toString().length === 5) {
+		if (zip.toString().length === 5 && !this.props.authentication.currentUser.location) {
 			this.props.actions.getZip(zip);
 		}
 	}
 
 	showLocation() {
-		const location = this.props.authentication.location;
+		const location = this.props.authentication.currentUser.location;
 		if (location === "error")
 			return "Hmm, seems to be an error with this location."
 		else if (location)
@@ -101,15 +109,17 @@ class Onboarding extends Component {
 	
 	uploadFile(e) {
 		e.preventDefault();
-		var image;
 		FS.Utility.eachFile(e, function (file) {
 			Images.insert(file, function (err, fileObj) {
+				if(err)
+					Meteor.error("Unable to upload picture");
 				Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
 			});
 		});
 	}
 
 	render() {
+		this.findCityByZipCode();
 		return (
 			<div> 
 				<div className="container" onChange={this.formChange}>
@@ -175,14 +185,12 @@ class Onboarding extends Component {
 					Where are you from? Enter your zip code
 					<div className="form-group">
 						<input type="text" pattern="[0-9]*" maxLength="5" required name="zipCode" id="zip" />
-						{this.findCityByZipCode()}
 					</div>
 					<p>{this.showLocation()}</p>
-					Lastly, upload your beautiful mug(s)
-					<input id="avatar" onChange={this.uploadFile} type="file" name="avatar" />
-					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>	
 				</div>
-
+				Lastly, upload your beautiful mug(s)
+					<input id="avatar" onChange={this.uploadFile} type="file" />
+					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>	
 			</div>
 		);
 	}

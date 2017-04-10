@@ -2,6 +2,7 @@
 - Add instructions on how to set up robo mongo
 
 TODO: 
+* fix login/logout issues
 Onboarding Component
     - profile picture(s)
     - submit onboarding user profile object to mongo via user _id
@@ -28,7 +29,7 @@ Matches Component
     - find matches with filters 
     - message a match 
 
-* Remove autopublish for meteor
+* Remove autopublish for meteor -- fix publication not being ready stated
 
 Low priority
     - Set email, change pw, etc

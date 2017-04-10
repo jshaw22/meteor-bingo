@@ -1,8 +1,7 @@
 import * as types from '../types';
 
 export const initialState = {
-	currentUser: null,
-	location: null
+	currentUser: null
 };
 
 export default (state = initialState, action) => {
@@ -11,13 +10,19 @@ export default (state = initialState, action) => {
 		case types.GET_CURRENT_USER:
 			return {
 				...state,
-				currentUser: action.currentUser,
+				currentUser: {
+					...state.currentUser,
+					...action.currentUser
+				},
 				isAuthenticated: action.isAuthenticated
 			};
 		case types.DISPLAY_ZIPCODE:
 			return {
 				...state,
-				location: action.zipCode
+				currentUser: {
+					...state.currentUser,
+					location: action.zipCode
+				}
 			}
 		default:
 			return state;
