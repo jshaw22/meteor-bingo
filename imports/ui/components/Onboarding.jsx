@@ -98,6 +98,16 @@ class Onboarding extends Component {
 		else
 			return;
 	}
+	
+	uploadFile(e) {
+		e.preventDefault();
+		var image;
+		FS.Utility.eachFile(e, function (file) {
+			Images.insert(file, function (err, fileObj) {
+				Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
+			});
+		});
+	}
 
 	render() {
 		return (
@@ -168,6 +178,8 @@ class Onboarding extends Component {
 						{this.findCityByZipCode()}
 					</div>
 					<p>{this.showLocation()}</p>
+					Lastly, upload your beautiful mug(s)
+					<input id="avatar" onChange={this.uploadFile} type="file" name="avatar" />
 					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>	
 				</div>
 
