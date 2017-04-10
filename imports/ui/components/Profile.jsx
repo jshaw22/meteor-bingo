@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import * as actions from '../actions/authentication';
 
 class Profile extends Component {
 	constructor(props){
@@ -14,7 +15,7 @@ class Profile extends Component {
 	render() {
 		return (
 			<div className="row">
-				<div align="center" className="col-md-2 hidden-xs">
+				<div className="col-md-2 hidden-xs">
 					Avatar
 						<div>
 							<label>
@@ -55,3 +56,30 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+
+/*
+return (
+			<div className="row">
+				<div align="center" className="col-md-2 hidden-xs">
+					Avatar
+						<div>
+							<label>
+								<div className="inputWrapper">
+									<input type="file" id="avatar" name="avatar" className="file"></input>
+								</div>
+							</label>
+						</div>
+					</div>
+					<div className="col-md-9 col-xs-9">
+						<h2>Justin Shaw</h2>
+						<table className="table table-user-information">
+							<tbody>
+							<tr>
+								<td>Email</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+		)
+		*/

@@ -64,7 +64,14 @@ class Onboarding extends Component {
 
 	submitForm(e){
 		e.preventDefault();
-		Meteor.call("updateUser", this.state);
+		let userInfo = {...this.state, avatar: 'http://placehold.it/150x150'};
+		
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.info": userInfo}}, function(err){
+			if(err){
+				console.log("There was an error");
+			}
+			browserHistory.push('/profile');
+		});
 	}
 
 	calcAge(){
@@ -127,7 +134,7 @@ class Onboarding extends Component {
 					    	</select>
 					    </div>
 					 </form>
-					 <p>{this.calcAge()}</p> 
+					 <p>{this.calcAge()}</p>
 					I am a
 					<div className="form-group">
 					  <select name="myGender" selected={this.state.myOrientation} className="form-control" id="myGender">
@@ -155,7 +162,7 @@ class Onboarding extends Component {
 					    <option value='plan'>Not yet, but plan to be</option>
 					  </select>
 					</div>
-					Lastly, where are you from?
+					Where are you from? Enter your zip code
 					<div className="form-group">
 						<input type="text" pattern="[0-9]*" maxLength="5" required name="zipCode" id="zip" />
 						{this.findCityByZipCode()}
