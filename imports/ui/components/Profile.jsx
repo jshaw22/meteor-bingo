@@ -16,15 +16,18 @@ class Profile extends Component {
 		this.uploadFile = this.uploadFile.bind(this);
 	}
 
-	componentWillReceiveProps (nextProps) {
+	componentDidMount(){
+		
+	}
+	componentWillUpdate(nextProps){
+		console.log("component willUpdate", nextProps);
 		const user = nextProps.authentication;
-		console.log("user", user);
 		let data = {};
 		if (user) {
 			data.img = Images.findOne({_id: user.currentUser.profile.info.avatar}).url();
-			this.setState({user: user.currentUser}); //I don't like the lifecycle for this. fix later	
+			//this.setState({user: user.currentUser}); //I don't like the lifecycle for this. fix later	
 		}
-		this.setState({data});		
+		//this.setState({data});
 	}
 
 	uploadFile(e) {
@@ -39,13 +42,17 @@ class Profile extends Component {
 	}
 
 	render() {
+		const user = this.props.authentication.currentUser;
 		var avatar = this.state.avatar;
-		var user = this.state.user
-		console.log("this state", this.state);
-		if (this.state.data.hasOwnProperty("img")){
-			avatar = this.state.data.img;
+		let picData = {};
+		if (user && user.profile) {
+			picData.img = Images.findOne({_id: user.profile.info.avatar}).url();
 		}
-		if (!this.state.user.profile)
+
+		if (picData.hasOwnProperty("img")){
+			avatar = picData.img;
+		}
+		if (!user.profile)
 			return <div>Loading</div>
 
 		//TODO: avatar should be scaled first from server? 

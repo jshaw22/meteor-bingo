@@ -16,6 +16,7 @@ class Home extends Component {
 					<h1 className='text-center'>
 						You logged in, bro!!
 					</h1>
+					<h3 className="text-center">I'm not sure what to put here. Maybe a newsfeed?</h3>
 				</div>
 			</div>
 		);

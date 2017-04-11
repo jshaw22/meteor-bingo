@@ -10,6 +10,12 @@ export const getCurrentUser = (currentUser, isAuthenticated) =>{
 	}
 }
 
+export const logout = () => {
+	return {
+		type: types.LOGOUT
+	}
+}
+
 export const getZip = (zip) => {
 	return function(dispatch) {
 		//Using old school node callback style. The current convention is via promises:

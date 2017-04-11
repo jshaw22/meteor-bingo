@@ -19,14 +19,7 @@ class App extends Component {
 		this.logout = this.logout.bind(this);
 	}
 
-	loggedIn () {
-		return {
-			isAuthenticated: Meteor.userId() !== null,
-		}
-	}
-
 	componentWillMount () {
-		console.log("component mounted", this.state);
 		//React state differs from meteor fetch state
 		Tracker.autorun(() => {
 			const currentUser = Meteor.user();
@@ -57,6 +50,7 @@ class App extends Component {
 	logout(e){
 		e.preventDefault();
 		Meteor.logout();
+		this.props.actions.logout();  // this double call seems to be clunky
 		browserHistory.push('/');
 	}
 
@@ -65,15 +59,13 @@ class App extends Component {
 			return <li className="alert alert-danger fade in">{this.state.error}</li>
 	}
 
-	loginLogOut () {
-		let currentUser = this.props.authentication.currentUser;
-		let userDataAvailable = (this.props.authentication.currentUser != '');
-		let loggedIn = (currentUser && userDataAvailable)
+	loginLogOut (loggedIn) {
 		if (loggedIn){
+			const currentUser = this.props.authentication.currentUser;
 			return (
 				<ul className="nav navbar-nav navbar-right">
-					<li>Welcome, {currentUser.username}&nbsp;</li>
-					<a href="#" onClick={this.logout}>Logout</a>
+					<li>Welcome, {currentUser.username}</li>
+					<li><a href="#" onClick={this.logout}>Logout</a></li>
 				</ul>
 			)
 		} else {
@@ -104,17 +96,21 @@ class App extends Component {
 
 	render() {
 		let currentUser = this.props.authentication.currentUser;
-		let userDataAvailable = (this.props.authentication.currentUser != '');
-		let loggedIn = (currentUser && userDataAvailable);
+		let loggedIn = (currentUser && currentUser.hasOwnProperty("_id"));
 		return (
 			<div>
 				<nav className="navbar navbar-default navbar-static-top">
 					<div className="container">
 						<div className="navbar-header">
-							<a className="navbar-brand" href="#">Bingo Smashers</a>
+							<a className="navbar-brand" href="#"><Link to="/">Bingo Smashers</Link></a>
 						</div>
-						<div className="navbar-collapse">
-							{this.loginLogOut()}
+						<div className="navbar-collapse collapse">
+							<ul className="nav navbar-nav">
+								<li><Link to="/profile">Profile</Link></li>
+								<li><Link to="/messages">Messages</Link></li>
+								<li><Link to="/matches">Browse Matches</Link></li>
+							</ul>
+							{this.loginLogOut(loggedIn)}
 						</div>
 					</div>
 				</nav>

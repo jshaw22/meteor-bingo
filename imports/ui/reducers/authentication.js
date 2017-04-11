@@ -7,6 +7,10 @@ export const initialState = {
 export default (state = initialState, action) => {
 
 	switch (action.type) {
+		case types.LOGOUT:
+			return {
+				...initialState
+			}
 		case types.GET_CURRENT_USER:
 			return {
 				...state,
