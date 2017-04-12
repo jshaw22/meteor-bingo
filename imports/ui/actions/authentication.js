@@ -7,13 +7,13 @@ export const getCurrentUser = (currentUser, isAuthenticated) =>{
 		type: types.GET_CURRENT_USER,
 		currentUser,
 		isAuthenticated
-	}
+	};
 }
 
 export const logout = () => {
 	return {
 		type: types.LOGOUT
-	}
+	};
 }
 
 export const getZip = (zip) => {

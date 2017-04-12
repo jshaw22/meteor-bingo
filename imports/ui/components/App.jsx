@@ -94,9 +94,22 @@ class App extends Component {
 		}
 	}
 
+	displayLinksForUser (loggedIn) {
+		if(!loggedIn)
+			return;
+		return (
+			<ul className="nav navbar-nav">
+				<li><Link to="/profile">Profile</Link></li>
+				<li><Link to="/messages">Messages</Link></li>
+				<li><Link to="/match">Browse Matches</Link></li>
+			</ul>
+		)
+	}
+
 	render() {
 		let currentUser = this.props.authentication.currentUser;
 		let loggedIn = (currentUser && currentUser.hasOwnProperty("_id"));
+		console.log("User logged in?", loggedIn);
 		return (
 			<div>
 				<nav className="navbar navbar-default navbar-static-top">
@@ -105,11 +118,7 @@ class App extends Component {
 							<a className="navbar-brand" href="#"><Link to="/">Bingo Smashers</Link></a>
 						</div>
 						<div className="navbar-collapse collapse">
-							<ul className="nav navbar-nav">
-								<li><Link to="/profile">Profile</Link></li>
-								<li><Link to="/messages">Messages</Link></li>
-								<li><Link to="/matches">Browse Matches</Link></li>
-							</ul>
+							{this.displayLinksForUser(loggedIn)}
 							{this.loginLogOut(loggedIn)}
 						</div>
 					</div>

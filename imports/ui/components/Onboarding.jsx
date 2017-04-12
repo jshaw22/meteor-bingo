@@ -32,14 +32,14 @@ class Onboarding extends Component {
 		}
 		return daysOptions.map((val)=>{
 			if(val.value === 0){
-				return (<option key="default" value="default">Day</option>)
+				return (<option key="default" value="" selected disabled>Day</option>)
 			}
 			return (
 				<option key={val.value} value={val.value}>{val.text}</option>
 			)
 		})
 	}
-	//TODO: use momentJS to calculate at least 18 years of age 
+	//TODO: use momentJS to calculate at least 18 years of age to use site
 	renderYears() {
 		let yearOptions = [];
 		for (var i = 1999; i>1920; i--) {
@@ -50,7 +50,7 @@ class Onboarding extends Component {
 		}
 		return yearOptions.map((val)=>{
 			if( val.value === 1999) // TODO change this to be more dynamic with Moment
-				return (<option key="default" value="default">Year</option>)
+				return (<option key="default" value="" selected disabled>Year</option>)
 			return (
 				<option key={val.value} value={val.value}>{val.text}</option>
 			)
@@ -70,7 +70,7 @@ class Onboarding extends Component {
 		let userInfo = {
 			...this.state, 
 			avatar: user.profile.info.avatar,
-			location: user.location
+			location: user.location,
 		};
 
 		
@@ -84,10 +84,16 @@ class Onboarding extends Component {
 
 	calcAge(){
 		let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
-		if (this.state.bdayYear !==null && this.state.bdayMonth !==null && this.state.bdayDay !== null) {
+		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null && this.state.age === undefined) {
 			let age = moment().diff(dateOfBirth, 'years');
-			return `Ah, ${age}. What a great age to be childfree!`;
+			//this.props.actions.saveAge(age);
+			this.setState({age});
 		}
+	}
+
+	showAge() {
+		if(this.state.age)
+			return `Ah, ${this.state.age}. What a great age to be childfree!`;
 	}
 
 	findCityByZipCode() {
@@ -120,6 +126,7 @@ class Onboarding extends Component {
 
 	render() {
 		this.findCityByZipCode();
+		this.calcAge();
 		return (
 			<div> 
 				<div className="container" onChange={this.formChange}>
@@ -128,7 +135,7 @@ class Onboarding extends Component {
 					<form className="form-inline">
 					    <div className="form-group">
 					    	<select onChange={this.setMonth} name="bdayMonth" selected={this.state.bdayMonth} className="form-control" id="bdayMonth">
-						        <option value='default'>Month</option>
+						        <option value="" selected disabled>Month</option>
 						        <option value='1'>Jan</option>
 						        <option value='2'>Feb</option>
 						        <option value='3'>Mar</option>
@@ -154,7 +161,7 @@ class Onboarding extends Component {
 					    	</select>
 					    </div>
 					 </form>
-					 <p>{this.calcAge()}</p>
+					 <p>{this.showAge()}</p>
 					I am a
 					<div className="form-group">
 					  <select name="myGender" selected={this.state.myOrientation} className="form-control" id="myGender">
@@ -177,8 +184,8 @@ class Onboarding extends Component {
 					<div className="form-group">
 					  <select name="sterilized" selected={this.state.sterilized} className="form-control" id="sterilized">
 					    <option value='default'>Choose one</option>
-					    <option value='yes'>Yes</option>
-					    <option value='no'>No</option>
+					    <option value='true'>Yes</option>
+					    <option value='false'>No</option>
 					    <option value='plan'>Not yet, but plan to be</option>
 					  </select>
 					</div>

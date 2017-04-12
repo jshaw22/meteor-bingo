@@ -12,6 +12,8 @@ import Welcome from '../../ui/components/Welcome.jsx';
 import PageNotFound from '../../ui/components/PageNotFound.jsx';
 import Onboarding from '../../ui/components/Onboarding.jsx';
 import Profile from '../../ui/components/Profile.jsx';
+import Match from '../../ui/components/Match.jsx';
+import Message from '../../ui/components/Message.jsx'
 
 export const renderRoutes = (store) => (
 	<Router history={browserHistory}>
@@ -22,6 +24,8 @@ export const renderRoutes = (store) => (
 			<Route path='home' component={requireAuth(Home)} />
 			<Route path='onboarding' component={requireAuth(Onboarding)} />
 			<Route path='profile' component={requireAuth(Profile)} />
+			<Route path='match' component={requireAuth(Match)} />
+			<Route path='message' component={requireAuth(Message)} />
 		</Route>
 		<Route path='*' component={PageNotFound} />
 	</Router>
