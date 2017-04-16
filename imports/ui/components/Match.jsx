@@ -2,23 +2,43 @@ import React, { Component, PropTypes } from 'react';
 import {browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import * as actions from '../actions/matchUserActions';
 
 class Match extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			matchGender: null,
-			ageFrom: null,
-			ageTo: null
+			selectMatchGender: null,
+			selectAgeFrom: null,
+			selectAgeTo: null
 		}
+		this.formChange = this.formChange.bind(this);
+		this.searchMatches = this.searchMatches.bind(this);
 	}
+
+
 
 	componentWillMount(){
-		var userHandle = Meteor.subscribe('userList');
-		console.log("user handle", userHandle);
-		console.log("users", this.props.users);
+		// console.log("users", this.props.users);
+		// const handle = Meteor.subscribe('userList');
+		// Tracker.autorun(() => {
+		//   const isReady = handle.ready();
+		//   console.log(`Handle is ${isReady ? 'ready' : 'not ready'}`);  
+		// });
 	}
 
+	//gonna need to save sessions so user doesn't have to filter every time
+	searchMatches () {
+		let filteredUsers = Meteor.users.find(
+			{
+				_id: {$not: Meteor.userId()},
+				"profile.info.myGender": this.state.selectMatchGender,
+				"profile.info.age": {$gt: parseInt(this.state.selectAgeFrom), $lt: parseInt(this.state.selectAgeTo)},
+		}).fetch(); 
+		if (filteredUsers) 
+			this.props.actions.matchedUsers(filteredUsers);
+	}
+	
 	formChange(e){
 		let change = {};
 		change[e.target.name] = e.target.value;
@@ -43,9 +63,11 @@ class Match extends Component {
 		})
 	}
 
-	showNewUsers () {
-		const users = this.props.users;
-		return users.map((user, index) =>{
+	showMatches () {
+		const matches = this.props.matchUsers.matchedUsers;
+		if(!matches)
+			return;
+		return matches.map((user, index) =>{
 			return (
 				<div className="col-xs-4" key={`user${index}`}>
 					<div>{user.username}</div>
@@ -58,28 +80,31 @@ class Match extends Component {
 
 	render() {
 		return (
-			<div className="form-inline" onChange>
-			    <div className="input-group">
-			    	<select className="form-control" name="selectMatchGender">
-			    		<option value="" disabled selected>I am looking for a</option>
-			    		<option value="male">Male</option>
-			    		<option value="female">Female</option>
-			    		<option value="other">Other</option>
-			        </select>
-			    </div>
-			    <div className="input-group">
-			        <select className="form-control" name="selectAgeFrom">
-			        	{this.renderDays("from")}
-			        </select>
-			    </div>
-			    <div className="input-group">
-			        <select className="form-control" name="selectAgeTo">
-			        	{this.renderDays("to")}
-			        </select>
-			    </div>
-			    <div className="input-group" style={{width:"105px"}}>
-			        <button id="searchbtn" type="submit" className="form-control"><span className="glyphicon glyphicon-search"></span></button>
-			    </div>
+			<div>
+				<div className="form-inline" onChange={this.formChange}>
+				    <div className="input-group">
+				    	<select className="form-control" name="selectMatchGender">
+				    		<option value="" disabled selected>I am looking for a</option>
+				    		<option value="male">Male</option>
+				    		<option value="female">Female</option>
+				    		<option value="other">Other</option>
+				        </select>
+				    </div>
+				    <div className="input-group">
+				        <select className="form-control" name="selectAgeFrom">
+				        	{this.renderDays("from")}
+				        </select>
+				    </div>
+				    <div className="input-group">
+				        <select className="form-control" name="selectAgeTo">
+				        	{this.renderDays("to")}
+				        </select>
+				    </div>
+				    <div className="input-group" style={{width:"105px"}}>
+				        <button id="searchbtn" type="submit" onClick={this.searchMatches} className="form-control"><span className="glyphicon glyphicon-search"></span></button>
+				    </div>
+				</div>
+				{this.showMatches()}
 			</div>
 		)
 
@@ -87,18 +112,20 @@ class Match extends Component {
 }
 
 Match.PropTypes = {
-	username: React.PropTypes.string
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		//actions: bindActionCreators(actions, dispatch),
+		actions: bindActionCreators(actions, dispatch),
+
+
 	};
 }
 const mapStateToProps = (state) => {
 	return {
 		authentication: state.authentication,
-		users: Meteor.users.find({}).fetch()
+		users: Meteor.users.find({}).fetch(),
+		matchUsers: state.matchUserReducer
 	};
 };
 
