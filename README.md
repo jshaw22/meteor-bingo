@@ -1,5 +1,5 @@
 Instructions on setting up Meteor: 
- - Mac/Linux: curl https://install.meteor.com/ | sh
+ - Mac/Linux: `curl https://install.meteor.com/ | sh`
  - Windows: Get the installer @ https://install.meteor.com/windows
 
 Once installed, clone this repo. CD into the repo and type `meteor` to start the server.
@@ -8,9 +8,9 @@ Tip: To clear the Meteor DB, type `meteor reset` for a clean re-boot.
 <h4>Robomongo</h4>
 Because Meteor uses MongoDB, you'll need to get a program that can visually display Mongo objects.
 I suggest Robomongo. Download it, and you'll need the following configurations:
-- Type: Direct Connection
-- Name: Choose any name, I use "Meteor Bingosmash"
-- Address: 127.0.0.1 : 3001
+	- Type: Direct Connection
+	- Name: Choose any name, I use "Meteor Bingosmash"
+	- Address: 127.0.0.1 : 3001
 
 TODO: 
 Onboarding Component
@@ -45,6 +45,12 @@ Matches Component
 
 Low priority
     - Set email, change pw, etc
+
+<h4>Version Control</h4>
+Clone the repo. 
+Dev on scratch: git checkout -b user-profile-css-changes
+Add, commit, and push to branch. 
+Make sure your branch is synced with master. `git checkout master`, `git pull origin master`, `git checkout user-profile-css-changes`, `git rebase master`. Once ready, navigate to github and create a pull request, comparing your base branch to master branch. 
 
 Recruitment All-Star team once basic functionality is finished:
 - Jonathan for FS??
