@@ -13,7 +13,7 @@ import PageNotFound from '../../ui/components/PageNotFound.jsx';
 import Onboarding from '../../ui/components/Onboarding.jsx';
 import Profile from '../../ui/components/Profile.jsx';
 import Match from '../../ui/components/Match.jsx';
-import Message from '../../ui/components/Message.jsx'
+import Messages from '../../ui/components/Message.jsx'
 import Users from '../../ui/components/Users.jsx'
 
 export const renderRoutes = (store) => (
@@ -29,7 +29,7 @@ export const renderRoutes = (store) => (
 				<Route path=':username' component={Users} />
 			</Route>
 			<Route path='match' component={requireAuth(Match)} />
-			<Route path='messages' component={requireAuth(Message)} />
+			<Route path='messages' component={requireAuth(Messages)} />
 		</Route>
 		<Route path='*' component={PageNotFound} />
 	</Router>

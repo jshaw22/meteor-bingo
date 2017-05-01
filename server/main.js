@@ -18,7 +18,8 @@ Meteor.startup(() => {
   		var msg = {
   			to: to,
   			fromuser: from._id,
-  			createdOn: new Date()
+  			createdOn: new Date(),
+        message: message
   		};
   		console.log("message", msg);
   		if(person == this.userId) {

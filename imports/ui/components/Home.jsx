@@ -21,7 +21,7 @@ class Home extends Component {
 		return users.map((user, index) =>{
 			return (
 				<div className="col-xs-4" key={`user${index}`}>
-					<div>{user.username}</div>
+					<div><Link to={`/profile/${user.username}`}>{user.username}</Link></div>
 					<div>{user.profile.info.location}</div>
 					<img src="http://placehold.it/100x100" id={`picture${index}`} className="img-responsive" />
 				</div>

@@ -60,7 +60,6 @@ class Onboarding extends Component {
 	formChange(e){
 		let change = {};
 		change[e.target.name] = e.target.value;
-		this.setState(change, () => console.log(this.state));
 	}
 
 	submitForm(e){

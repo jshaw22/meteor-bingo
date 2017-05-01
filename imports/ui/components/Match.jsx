@@ -17,16 +17,6 @@ class Match extends Component {
 	}
 
 
-
-	componentWillMount(){
-		// console.log("users", this.props.users);
-		// const handle = Meteor.subscribe('userList');
-		// Tracker.autorun(() => {
-		//   const isReady = handle.ready();
-		//   console.log(`Handle is ${isReady ? 'ready' : 'not ready'}`);  
-		// });
-	}
-
 	//gonna need to save sessions so user doesn't have to filter every time
 	searchMatches () {
 		let filteredUsers = Meteor.users.find(
@@ -42,7 +32,7 @@ class Match extends Component {
 	formChange(e){
 		let change = {};
 		change[e.target.name] = e.target.value;
-		this.setState(change, () => console.log(this.state));
+		this.setState(change);
 	}
 
 	renderDays(fromTo) {
