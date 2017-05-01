@@ -10,17 +10,11 @@ class Profile extends Component {
 		this.state = {
 			//bingosmash logo goes here
 			avatar: 'http://placehold.it/150x150',
-			data: {},
-			user: {}
 		}
 		this.uploadFile = this.uploadFile.bind(this);
 	}
 
-	componentDidMount(){
-		
-	}
 	componentWillUpdate(nextProps){
-		console.log("component willUpdate", nextProps);
 		const user = nextProps.authentication;
 		let data = {};
 		if (user) {

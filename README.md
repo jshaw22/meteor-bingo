@@ -1,5 +1,5 @@
 Instructions on setting up Meteor: 
- - Mac/Linux: curl https://install.meteor.com/ | sh
+ - Mac/Linux: `curl https://install.meteor.com/ | sh`
  - Windows: Get the installer @ https://install.meteor.com/windows
 
 Once installed, clone this repo. CD into the repo and type `meteor` to start the server.
@@ -12,39 +12,50 @@ I suggest Robomongo. Download it, and you'll need the following configurations:
 - Name: Choose any name, I use "Meteor Bingosmash"
 - Address: 127.0.0.1 : 3001
 
-TODO: 
-Onboarding Component
-    - profile picture(s) need to be better handled. We should *require* a profile pic? Yes, No? 
-    - Store profile images into S3 after local testing?
-    - use graphicsmagick to make thumbnails, resize, optimize
+<h4>TODO:<h4> 
+<h5>Onboarding Component<h5>
+- profile picture(s) need to be better handled. We should *require* a profile pic? Yes, No? 
+- Store profile images into S3 after local testing?
+- use graphicsmagick to make thumbnails, resize, optimize
     
 User Profile Page (editable) 
-    - Give user option to add additional details 
-        - Textarea for a little something about me
-        - Favorite hobbies
-        - Sexual orientation
-        - relationship status
-        - relationship type 
-        - ethnicity 
-        - body type 
-        - height
-        - Diet
-        - Smoking
-        - Drinking
-        - Religion
-        - Education 
-        - etc
+- Give user option to add additional details 
+    - Textarea for a little something about me
+    - Favorite hobbies
+    - Sexual orientation
+    - relationship status
+    - relationship type 
+    - ethnicity 
+    - body type 
+    - height
+    - Diet
+    - Smoking
+    - Drinking
+    - Religion
+    - Education 
+    - etc
 
 Matches Component
-    - find matches with filters. Done, but need to add a 'location' parameter. I'm going to leave that blank for now because so little users.
-    - message a match. Done, but need to add:
-    	- Better sorting and UI
-    	- A good way to respond back to matches quickly and efficiently (sort of like OKCupid's mechanism). Will need to componentize this
+- find matches with filters. Done, but need to add a 'location' parameter. I'm going to leave that blank for now because so little users.
+- message a match. Done, but need to add:
+	- Better sorting and UI
+	- A good way to respond back to matches quickly and efficiently (sort of like OKCupid's mechanism). Will need to componentize this
 
 * Remove autopublish for meteor -- fix publication not being ready stated
 
 Low priority
-    - Set email, change pw, etc
+- Set email, change pw, etc
+
+<h4>Version Control</h4>
+Clone the repo. 
+
+Dev on scratch: git checkout -b user-profile-css-changes
+
+Add, commit, and push to branch. 
+
+Make sure your branch is synced with master. `git checkout master`, `git pull origin 
+master`, `git checkout user-profile-css-changes`, `git rebase master`. Once ready, navigate to github and create a pull request, comparing your base branch to master branch. 
+
 
 Recruitment All-Star team once basic functionality is finished:
 - Jonathan for FS??
