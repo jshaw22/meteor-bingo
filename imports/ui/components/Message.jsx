@@ -17,16 +17,13 @@ class Messages extends Component {
 		Tracker.autorun(() => {
 		  const isReady = messageHandle.ready();
 		  if (isReady){
-		  	console.log("IsReady!")
-
 		  	let messages = DBMessage.find({$or:[{'to._id':Meteor.userId()},{'fromuser':Meteor.userId()}]},{sort:{createdOn:-1}}).fetch();
-		  	this.setState({messages}, ()=>{console.log("messages", this.state.messages)});
+		  	this.setState({messages});
 		  }		
 		});
 	}
 
 	render() {
-		console.log("this state messages", this.state.messages);
 		let rows = this.state.messages.map((message) => {
 			let msgfrom = Meteor.users.findOne({_id: message.fromuser});
 			let timesince = moment(message.createdOn).fromNow();

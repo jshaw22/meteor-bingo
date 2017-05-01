@@ -15,7 +15,7 @@ class Onboarding extends Component {
 			bdayMonth: null,
 			bdayYear: null,
 			sterilized: null,
-			zipCode: null
+			zipCode: null,
 		}
 		this.formChange = this.formChange.bind(this);
 		this.submitForm = this.submitForm.bind(this);
@@ -60,6 +60,8 @@ class Onboarding extends Component {
 	formChange(e){
 		let change = {};
 		change[e.target.name] = e.target.value;
+		console.log("e target name, value", e.target.name, e.target.value)
+		this.setState(change, ()=>console.log("state is now", this.state))
 	}
 
 	submitForm(e){
@@ -133,7 +135,7 @@ class Onboarding extends Component {
 					When's your birthday?
 					<form className="form-inline">
 					    <div className="form-group">
-					    	<select onChange={this.setMonth} name="bdayMonth" selected={this.state.bdayMonth} className="form-control" id="bdayMonth">
+					    	<select name="bdayMonth" selected={this.state.bdayMonth} className="form-control" id="bdayMonth">
 						        <option value="" selected disabled>Month</option>
 						        <option value='1'>Jan</option>
 						        <option value='2'>Feb</option>
@@ -155,7 +157,7 @@ class Onboarding extends Component {
 					    	</select>
 					    </div>
 					    <div className="form-group">
-					    	<select onChange={this.setYear} name="bdayYear" selected={this.state.bdayYear} className="form-control" id="bdayYear">
+					    	<select name="bdayYear" selected={this.state.bdayYear} className="form-control" id="bdayYear">
 					    		{this.renderYears()}
 					    	</select>
 					    </div>

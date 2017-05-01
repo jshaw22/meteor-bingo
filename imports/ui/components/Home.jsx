@@ -8,12 +8,6 @@ class Home extends Component {
 		super(props);
 	}
 
-	componentWillMount(){
-		//var userHandle = Meteor.subscribe('userList');
-		//console.log("user handle", userHandle);
-		console.log("users", this.props.users);
-	}
-
 	showNewUsers () {
 		const users = this.props.users;
 		if(!users)

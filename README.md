@@ -14,7 +14,7 @@ I suggest Robomongo. Download it, and you'll need the following configurations:
 
 <h4>TODO:<h4> 
 <h5>Onboarding Component<h5>
-- profile picture(s) need to be better handled. We should *require* a profile pic? Yes, No? 
+Profile picture(s) need to be better handled. We should *require* a profile pic? Yes, No? 
 - Store profile images into S3 after local testing?
 - use graphicsmagick to make thumbnails, resize, optimize
     

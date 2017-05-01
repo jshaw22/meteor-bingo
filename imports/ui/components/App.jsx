@@ -17,16 +17,10 @@ class App extends Component {
 			}
 		this.handleLogin = this.handleLogin.bind(this);
 		this.logout = this.logout.bind(this);
-	}
-
-	componentWillMount () {
-		//React state differs from meteor fetch state
 		Tracker.autorun(() => {
 			const currentUser = Meteor.user();
 			this.props.actions.getCurrentUser(currentUser);
 		})
-		// if(!this.state.isAuthenticated) 
-		// 	browserHistory.push('/login');
 	}
 
 	componentDidUpdate(prevProps, nextProps) {
@@ -50,6 +44,7 @@ class App extends Component {
 	logout(e){
 		e.preventDefault();
 		Meteor.logout();
+		this.setState({error:''})
 		this.props.actions.logout();  // this double call seems to be clunky
 		browserHistory.push('/');
 	}
