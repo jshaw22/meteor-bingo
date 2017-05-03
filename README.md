@@ -5,6 +5,9 @@ Instructions on setting up Meteor:
 Once installed, clone this repo. CD into the repo and type `meteor` to start the server.
 Tip: To clear the Meteor DB, type `meteor reset` for a clean re-boot.
 
+Another dev tip: Download React and Redux tools. It will make debugging loads easier!
+
+
 <h4>Robomongo</h4>
 Because Meteor uses MongoDB, you'll need to get a program that can visually display Mongo objects.
 I suggest Robomongo. Download it, and you'll need the following configurations:

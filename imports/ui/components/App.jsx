@@ -4,8 +4,6 @@ import * as actions from '../actions/authentication.js'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-
-
 class App extends Component {
 	constructor(props){
 		super(props);
@@ -58,14 +56,14 @@ class App extends Component {
 		if (loggedIn){
 			const currentUser = this.props.authentication.currentUser;
 			return (
-				<ul className="nav navbar-nav navbar-right">
-					<li>Welcome, {currentUser.username}</li>
-					<li><a href="#" onClick={this.logout}>Logout</a></li>
+				<ul className="navbar-nav navbar-right">
+					<li className="nav-item">Welcome, {currentUser.username}</li>
+					<li className="nav-item"><a href="#" onClick={this.logout}>Logout</a></li>
 				</ul>
 			)
 		} else {
 			return (
-				<ul className="nav navbar-nav navbar-right">
+				<ul className="navbar-nav navbar-right">
 					<form role="form" id="signin" className="navbar-form navbar-right">
 						<div className="input-group">
 							<span className="input-group-addon">
@@ -93,10 +91,10 @@ class App extends Component {
 		if(!loggedIn)
 			return;
 		return (
-			<ul className="nav navbar-nav">
-				<li><Link to="/profile">Profile</Link></li>
-				<li><Link to="/messages">Messages</Link></li>
-				<li><Link to="/match">Browse Matches</Link></li>
+			<ul className="navbar-nav mr-auto">
+				<li className="nav-item"><Link to="/profile">Profile</Link></li>
+				<li className="nav-item"><Link to="/messages">Messages</Link></li>
+				<li className="nav-item"><Link to="/match">Browse Matches</Link></li>
 			</ul>
 		)
 	}
@@ -107,15 +105,11 @@ class App extends Component {
 		console.log("User logged in?", loggedIn);
 		return (
 			<div>
-				<nav className="navbar navbar-default navbar-static-top">
-					<div className="container">
-						<div className="navbar-header">
-							<a className="navbar-brand" href="#"><Link to="/">Bingo Smashers</Link></a>
-						</div>
-						<div className="navbar-collapse collapse">
-							{this.displayLinksForUser(loggedIn)}
-							{this.loginLogOut(loggedIn)}
-						</div>
+				<nav className="navbar navbar-toggleable-md navbar-light bg-faded">
+					<div className="navbar-brand"><Link to="/">Bingo Smashers</Link></div>
+					<div className="collapse navbar-collapse">
+						{this.displayLinksForUser(loggedIn)}
+						{this.loginLogOut(loggedIn)}
 					</div>
 				</nav>
 				{this.props.children}

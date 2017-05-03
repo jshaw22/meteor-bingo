@@ -5,6 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import reducers from '../imports/ui/reducers/index';
 import { Provider } from 'react-redux';
+import 'bootstrap';
 
 //render routes
 import { renderRoutes } from '../imports/startup/client/routes.jsx';
