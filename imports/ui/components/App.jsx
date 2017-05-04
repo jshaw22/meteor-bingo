@@ -91,11 +91,17 @@ class App extends Component {
 		if(!loggedIn)
 			return;
 		return (
-			<ul className="navbar-nav mr-auto">
-				<li className="nav-item"><Link to="/profile">Profile</Link></li>
-				<li className="nav-item"><Link to="/messages">Messages</Link></li>
-				<li className="nav-item"><Link to="/match">Browse Matches</Link></li>
-			</ul>
+		    <ul className="navbar-nav mr-auto">
+		      <li className="nav-item active">
+		        <Link className="nav-link" to="/profile">Profile</Link>
+		      </li>
+		      <li className="nav-item">
+		        <Link className="nav-link" to="/messages">Messages</Link>
+		      </li>
+		      <li className="nav-item">
+		        <Link className="nav-link" to="/match">Browse Matches</Link>
+		      </li>
+		    </ul>
 		)
 	}
 
@@ -106,11 +112,18 @@ class App extends Component {
 		return (
 			<div>
 				<nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-					<div className="navbar-brand"><Link to="/">Bingo Smashers</Link></div>
-					<div className="collapse navbar-collapse">
-						{this.displayLinksForUser(loggedIn)}
-						{this.loginLogOut(loggedIn)}
-					</div>
+				  <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				    <span className="navbar-toggler-icon"></span>
+				  </button>
+
+				  <div className="navbar-brand"><Link to="/">Bingo Smashers</Link></div>
+
+				  <div className="collapse navbar-collapse" id="navbarSupportedContent">
+
+				            {this.displayLinksForUser(loggedIn)}
+				            {this.loginLogOut(loggedIn)}
+
+				  </div>
 				</nav>
 				{this.props.children}
 			</div>
