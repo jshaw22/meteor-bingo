@@ -22,7 +22,6 @@ autopublish@1.0.7             # Publish all data to the clients (for prototyping
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 accounts-password
 react-meteor-data
-twbs:bootstrap
 cfs:standard-packages
 cfs:filesystem
 http
