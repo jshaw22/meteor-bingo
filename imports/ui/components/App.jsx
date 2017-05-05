@@ -63,26 +63,15 @@ class App extends Component {
 			)
 		} else {
 			return (
-				<ul className="navbar-nav navbar-right">
-					<form role="form" id="signin" className="navbar-form navbar-right">
-						<div className="input-group">
-							<span className="input-group-addon">
-								<i className="fa fa-user"></i>
-							</span>
-							<input type="text" ref="username" placeholder="username" id="username" className="form-control"></input>
-						</div>
-						<div className="input-group">
-							<span className="input-group-addon">
-								<i className="fa fa-user"></i>
-							</span>
-							<input type="password" ref="password" placeholder="password" id="password" className="form-control"></input>
-						</div>
-						<button onClick={this.handleLogin} className="btn btn-primary">Log in</button>
-					</form>
-					<li><Link to="/signup">Sign Up</Link></li>
-					{this.renderErrors()}	
+				<ul className="navbar-nav ml-auto">
+					<li className="p-1" ><Link to="/signup">Sign Up</Link></li>
+				    <form className="form-inline my-2 my-lg-0  ml-3">
+				      <input type="text" ref="username" placeholder="username" id="username" className="form-control" />
+				      <input type="password" ref="password" placeholder="password" id="password" className="form-control"/>
+				      <button onClick={this.handleLogin} className="btn btn-primary">Log in</button>
+				    </form>
+				    {this.renderErrors()}
 				</ul>
-
 			)
 		}
 	}
