@@ -60,9 +60,16 @@ class Onboarding extends Component {
 	formChange(e){
 		let change = {};
 		change[e.target.name] = e.target.value;
-		console.log("e target name, value", e.target.name, e.target.value)
-		this.setState(change, ()=>console.log("state is now", this.state))
+		this.setState(change, this.checkAge)
+
 	}
+
+	checkAge() {
+		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null) {
+			let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
+			this.setState({ age: moment().diff(dateOfBirth, 'years') });
+		}
+	} 
 
 	submitForm(e){
 		e.preventDefault();
@@ -83,18 +90,10 @@ class Onboarding extends Component {
 		});
 	}
 
-	calcAge(){
-		let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
-		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null && this.state.age === undefined) {
-			let age = moment().diff(dateOfBirth, 'years');
-			//this.props.actions.saveAge(age);
-			this.setState({age});
-		}
-	}
-
 	showAge() {
-		if(this.state.age)
+		if (this.state.age !== undefined) {
 			return `Ah, ${this.state.age}. What a great age to be childfree!`;
+		}
 	}
 
 	findCityByZipCode() {
@@ -127,7 +126,6 @@ class Onboarding extends Component {
 
 	render() {
 		this.findCityByZipCode();
-		this.calcAge();
 		return (
 			<div> 
 				<div className="container" onChange={this.formChange}>
