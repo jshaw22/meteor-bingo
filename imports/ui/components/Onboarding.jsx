@@ -83,18 +83,12 @@ class Onboarding extends Component {
 		});
 	}
 
-	calcAge(){
-		let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
-		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null && this.state.age === undefined) {
-			let age = moment().diff(dateOfBirth, 'years');
-			//this.props.actions.saveAge(age);
-			this.setState({age});
-		}
-	}
-
 	showAge() {
-		if(this.state.age)
-			return `Ah, ${this.state.age}. What a great age to be childfree!`;
+		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null) {
+			let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
+			let age = moment().diff(dateOfBirth, 'years');
+			return `Ah, ${age}. What a great age to be childfree!`;
+		}
 	}
 
 	findCityByZipCode() {
@@ -127,7 +121,6 @@ class Onboarding extends Component {
 
 	render() {
 		this.findCityByZipCode();
-		this.calcAge();
 		return (
 			<div> 
 				<div className="container" onChange={this.formChange}>
