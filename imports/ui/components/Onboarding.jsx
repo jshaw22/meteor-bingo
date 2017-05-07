@@ -60,9 +60,16 @@ class Onboarding extends Component {
 	formChange(e){
 		let change = {};
 		change[e.target.name] = e.target.value;
-		console.log("e target name, value", e.target.name, e.target.value)
-		this.setState(change, ()=>console.log("state is now", this.state))
+		this.setState(change, this.checkAge)
+
 	}
+
+	checkAge() {
+		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null) {
+			let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
+			this.setState({ age: moment().diff(dateOfBirth, 'years') });
+		}
+	} 
 
 	submitForm(e){
 		e.preventDefault();
@@ -84,10 +91,8 @@ class Onboarding extends Component {
 	}
 
 	showAge() {
-		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null) {
-			let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
-			let age = moment().diff(dateOfBirth, 'years');
-			return `Ah, ${age}. What a great age to be childfree!`;
+		if (this.state.age !== undefined) {
+			return `Ah, ${this.state.age}. What a great age to be childfree!`;
 		}
 	}
 
