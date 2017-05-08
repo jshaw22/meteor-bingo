@@ -57,7 +57,7 @@ class App extends Component {
 			const currentUser = this.props.authentication.currentUser;
 			return (
 				<ul className="navbar-nav navbar-right">
-					<li className="nav-item">Welcome, {currentUser.username}</li>
+					<li className="nav-item">Welcome, {currentUser.username}&nbsp;</li>
 					<li className="nav-item"><a href="#" onClick={this.logout}>Logout</a></li>
 				</ul>
 			)

@@ -29,7 +29,7 @@ export const getZip = (zip) => {
 	  		} else {
 				dispatch({
 					type: types.DISPLAY_ZIPCODE,
-					zipCode: response.data.places[0]['place name']
+					zipCode: `${response.data.places[0]['place name']}, ${response.data.places[0]['state abbreviation']}`
 				});
 			}
 		});

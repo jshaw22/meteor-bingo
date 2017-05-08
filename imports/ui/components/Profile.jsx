@@ -10,18 +10,33 @@ class Profile extends Component {
 		this.state = {
 			//bingosmash logo goes here
 			avatar: 'http://placehold.it/150x150',
+			addHover: false
 		}
 		this.uploadFile = this.uploadFile.bind(this);
+		this.mouseOver = this.mouseOver.bind(this);
+		this.mouseOut = this.mouseOut.bind(this);
+
+		const imageHandle = Meteor.subscribe('imageList');
+		
+		//Seems like the Tracker takes the place of componentWillMount
+		Tracker.autorun(() => {
+		  const isReady = imageHandle.ready();
+		  if(isReady){
+		  	const user = this.props.authentication.currentUser;
+		  	let avatar = Images.findOne({_id: user.profile.info.avatar}).url();
+		  	this.setState({avatar})
+		  }		
+		});
 	}
 
 	componentWillUpdate(nextProps){
-		const user = nextProps.authentication;
-		let data = {};
-		if (user) {
-			data.img = Images.findOne({_id: user.currentUser.profile.info.avatar}).url();
-			//this.setState({user: user.currentUser}); //I don't like the lifecycle for this. fix later	
-		}
-		//this.setState({data});
+		// const user = nextProps.authentication;
+		// let data = {};
+		// if (user) {
+		// 	data.img = Images.findOne({_id: user.currentUser.profile.info.avatar}).url();
+		// 	//this.setState({user: user.currentUser}); //I don't like the lifecycle for this. fix later	
+		// }
+		// //this.setState({data});
 	}
 
 	uploadFile(e) {
@@ -35,45 +50,60 @@ class Profile extends Component {
 		});
 	}
 
+	mouseOver (e) {
+		this.setState({hover:true});
+	}
+
+	mouseOut () {
+		this.setState({hover:false})
+	}
+
+	renderPicChange (){
+		if(this.state.hover){
+			return (
+				<div>
+				  <label htmlFor="files" className="btn btn-primary changePic">Change</label>
+				  <input id="files" style={{visibility:"hidden"}} type="file" />
+				</div>
+			)
+		}
+	}
+
 	render() {
 		const user = this.props.authentication.currentUser;
-		var avatar = this.state.avatar;
-		let picData = {};
-		if (user && user.profile) {
-			picData.img = Images.findOne({_id: user.profile.info.avatar}).url();
-		}
+		// var avatar = this.state.avatar;
+		// let picData = {};
+		// if (user && user.profile) {
+		// 	picData.img = Images.findOne({_id: user.profile.info.avatar}).url();
+		// }
 
-		if (picData.hasOwnProperty("img")){
-			avatar = picData.img;
-		}
+		// if (picData.hasOwnProperty("img")){
+		// 	avatar = picData.img;
+		// }
 		if (!user.profile)
 			return <div>Loading</div>
 
 		//TODO: avatar should be scaled first from server? 
 		return (
-			<div className="row">
-				<div className="col-md-2 hidden-xs">
-					Avatar
-					<img src={avatar} width="200px" height="200px" />
-						<div>
-							<label>
-								<div className="inputWrapper">
-									<input type="file" id="avatar" onChange={this.uploadFile} name="avatar" className="file"></input>
-								</div>
-							</label>
+			<div className="profile-header">
+				<div className="inner-element">
+					<div className="userinfo">
+						<div className="userinfo-thumb" onMouseEnter={this.mouseOver} onMouseLeave={this.mouseOut}>
+							<img className="img-rounded" src={this.state.avatar} />
+							{this.renderPicChange()}
+						</div>
+						<div className="userinfo-basics">
+							<div className="userinfo-basics-username">{user.username}</div>
+							<div className="userinfo-basics-asl">
+								<span className="userinfo-basics-asl-age">{user.profile.info.age}</span>
+								<span className="userinfo-basics-asl-spacer">•</span>
+								<span className="userinfo-basics-asl-location">{user.profile.info.location}</span>
+							</div>
 						</div>
 					</div>
-					<div className="col-md-9 col-xs-9">
-						<h2>{user.username}</h2>
-						<table className="table table-user-information">
-							<tbody>
-							<tr>
-								<td>Hailing from {user.profile.info.location}</td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
 				</div>
+			</div>
+							
 		)
 	}
 }
