@@ -92,7 +92,7 @@ class Match extends Component {
 				        </select>
 				    </div>
 				    <div className="input-group" style={{width:"105px"}}>
-				        <button id="searchbtn" type="submit" onClick={this.searchMatches} className="form-control"><span className="glyphicon glyphicon-search"></span></button>
+				        <button id="searchbtn" type="submit" onClick={this.searchMatches} className="fa fa-search"></button>
 				    </div>
 				</div>
 				{this.showMatches()}

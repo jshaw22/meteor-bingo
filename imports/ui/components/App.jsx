@@ -49,7 +49,7 @@ class App extends Component {
 
 	renderErrors () {
 		if(this.state.error.length > 0)
-			return <li className="alert alert-danger fade in">{this.state.error}</li>
+			return <div className="alert alert-danger ml-2" role='alert'>{this.state.error}</div>
 	}
 
 	loginLogOut (loggedIn) {
@@ -63,15 +63,15 @@ class App extends Component {
 			)
 		} else {
 			return (
-				<ul className="navbar-nav ml-auto">
-					<li className="p-1" ><Link to="/signup">Sign Up</Link></li>
+				<div className="navbar-nav ml-auto">
+					<div className="p-1" ><Link to="/signup">Sign Up</Link></div>
 				    <form className="form-inline my-2 my-lg-0  ml-3">
-				      <input type="text" ref="username" placeholder="username" id="username" className="form-control" />
-				      <input type="password" ref="password" placeholder="password" id="password" className="form-control"/>
-				      <button onClick={this.handleLogin} className="btn btn-primary">Log in</button>
+				      <input type="text" ref="username" placeholder="username" id="username" className="form-control ml-2" />
+				      <input type="password" ref="password" placeholder="password" id="password" className="form-control ml-2"/>
+				      <button onClick={this.handleLogin} className="btn btn-primary ml-2">Log in</button>
 				    </form>
 				    {this.renderErrors()}
-				</ul>
+				</div>
 			)
 		}
 	}
