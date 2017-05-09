@@ -1,2 +1,7 @@
 @import "{}/node_modules/bootstrap/scss/bootstrap.scss";
 
+.form-inline {
+	.form-group, .input-group {
+		margin-right:5px;
+	}
+}

@@ -16,6 +16,7 @@ class Onboarding extends Component {
 			bdayYear: null,
 			sterilized: null,
 			zipCode: null,
+			error: ''
 		}
 		this.formChange = this.formChange.bind(this);
 		this.submitForm = this.submitForm.bind(this);
@@ -60,12 +61,34 @@ class Onboarding extends Component {
 	formChange(e){
 		let change = {};
 		change[e.target.name] = e.target.value;
-		console.log("e target name, value", e.target.name, e.target.value)
-		this.setState(change, ()=>console.log("state is now", this.state))
+		this.setState(change, ()=> {
+			this.checkAge();
+			this.checkZip();
+		})
 	}
+
+	checkZip () {
+		const zip = parseInt(this.state.zipCode);
+		if (zip.toString().length === 5) {
+			this.props.actions.getZip(zip);
+		}
+	}
+
+	checkAge() {
+		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null) {
+			let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
+			this.setState({ age: moment().diff(dateOfBirth, 'years') });
+		}
+	} 
 
 	submitForm(e){
 		e.preventDefault();
+		for (var key in this.state) {
+			if (this.state[key] === null) {
+				this.setState({error: "All form fields must be filled out"});
+				return;
+			}
+		}
 		//Needs to be a more elegant way of sending avatar hash. because it gets uploaded first before form submit
 		user = this.props.authentication.currentUser;
 		let userInfo = {
@@ -73,6 +96,7 @@ class Onboarding extends Component {
 			avatar: user.profile.info.avatar,
 			location: user.location,
 		};
+		
 
 		
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.info": userInfo}}, function(err){
@@ -83,24 +107,9 @@ class Onboarding extends Component {
 		});
 	}
 
-	calcAge(){
-		let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
-		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null && this.state.age === undefined) {
-			let age = moment().diff(dateOfBirth, 'years');
-			//this.props.actions.saveAge(age);
-			this.setState({age});
-		}
-	}
-
 	showAge() {
-		if(this.state.age)
+		if (this.state.age !== undefined) {
 			return `Ah, ${this.state.age}. What a great age to be childfree!`;
-	}
-
-	findCityByZipCode() {
-		const zip = parseInt(this.state.zipCode);
-		if (zip.toString().length === 5 && !this.props.authentication.currentUser.location) {
-			this.props.actions.getZip(zip);
 		}
 	}
 
@@ -125,11 +134,16 @@ class Onboarding extends Component {
 		});
 	}
 
+	renderErrors () {
+		if (this.state.error) {
+			return <div className="alert alert-danger">Sorry, all form fields must be filled out</div>
+		}
+	}
+
 	render() {
-		this.findCityByZipCode();
-		this.calcAge();
 		return (
-			<div> 
+			<div>
+				{this.renderErrors()}
 				<div className="container" onChange={this.formChange}>
 					<h2>Lets get your profile set up</h2>
 					When's your birthday?
@@ -195,10 +209,12 @@ class Onboarding extends Component {
 						<input type="text" pattern="[0-9]*" maxLength="5" required name="zipCode" id="zip" />
 					</div>
 					<p>{this.showLocation()}</p>
+					Lastly, upload your beautiful mug(s)
+					<div className="form-group"><input id="avatar" onChange={this.uploadFile} type="file" /></div>
+					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>
+					
 				</div>
-				Lastly, upload your beautiful mug(s)
-					<input id="avatar" onChange={this.uploadFile} type="file" />
-					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>	
+						
 			</div>
 		);
 	}
