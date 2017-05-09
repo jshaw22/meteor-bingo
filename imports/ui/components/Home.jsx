@@ -17,12 +17,12 @@ class Home extends Component {
 				<div className="col-xs-4" key={`user${index}`}>
 					<div className="card m-2">
 						<div className="card-block">
-							<h4 className="card-title">
+							<h5 className="card-title">
 								<Link to={`/profile/${user.username}`}>{user.username}</Link>
-							</h4>
+							</h5>
 							<h6 className="card-subtitle mb-2 text-muted">{user.profile.info.location}</h6>
+							<img src="http://placehold.it/100x100" id={`picture${index}`} alt="profile pic"/>
 						</div>
-						<img className="card-img-bottom" src="http://placehold.it/100x100" id={`picture${index}`} alt="profile pic"/>
 					</div>
 				</div>
 			)
