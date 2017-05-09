@@ -60,9 +60,17 @@ class Match extends Component {
 		return matches.map((user, index) =>{
 			return (
 				<div className="col-xs-4" key={`user${index}`}>
-					<div><Link to={'profile/'+user.username}>{user.username}</Link></div>
-					<div>{user.profile.info.location}</div>
-					<img src="http://placehold.it/100x100" id={`picture${index}`} className="img-responsive" />
+
+					<div className="card m-2">
+						<div className="card-block">
+							<h5 className="card-title">
+								<Link to={`/profile/${user.username}`}>{user.username}</Link>
+							</h5>
+							<h6 className="card-subtitle mb-2 text-muted">{user.profile.info.location}</h6>
+							<img className="img-thumbnail" src="http://placehold.it/100x100" id={`picture${index}`} alt="profile pic"/>
+						</div>
+					</div>
+
 
 				</div>
 			)
@@ -71,31 +79,30 @@ class Match extends Component {
 
 	render() {
 		return (
-			<div>
-				<div className="form-inline" onChange={this.formChange}>
-				    <div className="input-group">
-				    	<select className="form-control" name="selectMatchGender">
+			<div className="container">
+				<div className="form-inline my-3" onChange={this.formChange}>
+					<div className="form-group">
+				    	<select className="form-control mr-2" name="selectMatchGender">
 				    		<option value="" disabled selected>I am looking for a</option>
 				    		<option value="male">Male</option>
 				    		<option value="female">Female</option>
 				    		<option value="other">Other</option>
 				        </select>
-				    </div>
-				    <div className="input-group">
-				        <select className="form-control" name="selectAgeFrom">
+
+				        <select className="form-control mx-2" name="selectAgeFrom">
 				        	{this.renderDays("from")}
 				        </select>
-				    </div>
-				    <div className="input-group">
-				        <select className="form-control" name="selectAgeTo">
+
+				        <select className="form-control mx-2" name="selectAgeTo">
 				        	{this.renderDays("to")}
 				        </select>
-				    </div>
-				    <div className="input-group" style={{width:"105px"}}>
-				        <button id="searchbtn" type="submit" onClick={this.searchMatches} className="fa fa-search"></button>
-				    </div>
+
+					    <button id="searchbtn" type="submit" onClick={this.searchMatches} className="fa fa-search btn btn-primary  mx-2"></button>
+					</div>
 				</div>
-				{this.showMatches()}
+				<div className="row">
+					{this.showMatches()}
+				</div>
 			</div>
 		)
 
