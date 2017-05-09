@@ -27,13 +27,13 @@ export default class SignupPage extends Component {
 	render () {
 		const error = this.state.error;
 		return (
-			<div className="">
-				<div className="">
-					<div className="">
-						<div className="">
+			<div className="modal">
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
 							<h1 className="text-center">Sign up</h1>
 						</div>
-						<div className="">
+						<div className="modal-body">
 							{error.length > 0 ? 
 								<div className="alert alert-danger">{error}</div>:''
 							}
@@ -67,10 +67,10 @@ export default class SignupPage extends Component {
 							</div>
 						</form>
 					</div>
-					<div className="" style={{borderTop:0}}></div>
+					<div className="modal-footer" style={{borderTop:0}}></div>
 				</div>
 			</div>
-			</div>
+		</div>
 		);
 	}
 }

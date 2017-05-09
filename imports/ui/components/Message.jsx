@@ -11,16 +11,19 @@ class Messages extends Component {
 			messages: []
 		}
 		let data = {};
-		let messageHandle = Meteor.subscribe('messageList');
+		this.messageHandle = Meteor.subscribe('messageList');
 
 		//Seems like the Tracker takes the place of componentWillMount
 		Tracker.autorun(() => {
-		  const isReady = messageHandle.ready();
+		  const isReady = this.messageHandle.ready();
 		  if (isReady){
 		  	let messages = DBMessage.find({$or:[{'to._id':Meteor.userId()},{'fromuser':Meteor.userId()}]},{sort:{createdOn:-1}}).fetch();
 		  	this.setState({messages});
 		  }		
 		});
+	}
+	componentWillUnmount () {
+		this.messageHandle.stop();
 	}
 
 	render() {

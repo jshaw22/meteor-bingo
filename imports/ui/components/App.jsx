@@ -81,7 +81,7 @@ class App extends Component {
 			return;
 		return (
 		    <ul className="navbar-nav mr-auto">
-		      <li className="nav-item active">
+		      <li className="nav-item">
 		        <Link className="nav-link" to="/profile">Profile</Link>
 		      </li>
 		      <li className="nav-item">

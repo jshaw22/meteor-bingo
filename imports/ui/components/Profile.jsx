@@ -16,11 +16,11 @@ class Profile extends Component {
 		this.mouseOver = this.mouseOver.bind(this);
 		this.mouseOut = this.mouseOut.bind(this);
 
-		const imageHandle = Meteor.subscribe('imageList');
+		this.imageHandle = Meteor.subscribe('imageList');
 		
 		//Seems like the Tracker takes the place of componentWillMount
 		Tracker.autorun(() => {
-		  const isReady = imageHandle.ready();
+		  const isReady = this.imageHandle.ready();
 		  if(isReady){
 		  	const user = this.props.authentication.currentUser;
 		  	let avatar = Images.findOne({_id: user.profile.info.avatar}).url();
@@ -37,6 +37,11 @@ class Profile extends Component {
 		// 	//this.setState({user: user.currentUser}); //I don't like the lifecycle for this. fix later	
 		// }
 		// //this.setState({data});
+	}
+	// meteor needs you to stop the subscription when you unmount otherwise it will throw 
+	// console warnings
+	componentWillUnmount () {
+		this.imageHandle.stop();
 	}
 
 	uploadFile(e) {
