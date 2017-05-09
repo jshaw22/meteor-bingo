@@ -21,7 +21,7 @@ class Home extends Component {
 								<Link to={`/profile/${user.username}`}>{user.username}</Link>
 							</h5>
 							<h6 className="card-subtitle mb-2 text-muted">{user.profile.info.location}</h6>
-							<img src="http://placehold.it/100x100" id={`picture${index}`} alt="profile pic"/>
+							<img className="img-thumbnail" src="http://placehold.it/100x100" id={`picture${index}`} alt="profile pic"/>
 						</div>
 					</div>
 				</div>
