@@ -48,6 +48,7 @@ Matches Component
 
 Low priority
 - Set email, change pw, etc
+- Componentize the modals 
 
 <h4>Version Control</h4>
 Clone the repo. 

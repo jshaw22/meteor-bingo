@@ -27,7 +27,7 @@ export default class LoginPage extends Component {
 	render () {
 		const error = this.state.error;
 		return (
-			<div className="modal show">
+			<div className="modal">
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
@@ -35,7 +35,7 @@ export default class LoginPage extends Component {
 						</div>
 						<div className="modal-body">
 							{error.length > 0 ? 
-								<div className="alert alert-danger fade in">{error}</div>:''
+								<div className="alert alert-danger">{error}</div>:''
 							}
 						<form
 							id="login-form"

@@ -57,7 +57,7 @@ class App extends Component {
 			const currentUser = this.props.authentication.currentUser;
 			return (
 				<ul className="navbar-nav navbar-right">
-					<li className="nav-item">Welcome, {currentUser.username}</li>
+					<li className="nav-item">Welcome, {currentUser.username}&nbsp;</li>
 					<li className="nav-item"><a href="#" onClick={this.logout}>Logout</a></li>
 				</ul>
 			)
@@ -81,7 +81,7 @@ class App extends Component {
 			return;
 		return (
 		    <ul className="navbar-nav mr-auto">
-		      <li className="nav-item active">
+		      <li className="nav-item">
 		        <Link className="nav-link" to="/profile">Profile</Link>
 		      </li>
 		      <li className="nav-item">
