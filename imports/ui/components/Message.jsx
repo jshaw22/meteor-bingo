@@ -27,7 +27,6 @@ class Messages extends Component {
 	}
 
 	render() {
-		console.log(this.state.messages);
 		let rows = this.state.messages.map((message) => {
 			let msgfrom = Meteor.users.findOne({_id: message.fromuser});
 			let timesince = moment(message.createdOn).fromNow();
