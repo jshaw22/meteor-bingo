@@ -95,6 +95,11 @@ class Onboarding extends Component {
 			...this.state, 
 			avatar: user.profile.info.avatar,
 			location: user.location,
+			aboutMe: '',
+			whatILike: '',
+			favStuff: '',
+			cfBecause: '',
+			messageMeIf: ''
 		};
 		
 

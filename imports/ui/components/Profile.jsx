@@ -3,6 +3,7 @@ import {browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../actions/authentication';
+import ParagraphSection from './ParagraphSection';
 
 class Profile extends Component {
 	constructor(props){
@@ -15,6 +16,7 @@ class Profile extends Component {
 		this.uploadFile = this.uploadFile.bind(this);
 		this.mouseOver = this.mouseOver.bind(this);
 		this.mouseOut = this.mouseOut.bind(this);
+		this.editAboutMe = this.editAboutMe.bind(this);
 
 		this.imageHandle = Meteor.subscribe('imageList');
 		
@@ -44,7 +46,13 @@ class Profile extends Component {
 		this.imageHandle.stop();
 	}
 
+	editAboutMe(e) {
+		e.preventDefault();
+		console.log("editaboutmeclicked")
+	}
+
 	uploadFile(e) {
+		debugger;
 		e.preventDefault();
 		FS.Utility.eachFile(e, function (file) {
 			Images.insert(file, function (err, fileObj) {
@@ -68,7 +76,7 @@ class Profile extends Component {
 			return (
 				<div>
 				  <label htmlFor="files" className="btn btn-primary changePic">Change</label>
-				  <input id="files" style={{visibility:"hidden"}} type="file" />
+				  <input onChange={this.uploadFile} onClick={(e)=>{e.target.value=null}} id="files" style={{visibility:"hidden"}} type="file" />
 				</div>
 			)
 		}
@@ -76,39 +84,48 @@ class Profile extends Component {
 
 	render() {
 		const user = this.props.authentication.currentUser;
-		// var avatar = this.state.avatar;
-		// let picData = {};
-		// if (user && user.profile) {
-		// 	picData.img = Images.findOne({_id: user.profile.info.avatar}).url();
-		// }
 
-		// if (picData.hasOwnProperty("img")){
-		// 	avatar = picData.img;
-		// }
 		if (!user.profile)
 			return <div>Loading</div>
 
 		//TODO: avatar should be scaled first from server? 
 		return (
-			<div className="profile-header">
-				<div className="inner-element">
-					<div className="userinfo">
-						<div className="userinfo-thumb" onMouseEnter={this.mouseOver} onMouseLeave={this.mouseOut}>
-							<img className="img-rounded" src={this.state.avatar} />
-							{this.renderPicChange()}
+			<div>
+				<div className="profile-header">
+					<div className="inner-element">
+						<div className="userinfo">
+							<div className="userinfo-thumb" onMouseEnter={this.mouseOver} onMouseLeave={this.mouseOut}>
+								<img className="img-rounded" src={this.state.avatar} />
+								{this.renderPicChange()}
+							</div>
+							<div className="userinfo-basics">
+								<div className="userinfo-basics-username">{user.username}</div>
+								<div className="userinfo-basics-asl">
+									<span className="userinfo-basics-asl-age">{user.profile.info.age}</span>
+									<span className="userinfo-basics-asl-spacer">•</span>
+									<span className="userinfo-basics-asl-location">{user.profile.info.location}</span>
+								</div>
+							</div>
 						</div>
-						<div className="userinfo-basics">
-							<div className="userinfo-basics-username">{user.username}</div>
-							<div className="userinfo-basics-asl">
-								<span className="userinfo-basics-asl-age">{user.profile.info.age}</span>
-								<span className="userinfo-basics-asl-spacer">•</span>
-								<span className="userinfo-basics-asl-location">{user.profile.info.location}</span>
+					</div>
+				</div>
+				<div className="profile-content">
+					<div className="profile-content-main">
+						<div className="profile-section">
+							<div className="paragraph">
+								<button onClick={this.editAboutMe} className="paragraph-title profile-section-title">
+									<span>About me</span>
+									<span className="edit-title">Edit</span>
+								</button>
+								<div className="paragraph-content">
+									{user.profile.info.aboutMe === '' ? <i>Say something about youreslf!</i> : `${user.profile.info.aboutMe}` }
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-							
+
 		)
 	}
 }
