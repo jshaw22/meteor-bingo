@@ -46,13 +46,19 @@ class Profile extends Component {
 	}
 
 	uploadFile(e) {
-		debugger;
+		that = this
 		e.preventDefault();
 		FS.Utility.eachFile(e, function (file) {
 			Images.insert(file, function (err, fileObj) {
 				if(err)
 					Meteor.error("Unable to upload picture");
-				Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
+				Meteor.call("changeAvatar", Meteor.user(), fileObj._id, function() {
+					that.setState({changeButtonClicked:false})
+					that.setState({hover:false})
+					let avatar = Images.findOne({_id: Meteor.user().profile.avatar}).url();
+					that.setState({avatar})
+				});
+
 			});
 		});
 	}
@@ -62,18 +68,15 @@ class Profile extends Component {
 	}
 
 	mouseOut () {
-		this.setState({hover:false})
+	  if (this.state.changeButtonClicked) {
+	    return
+	  }
+	  this.setState({hover:false})
 	}
 
-	renderPicChange (){
-		if(this.state.hover){
-			return (
-				<div>
-				  <label htmlFor="files" className="btn btn-primary changePic">Change</label>
-				  <input onChange={this.uploadFile} onClick={(e)=>{e.target.value=null}} id="files" style={{visibility:"hidden"}} type="file" />
-				</div>
-			)
-		}
+	changePicClicked() {
+	  document.getElementById("file").click()
+	  this.setState({changeButtonClicked:true})
 	}
 
 	render() {
@@ -81,6 +84,14 @@ class Profile extends Component {
 
 		if (!user.profile)
 			return <div>Loading</div>
+
+		let changePicButton;
+		if (this.state.hover) {
+		  changePicButton = <ChangePicButton 
+		    changePicClicked={() => this.changePicClicked()}
+		    uploadFile={(e) => this.uploadFile(e)}
+		  />
+		}
 
 		//TODO: avatar should be scaled first from server? 
 		return (
@@ -90,7 +101,7 @@ class Profile extends Component {
 						<div className="userinfo">
 							<div className="userinfo-thumb" onMouseEnter={this.mouseOver} onMouseLeave={this.mouseOut}>
 								<img className="img-rounded" src={this.state.avatar} />
-								{this.renderPicChange()}
+								{ changePicButton }
 							</div>
 							<UserinfoBasics username={user.username} profileBasics={user.profile} />
 						</div>
@@ -111,6 +122,15 @@ class Profile extends Component {
 
 		)
 	}
+}
+
+function ChangePicButton(props) {
+  return (
+    <div>
+      <input className="btn btn-primary changePic" type="button" id="loadFileXml" value="Change" onClick={props.changePicClicked} />
+      <input onChange={props.uploadFile} onClick={(e)=>{e.target.value=null}} type="file" style={{display:"none"}} id="file" name="file"/>
+    </div>
+  );
 }
 
 Profile.PropTypes = {
