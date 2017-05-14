@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../actions/authentication';
 import ParagraphSection from './ParagraphSection';
+import UserinfoBasics from './UserinfoBasics';
 
 class Profile extends Component {
 	constructor(props){
@@ -16,8 +17,6 @@ class Profile extends Component {
 		this.uploadFile = this.uploadFile.bind(this);
 		this.mouseOver = this.mouseOver.bind(this);
 		this.mouseOut = this.mouseOut.bind(this);
-		this.editAboutMe = this.editAboutMe.bind(this);
-
 		this.imageHandle = Meteor.subscribe('imageList');
 		
 		//Seems like the Tracker takes the place of componentWillMount
@@ -25,7 +24,7 @@ class Profile extends Component {
 		  const isReady = this.imageHandle.ready();
 		  if(isReady){
 		  	const user = this.props.authentication.currentUser;
-		  	let avatar = Images.findOne({_id: user.profile.info.avatar}).url();
+		  	let avatar = Images.findOne({_id: user.profile.avatar}).url();
 		  	this.setState({avatar})
 		  }		
 		});
@@ -44,11 +43,6 @@ class Profile extends Component {
 	// console warnings
 	componentWillUnmount () {
 		this.imageHandle.stop();
-	}
-
-	editAboutMe(e) {
-		e.preventDefault();
-		console.log("editaboutmeclicked")
 	}
 
 	uploadFile(e) {
@@ -98,33 +92,22 @@ class Profile extends Component {
 								<img className="img-rounded" src={this.state.avatar} />
 								{this.renderPicChange()}
 							</div>
-							<div className="userinfo-basics">
-								<div className="userinfo-basics-username">{user.username}</div>
-								<div className="userinfo-basics-asl">
-									<span className="userinfo-basics-asl-age">{user.profile.info.age}</span>
-									<span className="userinfo-basics-asl-spacer">•</span>
-									<span className="userinfo-basics-asl-location">{user.profile.info.location}</span>
-								</div>
-							</div>
+							<UserinfoBasics username={user.username} profileBasics={user.profile} />
 						</div>
 					</div>
 				</div>
 				<div className="profile-content">
 					<div className="profile-content-main">
 						<div className="profile-section">
-							<div className="paragraph">
-								<button onClick={this.editAboutMe} className="paragraph-title profile-section-title">
-									<span>About me</span>
-									<span className="edit-title">Edit</span>
-								</button>
-								<div className="paragraph-content">
-									{user.profile.info.aboutMe === '' ? <i>Say something about youreslf!</i> : `${user.profile.info.aboutMe}` }
-								</div>
-							</div>
-						</div>
+							<ParagraphSection dbObjectName="aboutMe" sectionTitle="About me" paragraphContent={user.profile.aboutMe} />
+							<ParagraphSection dbObjectName="whatILike" sectionTitle="What I like to do" paragraphContent={user.profile.whatILike} />
+							<ParagraphSection dbObjectName="favStuff" sectionTitle="Favorite books, movies, shows, etc" paragraphContent={user.profile.favStuff} />
+							<ParagraphSection dbObjectName="cfBecause" sectionTitle="I'm childfree because..." paragraphContent={user.profile.cfBecause} />
+							<ParagraphSection dbObjectName="messageMeIf" sectionTitle="You should message me if..." paragraphContent={user.profile.messageMeIf} />
 					</div>
 				</div>
 			</div>
+		</div>
 
 		)
 	}

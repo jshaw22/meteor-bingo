@@ -2,17 +2,36 @@ import { Meteor } from 'meteor/meteor';
 import { AccountsServer } from 'meteor/accounts-base';
 Meteor.startup(() => {
   // code to run on server at startup
-  Accounts.onCreateUser((options, user)=> {
-    console.log("On create user custom function");
-    const customizedUser = Object.assign({
-      customStuff: "User is custom"
-    })
+  // Accounts.onCreateUser((options, user)=> {
+  //   //seed user with some default fields
+  //   let customizedUser = {...user, 
+  //     profile:
+  //     {
+  //       aboutMe: '',
+  //       whatILike: '',
+  //       favStuff: '',
+  //       cfBecause: '',
+  //       messageMeIf: '',
+  //       relationshipStatus: '',
+  //       bodyType: '',
+  //       height: '',
+  //       diet: '',
+  //       astrology: '',
+  //       education: '',
+  //       drugs: '',
+  //       drink: '' 
+  //     }
+  //   }
 
-    if(options.profile) {
-      customizedUser.profile = options.profile;
-    }
-    return customizedUser;
-  })
+  //   //merge filled out fields with blank custom fields 
+  //   if(options.profile) {
+  //     customizedUser.profile = {
+  //       ...options.profile, 
+  //       ...customizedUser.profile
+  //     }
+  //   }
+  //   return customizedUser;
+  // })
 
   Meteor.methods({
   	changeAvatar: function (user, fileId){

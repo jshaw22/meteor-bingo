@@ -95,77 +95,97 @@
 
 .profile-content {
 	padding-top: 30px;
-  min-height: 420px;
-  width: 1000px;
-  padding-left: 60px;
-  padding-right: 60px;
-  margin-left: auto;
-  margin-right: auto;
+	min-height: 420px;
+	width: 1000px;
+	padding-left: 60px;
+	padding-right: 60px;
+	margin-left: auto;
+	margin-right: auto;
 
-  .profile-content-main {
-  	float: left;
-    width: 560px;
-    padding-right: 50px;
+	.profile-content-main {
+		float: left;
+		width: 560px;
+		padding-right: 50px;
 
-    .profile-section {
-    	position: relative;
-    	overflow: hidden;
-    	min-height: 100px;
-    }
+		.profile-section {
+			position: relative;
+			overflow: hidden;
+			min-height: 100px;
+		}
 
-    .paragraph { 
-    	margin-bottom: 47px;
+		.edit-textarea {
+			min-height: 200px;
+			margin-top: 22px;
+			margin-bottom: 10px;
+			-webkit-font-smoothing: antialiased;
+			font-size: 17px;
+			line-height:24px; 
 
-    	.paragraph-content {
-    		margin-top: 14px;
-    		color: #2a2f35;
-    		word-wrap: break-word;
-    		-webkit-font-smoothing: antialiased;
-    		-moz-osx-font-smoothing: grayscale;
-    		font-size: 17px;
-    		line-height: 25px;
-    	}
+			textArea {
+				width: 500px;
+				min-height:100px;
+			}
 
-    	button {
-    		background: transparent;
-    		border: 0;
-    		padding: 0;
-    		cursor: pointer;
-    	}
+			.paragraph-buttons {
+				display: block;
+				width: 100%;
+				margin-top: 10px;
+			}
+		}
 
-    	.paragraph-title {
-    		display: block;
+		.paragraph { 
+			margin-bottom: 47px;
 
-    		.edit-title {
-    			overflow: hidden;
-    			background: transparent;
-    			border: 0;
-    			padding: 0;
-    			cursor: pointer;
-    			display: inline-block;
-    			width: 40px;
-    			height: 40px;
-    			color: #00d280;
-    			text-align: center;
-    			font-size: 17px;
-    			line-height: 40px;
-    			vertical-align: top;
-    			position: relative;
-    			bottom: 7px;
-    			margin-bottom: -18px;
-    		}
-    	}
+			.paragraph-content {
+				margin-top: 14px;
+				color: #2a2f35;
+				word-wrap: break-word;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				font-size: 17px;
+				line-height: 25px;
+			}
 
-    	.profile-section-title{
-    		margin-bottom: 15px;
-    		color: #1e1e1e;
-    		font-weight: 500;
-    		-webkit-font-smoothing: antialiased;
-    		-moz-osx-font-smoothing: grayscale;
-    		font-size: 19px;
-    		line-height: 22px;
-    	}
+			button {
+				background: transparent;
+				border: 0;
+				padding: 0;
+				cursor: pointer;
+			}
 
-     }
-  }
+			.paragraph-title {
+				display: block;
+
+				.edit-title {
+					overflow: hidden;
+					background: transparent;
+					border: 0;
+					padding: 0;
+					cursor: pointer;
+					display: inline-block;
+					width: 40px;
+					height: 40px;
+					color: #00d280;
+					text-align: center;
+					font-size: 17px;
+					line-height: 40px;
+					vertical-align: top;
+					position: relative;
+					bottom: 7px;
+					margin-bottom: -18px;
+				}
+			}
+
+			.profile-section-title{
+				margin-bottom: 15px;
+				color: #1e1e1e;
+				font-weight: 500;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				font-size: 19px;
+				line-height: 22px;
+			}
+
+		}
+	}
 }

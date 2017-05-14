@@ -22,8 +22,8 @@ class Match extends Component {
 		let filteredUsers = Meteor.users.find(
 			{
 				_id: {$not: Meteor.userId()},
-				"profile.info.myGender": this.state.selectMatchGender,
-				"profile.info.age": {$gt: parseInt(this.state.selectAgeFrom), $lt: parseInt(this.state.selectAgeTo)},
+				"profile.myGender": this.state.selectMatchGender,
+				"profile.age": {$gt: parseInt(this.state.selectAgeFrom), $lt: parseInt(this.state.selectAgeTo)},
 		}).fetch(); 
 		if (filteredUsers) 
 			this.props.actions.matchedUsers(filteredUsers);
@@ -66,7 +66,7 @@ class Match extends Component {
 							<h5 className="card-title">
 								<Link to={`/profile/${user.username}`}>{user.username}</Link>
 							</h5>
-							<h6 className="card-subtitle mb-2 text-muted">{user.profile.info.location}</h6>
+							<h6 className="card-subtitle mb-2 text-muted">{user.profile.location}</h6>
 							<img className="img-thumbnail" src="http://placehold.it/100x100" id={`picture${index}`} alt="profile pic"/>
 						</div>
 					</div>

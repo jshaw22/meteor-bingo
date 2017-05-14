@@ -96,15 +96,21 @@ class Onboarding extends Component {
 			avatar: user.profile.info.avatar,
 			location: user.location,
 			aboutMe: '',
-			whatILike: '',
-			favStuff: '',
-			cfBecause: '',
-			messageMeIf: ''
+	 		whatILike: '',
+	 		favStuff: '',
+	 		cfBecause: '',
+	 		messageMeIf: '',
+	 		relationshipStatus: '',
+	 		bodyType: '',
+	 		height: '',
+	 		diet: '',
+	 		astrology: '',
+	 		education: '',
+	 		drugs: '',
+	 		drink: '' 
 		};
 		
-
-		
-		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.info": userInfo}}, function(err){
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile": userInfo}}, function(err){
 			if(err){
 				console.log("There was an error");
 			}
