@@ -43,7 +43,7 @@ Meteor.startup(() => {
   		}
   		var data = file._id;
       console.log("Change avatar", this.userId, data);
-  		Meteor.users.update(this.userId, {$set: {"profile.info.avatar": data}})
+  		Meteor.users.update(this.userId, {$set: {"profile.avatar": data}})
   	},
   	sendMessage: function (person, message) {
   		var to = Meteor.users.findOne({_id: person});

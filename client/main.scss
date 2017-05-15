@@ -9,6 +9,25 @@
 .modal {
 	display: block;
 }
+
+.edit-title {
+	overflow: hidden;
+	background: transparent;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	color: #00d280;
+	text-align: center;
+	font-size: 17px;
+	line-height: 40px;
+	vertical-align: top;
+	position: relative;
+	bottom: 7px;
+	margin-bottom: -18px;
+}
 /* PROFILE HEADER */
 .profile-header {
 	padding-top: 50px;
@@ -93,6 +112,7 @@
 	}
 }
 
+/* LEFT SIDE PROFILE CONTENT -- PARAGRAPHS, ETC */
 .profile-content {
 	padding-top: 30px;
 	min-height: 420px;
@@ -155,25 +175,6 @@
 
 			.paragraph-title {
 				display: block;
-
-				.edit-title {
-					overflow: hidden;
-					background: transparent;
-					border: 0;
-					padding: 0;
-					cursor: pointer;
-					display: inline-block;
-					width: 40px;
-					height: 40px;
-					color: #00d280;
-					text-align: center;
-					font-size: 17px;
-					line-height: 40px;
-					vertical-align: top;
-					position: relative;
-					bottom: 7px;
-					margin-bottom: -18px;
-				}
 			}
 
 			.profile-section-title{
@@ -188,4 +189,44 @@
 
 		}
 	}
+}
+
+/* RIGHT SIDE SIDEBAR CONTENT -- DETAILS, ETC */
+.profile-content-sidebar {
+	float:right;
+	width: 320px;
+
+	.details-section-edit {
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+		text-align: left;
+		border-radius: 3px;
+		margin-bottom:10px;
+		width: 336px;
+		margin-top: -8px;
+		padding-top: 8px;
+		margin-left: -8px;
+		padding-left: 8px;
+		margin-right: -8px;
+		padding-right: 8px;
+
+		.details-title {
+			display:inline-block;
+			margin-left:2px;
+		}
+
+		.details-section-filled {
+			.details-element {
+				display:inline-block;
+				margin-left:2px;
+			}
+		}
+	}
+
+	.icon {
+		position: relative;
+		font-size:20px;
+	}
+
 }

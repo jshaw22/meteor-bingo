@@ -48,7 +48,8 @@ Matches Component
 
 Low priority
 - Set email, change pw, etc
-- Componentize the modals 
+- Componentize the modals
+- Set toastr on success moving between components
 
 <h4>Version Control</h4>
 Clone the repo. 

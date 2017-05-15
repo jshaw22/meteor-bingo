@@ -93,7 +93,7 @@ class Onboarding extends Component {
 		user = this.props.authentication.currentUser;
 		let userInfo = {
 			...this.state, 
-			avatar: user.profile.info.avatar,
+			avatar: user.profile.avatar,
 			location: user.location,
 			aboutMe: '',
 	 		whatILike: '',
@@ -114,6 +114,7 @@ class Onboarding extends Component {
 			if(err){
 				console.log("There was an error");
 			}
+			toastr.success("Profile created successfully. Take a minute to fill it out!")
 			browserHistory.push('/profile');
 		});
 	}

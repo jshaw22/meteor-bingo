@@ -30,14 +30,9 @@ class Profile extends Component {
 		});
 	}
 
-	componentWillUpdate(nextProps){
-		// const user = nextProps.authentication;
-		// let data = {};
-		// if (user) {
-		// 	data.img = Images.findOne({_id: user.currentUser.profile.info.avatar}).url();
-		// 	//this.setState({user: user.currentUser}); //I don't like the lifecycle for this. fix later	
-		// }
-		// //this.setState({data});
+	componentWillReceiveProps(nextProps){
+		let avatar = Images.findOne({_id: Meteor.user().profile.avatar}).url();
+		this.setState({avatar})
 	}
 	// meteor needs you to stop the subscription when you unmount otherwise it will throw 
 	// console warnings
@@ -46,17 +41,20 @@ class Profile extends Component {
 	}
 
 	uploadFile(e) {
-		that = this
+		let that = this;
 		e.preventDefault();
 		FS.Utility.eachFile(e, function (file) {
 			Images.insert(file, function (err, fileObj) {
 				if(err)
 					Meteor.error("Unable to upload picture");
-				Meteor.call("changeAvatar", Meteor.user(), fileObj._id, function() {
+				Meteor.call("changeAvatar", Meteor.user(), fileObj._id, function(err, res) {
+					if(err) {
+						toastr.error("There was an error uploading your picture, please try again");
+						Meteor.error("There was an issue changing the avatar");
+					}
+					toastr.success("Picture successfully changed");
 					that.setState({changeButtonClicked:false})
 					that.setState({hover:false})
-					let avatar = Images.findOne({_id: Meteor.user().profile.avatar}).url();
-					that.setState({avatar})
 				});
 
 			});
@@ -117,6 +115,29 @@ class Profile extends Component {
 							<ParagraphSection dbObjectName="messageMeIf" sectionTitle="You should message me if..." paragraphContent={user.profile.messageMeIf} />
 					</div>
 				</div>
+				<div className="profile-content-sidebar">
+						<button className="details-section-edit">
+							<div className="details-section">
+										<span className="icon fa fa-id-card-o mr-2"/><div className="details-title">Profile Details <span className="edit-title">Edit</span></div>
+										
+					
+										<div className="details-section-filled">
+											<span className="fa fa-user-o" /><div className="details-element">Male</div>
+											<span className="fa fa-venus-mars" /><div className="details-element">Looking for: Female</div> 
+											<span className="fa fa-scissors"/><div className="details-element">Sterilized: Yes</div>
+											<span className="fa fa-globe"/><div className="details-element">Ethnicity: Asian</div>
+											<span className="fa fa-building-o"/><div className="details-element">Religion: Jewish</div>
+											<span className="fa fa-heart"/><div className="details-element">Relationship status: Single</div>
+											<span className="fa fa-balance-scale"/><div className="details-element">Body Type: Athletic</div>
+											<span className="fa fa-level-up"/><div className="details-element">Height: 5' 7''</div>
+											<span className="fa fa-cutlery"/><div className="details-element">Diet: Omnivore</div>
+											<span className="fa fa-graduation-cap"/><div className="details-element">Education: College</div>
+											<span className="fa fa-flask"/><div className="details-element">Drugs: None</div>
+											<span className="fa fa-glass"/><div className="details-element">Drinking: Sometimes</div>
+										</div>
+							</div>
+						</button>
+					</div>
 			</div>
 		</div>
 
