@@ -49,10 +49,8 @@ class Profile extends Component {
 					Meteor.error("Unable to upload picture");
 				Meteor.call("changeAvatar", Meteor.user(), fileObj._id, function(err, res) {
 					if(err) {
-						toastr.error("There was an error uploading your picture, please try again");
 						Meteor.error("There was an issue changing the avatar");
 					}
-					toastr.success("Picture successfully changed");
 					that.setState({changeButtonClicked:false})
 					that.setState({hover:false})
 				});
@@ -122,18 +120,18 @@ class Profile extends Component {
 										
 					
 										<div className="details-section-filled">
-											<span className="fa fa-user-o" /><div className="details-element">Male</div>
-											<span className="fa fa-venus-mars" /><div className="details-element">Looking for: Female</div> 
-											<span className="fa fa-scissors"/><div className="details-element">Sterilized: Yes</div>
-											<span className="fa fa-globe"/><div className="details-element">Ethnicity: Asian</div>
-											<span className="fa fa-building-o"/><div className="details-element">Religion: Jewish</div>
-											<span className="fa fa-heart"/><div className="details-element">Relationship status: Single</div>
-											<span className="fa fa-balance-scale"/><div className="details-element">Body Type: Athletic</div>
-											<span className="fa fa-level-up"/><div className="details-element">Height: 5' 7''</div>
-											<span className="fa fa-cutlery"/><div className="details-element">Diet: Omnivore</div>
-											<span className="fa fa-graduation-cap"/><div className="details-element">Education: College</div>
-											<span className="fa fa-flask"/><div className="details-element">Drugs: None</div>
-											<span className="fa fa-glass"/><div className="details-element">Drinking: Sometimes</div>
+											<div className="details-block"><span className="fa fa-user-o" /><div className="details-element">Male</div></div>
+											<div className="details-block"><span className="fa fa-venus-mars" /><div className="details-element">Looking for: Female</div></div>
+											<div className="details-block"><span className="fa fa-scissors"/><div className="details-element">Sterilized: Yes</div></div>
+											<div className="details-block"><span className="fa fa-globe"/><div className="details-element">Ethnicity: Asian</div></div>
+											<div className="details-block"><span className="fa fa-building-o"/><div className="details-element">Religion: Jewish</div></div>
+											<div className="details-block"><span className="fa fa-heart"/><div className="details-element">Relationship status: Single</div></div>
+											<div className="details-block"><span className="fa fa-balance-scale"/><div className="details-element">Body Type: Athletic</div></div>
+											<div className="details-block"><span className="fa fa-level-up"/><div className="details-element">Height: 5' 7''</div></div>
+											<div className="details-block"><span className="fa fa-cutlery"/><div className="details-element">Diet: Omnivore</div></div>
+											<div className="details-block"><span className="fa fa-graduation-cap"/><div className="details-element">Education: College</div></div>
+											<div className="details-block"><span className="fa fa-flask"/><div className="details-element">Drugs: None</div></div>
+											<div className="details-block"><span className="fa fa-glass"/><div className="details-element">Drinking: Sometimes</div></div>
 										</div>
 							</div>
 						</button>

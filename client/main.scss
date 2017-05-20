@@ -22,10 +22,10 @@
 	color: #00d280;
 	text-align: center;
 	font-size: 17px;
-	line-height: 40px;
+	line-height: 24px;
 	vertical-align: top;
 	position: relative;
-	bottom: 7px;
+	//bottom: 7px;
 	margin-bottom: -18px;
 }
 /* PROFILE HEADER */
@@ -217,10 +217,16 @@
 		}
 
 		.details-section-filled {
-			.details-element {
-				display:inline-block;
-				margin-left:2px;
+			.details-block {
+				margin-top: 10px;
+				font-size: 20px;
+
+				.details-element {
+					display: inline-block;
+					margin-left: 5px;
+				}
 			}
+			
 		}
 	}
 
