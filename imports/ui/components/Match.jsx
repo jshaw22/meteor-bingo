@@ -84,9 +84,8 @@ class Match extends Component {
 					<div className="form-group">
 				    	<select className="form-control mr-2" name="selectMatchGender">
 				    		<option value="" disabled selected>I am looking for a</option>
-				    		<option value="male">Male</option>
-				    		<option value="female">Female</option>
-				    		<option value="other">Other</option>
+				    		<option value="Male">Male</option>
+				    		<option value="Female">Female</option>
 				        </select>
 
 				        <select className="form-control mx-2" name="selectAgeFrom">

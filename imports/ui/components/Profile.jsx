@@ -5,6 +5,8 @@ import {bindActionCreators} from 'redux';
 import * as actions from '../actions/authentication';
 import ParagraphSection from './ParagraphSection';
 import UserinfoBasics from './UserinfoBasics';
+import UserinfoDetails from './UserinfoDetails';
+import UserinfoDetailsModal from './UserinfoDetailsModal';
 
 class Profile extends Component {
 	constructor(props){
@@ -12,12 +14,15 @@ class Profile extends Component {
 		this.state = {
 			//bingosmash logo goes here
 			avatar: 'http://placehold.it/150x150',
-			addHover: false
+			addHover: false,
+			detailsModalOpen: false
 		}
 		this.uploadFile = this.uploadFile.bind(this);
 		this.mouseOver = this.mouseOver.bind(this);
 		this.mouseOut = this.mouseOut.bind(this);
 		this.imageHandle = Meteor.subscribe('imageList');
+		this.openDetailsModal = this.openDetailsModal.bind(this);
+		this.closeDetailsModal = this.closeDetailsModal.bind(this);
 		
 		//Seems like the Tracker takes the place of componentWillMount
 		Tracker.autorun(() => {
@@ -57,6 +62,16 @@ class Profile extends Component {
 
 			});
 		});
+	}
+
+	openDetailsModal () {
+		console.log("Opening the modal");
+		this.setState({detailsModalOpen: true});
+	}
+
+	closeDetailsModal () {
+		console.log("Closing the modal");
+		this.setState({detailsModalOpen: false});
 	}
 
 	mouseOver (e) {
@@ -115,25 +130,8 @@ class Profile extends Component {
 				</div>
 				<div className="profile-content-sidebar">
 						<button className="details-section-edit">
-							<div className="details-section">
-										<span className="icon fa fa-id-card-o mr-2"/><div className="details-title">Profile Details <span className="edit-title">Edit</span></div>
-										
-					
-										<div className="details-section-filled">
-											<div className="details-block"><span className="fa fa-user-o" /><div className="details-element">Male</div></div>
-											<div className="details-block"><span className="fa fa-venus-mars" /><div className="details-element">Looking for: Female</div></div>
-											<div className="details-block"><span className="fa fa-scissors"/><div className="details-element">Sterilized: Yes</div></div>
-											<div className="details-block"><span className="fa fa-globe"/><div className="details-element">Ethnicity: Asian</div></div>
-											<div className="details-block"><span className="fa fa-building-o"/><div className="details-element">Religion: Jewish</div></div>
-											<div className="details-block"><span className="fa fa-heart"/><div className="details-element">Relationship status: Single</div></div>
-											<div className="details-block"><span className="fa fa-balance-scale"/><div className="details-element">Body Type: Athletic</div></div>
-											<div className="details-block"><span className="fa fa-level-up"/><div className="details-element">Height: 5' 7''</div></div>
-											<div className="details-block"><span className="fa fa-cutlery"/><div className="details-element">Diet: Omnivore</div></div>
-											<div className="details-block"><span className="fa fa-graduation-cap"/><div className="details-element">Education: College</div></div>
-											<div className="details-block"><span className="fa fa-flask"/><div className="details-element">Drugs: None</div></div>
-											<div className="details-block"><span className="fa fa-glass"/><div className="details-element">Drinking: Sometimes</div></div>
-										</div>
-							</div>
+							<UserinfoDetails user={user.profile} editDetailsClick={this.openDetailsModal} />
+							<UserinfoDetailsModal isOpen={this.state.detailsModalOpen} closeModal={this.closeDetailsModal} />			
 						</button>
 					</div>
 			</div>
