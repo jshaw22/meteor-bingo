@@ -65,12 +65,10 @@ class Profile extends Component {
 	}
 
 	openDetailsModal () {
-		console.log("Opening the modal");
 		this.setState({detailsModalOpen: true});
 	}
 
 	closeDetailsModal () {
-		console.log("Closing the modal");
 		this.setState({detailsModalOpen: false});
 	}
 

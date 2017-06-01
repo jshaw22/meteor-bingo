@@ -67,6 +67,79 @@ export default class UserinfoDetailsModal extends Component {
 							<option value="Not yet, but plan to be">Not yet, but plan to be</option>
 						</select>
 					</div>
+					<div className="detailSection">
+						<div>Ethnicity</div>
+							<div className="modal-edit-checkboxes">
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="Asian" />
+									<span>Asian</span>
+								</label>
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="Indian" />
+									<span>Indian</span>
+								</label>
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="Pacific Islander" />
+									<span>Pacific Islander</span>
+								</label>
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="Black" />
+									<span>Black</span>
+								</label>
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="Middle Eastern" />
+									<span>Middle Eastern</span>
+								</label>
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="White" />
+									<span>White</span>
+								</label>
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="Hispanic / Latin" />
+									<span>Hispanic / Latin</span>
+								</label>
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="Native American" />
+									<span>Native American</span>
+								</label>
+								<label className="modal-checkbox">
+									<input type="checkbox" name="ethnicity" value="Other" />
+									<span>Other</span>
+								</label>
+							</div>
+					</div>
+					<div className="detailSection">
+						<div>Religion</div>
+						<select name="sterilized" value={this.state.religion} onChange={this.onChange}>
+							<option value="--">--</option>
+							<option value="Agnostic">Agnostic</option>
+							<option value="Atheist">Atheist</option>
+							<option value="Christian">Christian</option>
+							<option value="Catholic">Catholic</option>
+							<option value="Islam">Islam</option>
+							<option value="Hindu">Hindu</option>
+							<option value="Buddhist">Buddhist</option>
+							<option value="Christian">Christian</option>
+							<option value="Sikh">Sikh</option>
+							<option value="Other">Other</option>
+						</select>
+					</div>
+					<div className="detailSection">
+						<div>Religion</div>
+						<select name="religion" value={this.state.religion} onChange={this.onChange}>
+							<option value="--">--</option>
+							<option value="Agnostic">Agnostic</option>
+							<option value="Atheist">Atheist</option>
+							<option value="Christian">Christian</option>
+							<option value="Catholic">Catholic</option>
+							<option value="Islam">Islam</option>
+							<option value="Hindu">Hindu</option>
+							<option value="Buddhist">Buddhist</option>
+							<option value="Christian">Christian</option>
+							<option value="Sikh">Sikh</option>
+							<option value="Other">Other</option>
+						</select>
+					</div>
 				</div>
 				<div className="modalButtons">
 					<button onClick={this.props.closeModal}>Close</button>
