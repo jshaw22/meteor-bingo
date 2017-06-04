@@ -39,6 +39,7 @@ export default class ParagraphSection extends Component {
 	}
 
 	editText (e) {
+		console.log("log me text", e.target.value);
 		this.setState({text: e.target.value});
 	}
 
@@ -50,7 +51,7 @@ export default class ParagraphSection extends Component {
 					<span className="edit-title">Edit</span>
 				</button>
 				<div className="paragraph-content">
-					{this.props.paragraphContent === '' ? <i>Fill me out!</i> : `${this.props.paragraphContent}` }
+					{this.props.paragraphContent === '--' ? <i>Fill me out!</i> : `${this.props.paragraphContent}` }
 				</div>
 			</div>
 		);

@@ -235,3 +235,16 @@
 	}
 
 }
+
+/*Modal CSS */
+.detailSection {
+	.modal-edit-checkboxes {
+		width: 33%;
+		height: 100px;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		-webkit-box-lines: multiple;
+		-webkit-box-orient: vertical;
+	}
+}
