@@ -3,6 +3,10 @@ import {browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../actions/authentication';
+import ParagraphSection from './ParagraphSection';
+import UserinfoBasics from './UserinfoBasics';
+import UserinfoDetails from './UserinfoDetails';
+import UserinfoDetailsModal from './UserinfoDetailsModal';
 
 class Profile extends Component {
 	constructor(props){
@@ -10,33 +14,30 @@ class Profile extends Component {
 		this.state = {
 			//bingosmash logo goes here
 			avatar: 'http://placehold.it/150x150',
-			addHover: false
+			addHover: false,
+			detailsModalOpen: false
 		}
 		this.uploadFile = this.uploadFile.bind(this);
 		this.mouseOver = this.mouseOver.bind(this);
 		this.mouseOut = this.mouseOut.bind(this);
-
 		this.imageHandle = Meteor.subscribe('imageList');
+		this.openDetailsModal = this.openDetailsModal.bind(this);
+		this.closeDetailsModal = this.closeDetailsModal.bind(this);
 		
 		//Seems like the Tracker takes the place of componentWillMount
 		Tracker.autorun(() => {
 		  const isReady = this.imageHandle.ready();
 		  if(isReady){
 		  	const user = this.props.authentication.currentUser;
-		  	let avatar = Images.findOne({_id: user.profile.info.avatar}).url();
+		  	let avatar = Images.findOne({_id: user.profile.avatar}).url();
 		  	this.setState({avatar})
 		  }		
 		});
 	}
 
-	componentWillUpdate(nextProps){
-		// const user = nextProps.authentication;
-		// let data = {};
-		// if (user) {
-		// 	data.img = Images.findOne({_id: user.currentUser.profile.info.avatar}).url();
-		// 	//this.setState({user: user.currentUser}); //I don't like the lifecycle for this. fix later	
-		// }
-		// //this.setState({data});
+	componentWillReceiveProps(nextProps){
+		let avatar = Images.findOne({_id: Meteor.user().profile.avatar}).url();
+		this.setState({avatar})
 	}
 	// meteor needs you to stop the subscription when you unmount otherwise it will throw 
 	// console warnings
@@ -45,14 +46,32 @@ class Profile extends Component {
 	}
 
 	uploadFile(e) {
+		let that = this;
 		e.preventDefault();
 		FS.Utility.eachFile(e, function (file) {
 			Images.insert(file, function (err, fileObj) {
 				if(err)
 					Meteor.error("Unable to upload picture");
-				Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
+				Meteor.call("changeAvatar", Meteor.user(), fileObj._id, function(err, res) {
+					if(err) {
+						Meteor.error("There was an issue changing the avatar");
+					}
+					that.setState({changeButtonClicked:false})
+					that.setState({hover:false})
+				});
+
 			});
 		});
+	}
+
+	openDetailsModal () {
+		console.log("Opening the modal");
+		this.setState({detailsModalOpen: true});
+	}
+
+	closeDetailsModal () {
+		console.log("Closing the modal");
+		this.setState({detailsModalOpen: false});
 	}
 
 	mouseOver (e) {
@@ -60,57 +79,75 @@ class Profile extends Component {
 	}
 
 	mouseOut () {
-		this.setState({hover:false})
+	  if (this.state.changeButtonClicked) {
+	    return
+	  }
+	  this.setState({hover:false})
 	}
 
-	renderPicChange (){
-		if(this.state.hover){
-			return (
-				<div>
-				  <label htmlFor="files" className="btn btn-primary changePic">Change</label>
-				  <input id="files" style={{visibility:"hidden"}} type="file" />
-				</div>
-			)
-		}
+	changePicClicked() {
+	  document.getElementById("file").click()
+	  this.setState({changeButtonClicked:true})
 	}
 
 	render() {
 		const user = this.props.authentication.currentUser;
-		// var avatar = this.state.avatar;
-		// let picData = {};
-		// if (user && user.profile) {
-		// 	picData.img = Images.findOne({_id: user.profile.info.avatar}).url();
-		// }
 
-		// if (picData.hasOwnProperty("img")){
-		// 	avatar = picData.img;
-		// }
 		if (!user.profile)
 			return <div>Loading</div>
 
+		let changePicButton;
+		if (this.state.hover) {
+		  changePicButton = <ChangePicButton 
+		    changePicClicked={() => this.changePicClicked()}
+		    uploadFile={(e) => this.uploadFile(e)}
+		  />
+		}
+
 		//TODO: avatar should be scaled first from server? 
 		return (
-			<div className="profile-header">
-				<div className="inner-element">
-					<div className="userinfo">
-						<div className="userinfo-thumb" onMouseEnter={this.mouseOver} onMouseLeave={this.mouseOut}>
-							<img className="img-rounded" src={this.state.avatar} />
-							{this.renderPicChange()}
-						</div>
-						<div className="userinfo-basics">
-							<div className="userinfo-basics-username">{user.username}</div>
-							<div className="userinfo-basics-asl">
-								<span className="userinfo-basics-asl-age">{user.profile.info.age}</span>
-								<span className="userinfo-basics-asl-spacer">•</span>
-								<span className="userinfo-basics-asl-location">{user.profile.info.location}</span>
+			<div>
+				<div className="profile-header">
+					<div className="inner-element">
+						<div className="userinfo">
+							<div className="userinfo-thumb" onMouseEnter={this.mouseOver} onMouseLeave={this.mouseOut}>
+								<img className="img-rounded" src={this.state.avatar} />
+								{ changePicButton }
 							</div>
+							<UserinfoBasics username={user.username} profileBasics={user.profile} />
 						</div>
 					</div>
 				</div>
+				<div className="profile-content">
+					<div className="profile-content-main">
+						<div className="profile-section">
+							<ParagraphSection dbObjectName="aboutMe" sectionTitle="About me" paragraphContent={user.profile.aboutMe} />
+							<ParagraphSection dbObjectName="whatILike" sectionTitle="What I like to do" paragraphContent={user.profile.whatILike} />
+							<ParagraphSection dbObjectName="favStuff" sectionTitle="Favorite books, movies, shows, etc" paragraphContent={user.profile.favStuff} />
+							<ParagraphSection dbObjectName="cfBecause" sectionTitle="I'm childfree because..." paragraphContent={user.profile.cfBecause} />
+							<ParagraphSection dbObjectName="messageMeIf" sectionTitle="You should message me if..." paragraphContent={user.profile.messageMeIf} />
+					</div>
+				</div>
+				<div className="profile-content-sidebar">
+						<button className="details-section-edit">
+							<UserinfoDetails user={user.profile} editDetailsClick={this.openDetailsModal} />
+							<UserinfoDetailsModal isOpen={this.state.detailsModalOpen} closeModal={this.closeDetailsModal} />			
+						</button>
+					</div>
 			</div>
-							
+		</div>
+
 		)
 	}
+}
+
+function ChangePicButton(props) {
+  return (
+    <div>
+      <input className="btn btn-primary changePic" type="button" id="loadFileXml" value="Change" onClick={props.changePicClicked} />
+      <input onChange={props.uploadFile} onClick={(e)=>{e.target.value=null}} type="file" style={{display:"none"}} id="file" name="file"/>
+    </div>
+  );
 }
 
 Profile.PropTypes = {

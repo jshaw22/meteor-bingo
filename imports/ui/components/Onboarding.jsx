@@ -93,13 +93,26 @@ class Onboarding extends Component {
 		user = this.props.authentication.currentUser;
 		let userInfo = {
 			...this.state, 
-			avatar: user.profile.info.avatar,
+			avatar: user.profile.avatar,
 			location: user.location,
+			aboutMe: '--',
+	 		whatILike: '--',
+	 		ethnicity:'--',
+	 		favStuff: '--',
+	 		cfBecause: '--',
+	 		messageMeIf: '--',
+	 		relationshipStatus: '--',
+	 		bodyType: '--',
+	 		height: '--',
+	 		diet: '--',
+	 		astrology: '--',
+	 		education: '--',
+	 		drugs: '--',
+	 		drink: '--',
+	 		religion: '--'
 		};
 		
-
-		
-		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.info": userInfo}}, function(err){
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile": userInfo}}, function(err){
 			if(err){
 				console.log("There was an error");
 			}
@@ -181,27 +194,25 @@ class Onboarding extends Component {
 					<div className="form-group">
 					  <select name="myGender" selected={this.state.myOrientation} className="form-control" id="myGender">
 					     <option value='default'>Choose one</option>
-					    <option value='male'>Male</option>
-					    <option value='female'>Female</option>
-					    <option value='other'>Other</option>
+					    <option value='Male'>Male</option>
+					    <option value='Female'>Female</option>
 					  </select>
 					</div>
 					Looking for a
 					<div className="form-group">
 					  <select name="matchGender" selected={this.state.matchOrientation} className="form-control" id="matchGender">
 					    <option value='default'>Choose one</option>
-					    <option value='male'>Male</option>
-					    <option value='female'>Female</option>
-					    <option value='other'>Other</option>
+					    <option value='Male'>Male</option>
+					    <option value='Female'>Female</option>
 					  </select>
 					</div>	
 					Sterilized? 
 					<div className="form-group">
 					  <select name="sterilized" selected={this.state.sterilized} className="form-control" id="sterilized">
 					    <option value='default'>Choose one</option>
-					    <option value='true'>Yes</option>
-					    <option value='false'>No</option>
-					    <option value='plan'>Not yet, but plan to be</option>
+					    <option value='Yes'>Yes</option>
+					    <option value='No'>No</option>
+					    <option value='Not yet, but plan to be'>Not yet, but plan to be</option>
 					  </select>
 					</div>
 					Where are you from? Enter your zip code
