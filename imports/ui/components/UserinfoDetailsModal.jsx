@@ -45,22 +45,24 @@ export default class UserinfoDetailsModal extends Component {
 				contentLabel="Edit User Details"
 				style={customStyles}
 			>
-				<div className="modalHeader">
-					<div>User Details</div>
-					<div><span className="fa fa-times" onClick={this.props.closeModal}/></div>
+				<div className="modal-header">
+					<h5 className="modal-title">User Details</h5>
+			        <button type="button" className="close" onClick={this.props.closeModal} aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
 				</div>
-				<div className="modalBody">
-					<div className="detailSection">
-						<div>I am looking for a</div>
-						<select name="matchGender" value={this.state.matchGender} onChange={this.onChange}>
+				<div className="modal-body">
+					<div className="form-group mt-2">
+						<label for="matchGender">I am looking for a</label>
+						<select className="form-control" name="matchGender" value={this.state.matchGender} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Male">Male</option>
 							<option value="Female">Female</option>
 						</select>
 					</div>
-					<div className="detailSection">
-						<div>Sterilization</div>
-						<select name="sterilized" value={this.state.sterilized} onChange={this.onChange}>
+					<div className="form-group mt-2">
+						<label for="sterilized">Sterilization</label>
+						<select className="form-control" name="sterilized" value={this.state.sterilized} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
@@ -141,9 +143,9 @@ export default class UserinfoDetailsModal extends Component {
 						</select>
 					</div>
 				</div>
-				<div className="modalButtons">
-					<button onClick={this.props.closeModal}>Close</button>
-					<button onClick={this.saveDetails}>Save</button>
+				<div className="modal-footer">
+					<button className="btn btn-secondary" onClick={this.props.closeModal}>Close</button>
+					<button className="btn btn-primary" onClick={this.saveDetails}>Save</button>
 				</div>
 			</Modal>
 		)
@@ -152,12 +154,14 @@ export default class UserinfoDetailsModal extends Component {
 
 const customStyles = {
 	content: {
+		width: '500px',
+		padding: '0',
 		top: '50%',
 		left: '50%',
 		right: 'auto',
 		bottom: 'auto',
 		marginRight: '-50%',
 		transform: 'translate(-50%, -50%)',
-		zIndex: '50'
+		zIndex: '50',
 	}
 };
