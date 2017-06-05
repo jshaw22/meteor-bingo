@@ -35,6 +35,12 @@ class Profile extends Component {
 		});
 	}
 
+	componentWillMount() {
+		if (Meteor.userId() === null) {
+				browserHistory.push('/');
+			}
+	}
+
 	componentWillReceiveProps(nextProps){
 		let avatar = Images.findOne({_id: Meteor.user().profile.avatar}).url();
 		this.setState({avatar})

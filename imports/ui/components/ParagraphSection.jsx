@@ -30,16 +30,14 @@ export default class ParagraphSection extends Component {
 	onSave () {
 		let update = {$set: {}};
 		update.$set['profile.' + this.props.dbObjectName] = this.state.text;
-		Meteor.users.update({_id: Meteor.userId()}, update, function(err){
-			if(err){
-				console.log("There was an error", err);
-			}
+		Meteor.call('saveParagraph', update, (err, response)=> {
+			if (err)
+				console.error("There was an error saving the paragraph", err);
+			this.setState({isEditing: false});
 		});
-		this.setState({isEditing: false});
 	}
 
 	editText (e) {
-		console.log("log me text", e.target.value);
 		this.setState({text: e.target.value});
 	}
 

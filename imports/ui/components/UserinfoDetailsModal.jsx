@@ -30,10 +30,10 @@ export default class UserinfoDetailsModal extends Component {
 	}
 
 	changeEthnicity (e) {
-		ethnicityArr = this.state.ethnicity
+		let ethnicityArr = this.state.ethnicity;
 		ethnicity = e.target.value;
 		if (e.target.checked) {
-			ethnicityArr.push(ethnicity)
+			ethnicityArr.push(ethnicity);
 		}
 		else {
 			index = ethnicityArr.indexOf(ethnicity);
@@ -45,10 +45,9 @@ export default class UserinfoDetailsModal extends Component {
 	saveDetails (e) {
 		e.preventDefault();
 		const context = this; //We lose the context to 'this' props inside the update function
-		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile": this.state}}, function(err){
-			if(err){
-				console.log("There was an error saving user details");
-			}
+		Meteor.call('saveDetails', this.state, (err, resp)=> {
+			if(err)
+				console.log("There was an error saving the details", err);
 			context.props.closeModal();
 		});
 	}
@@ -69,7 +68,7 @@ export default class UserinfoDetailsModal extends Component {
 				</div>
 				<div className="modal-body">
 					<div className="form-group mt-2">
-						<label for="matchGender">I am looking for a</label>
+						<label htmlFor="matchGender">I am looking for a</label>
 						<select className="form-control" name="matchGender" value={this.state.matchGender} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Male">Male</option>
@@ -77,7 +76,7 @@ export default class UserinfoDetailsModal extends Component {
 						</select>
 					</div>
 					<div className="form-group mt-2">
-						<label for="sterilized">Sterilization</label>
+						<label htmlFor="sterilized">Sterilization</label>
 						<select className="form-control" name="sterilized" value={this.state.sterilized} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Yes">Yes</option>

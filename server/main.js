@@ -35,15 +35,16 @@ Meteor.startup(() => {
 
   Meteor.methods({
   	changeAvatar: function (user, fileId){
-      console.log("Change avatar called");
   		//temporary placeholder
   		var file = "http://placehold.it/300x300";
   		if (fileId){
   			file = Images.findOne({_id: fileId});
   		}
   		var data = file._id;
-      console.log("Change avatar", this.userId, data);
-  		Meteor.users.update(this.userId, {$set: {"profile.avatar": data}})
+  		Meteor.users.update(this.userId, {$set: {"profile.avatar": data}}, function(err){
+        if (err)
+          throw new Meteor.Error("There was an error changing the avatar", err);
+      });
   	},
   	sendMessage: function (person, message) {
   		var to = Meteor.users.findOne({_id: person});
@@ -55,10 +56,22 @@ Meteor.startup(() => {
         message: message
   		};
   		console.log("message", msg);
-  		if(person == this.userId) {
-  			throw new Meteor.Error("You can't send yourself a message");
+  		if (person == this.userId) {
+  			throw new Meteor.Error("You can't send yourself a message", err);
   		}
   		DBMessage.insert(msg);
-  	}
-  })
+  	},
+    saveParagraph: function(updatedText) {
+      Meteor.users.update({_id: Meteor.userId()}, updatedText, function(err){
+      if (err)
+        throw new Meteor.Error("There was an error saving the paragraph", err);
+      });
+    },
+    saveDetails: function(userDetails){
+      Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile": userDetails}}, function(err, res){
+      if(err)
+        throw new Meteor.error("There was an error saving user details", err);
+      });
+    }
+  });
 });

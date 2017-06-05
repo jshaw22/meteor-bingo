@@ -24,7 +24,7 @@ export const renderRoutes = (store) => (
 			<Route path="signup" component={SignupPage} />
 			<Route path='home' component={requireAuth(Home)} />
 			<Route path='onboarding' component={requireAuth(Onboarding)} />
-			<Route path='profile' onEnter={requireAuth}>
+			<Route path='profile'>
 				<IndexRoute component={Profile}/>
 				<Route path=':username' component={Users} />
 			</Route>
