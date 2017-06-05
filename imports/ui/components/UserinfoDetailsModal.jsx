@@ -8,12 +8,15 @@ export default class UserinfoDetailsModal extends Component {
 		};
 		this.onChange = this.onChange.bind(this);
 		this.saveDetails = this.saveDetails.bind(this);
+		this.changeEthnicity = this.changeEthnicity.bind(this);
 	}
 	componentWillMount () {
 		//grab the props and populate the state. 
 		//TODO: Is there any way more efficient than copying over each prop? 
 		for (var key in Meteor.user().profile){
 			let value = Meteor.user().profile[key] === '' ? "--" : Meteor.user().profile[key];
+			if (key == 'ethnicity' && (value == "--"))
+				value = []
 			this.setState({
 				[key]: value
 			});
@@ -24,6 +27,19 @@ export default class UserinfoDetailsModal extends Component {
 		let change = {};
 		change[e.target.name] = e.target.value;
 		this.setState(change);
+	}
+
+	changeEthnicity (e) {
+		ethnicityArr = this.state.ethnicity
+		ethnicity = e.target.value;
+		if (e.target.checked) {
+			ethnicityArr.push(ethnicity)
+		}
+		else {
+			index = ethnicityArr.indexOf(ethnicity);
+	    ethnicityArr.splice(index, 1);
+	  }
+		this.setState({ethnicity: ethnicityArr});
 	}
 
 	saveDetails (e) {
@@ -73,39 +89,39 @@ export default class UserinfoDetailsModal extends Component {
 						<div>Ethnicity</div>
 							<div className="modal-edit-checkboxes">
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Asian" />
+									<input type="checkbox" name="ethnicity" value="Asian" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('Asian')} />
 									<span>Asian</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Indian" />
+									<input type="checkbox" name="ethnicity" value="Indian" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('Indian')}/>
 									<span>Indian</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Pacific Islander" />
+									<input type="checkbox" name="ethnicity" value="Pacific Islander" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('Pacific Islander')}/>
 									<span>Pacific Islander</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Black" />
+									<input type="checkbox" name="ethnicity" value="Black" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('Black')}/>
 									<span>Black</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Middle Eastern" />
+									<input type="checkbox" name="ethnicity" value="Middle Eastern" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('Middle Eastern')}/>
 									<span>Middle Eastern</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="White" />
+									<input type="checkbox" name="ethnicity" value="White" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('White')}/>
 									<span>White</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Hispanic / Latin" />
+									<input type="checkbox" name="ethnicity" value="Hispanic / Latin" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('Hispanic / Latin')}/>
 									<span>Hispanic / Latin</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Native American" />
+									<input type="checkbox" name="ethnicity" value="Native American" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('Native American')}/>
 									<span>Native American</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Other" />
+									<input type="checkbox" name="ethnicity" value="Other" onChange={this.changeEthnicity} checked={this.state.ethnicity.includes('Other')}/>
 									<span>Other</span>
 								</label>
 							</div>
