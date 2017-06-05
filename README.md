@@ -5,7 +5,7 @@ Instructions on setting up Meteor:
 Once installed, clone this repo. CD into the repo and type `meteor` to start the server.
 Tip: To clear the Meteor DB, type `meteor reset` for a clean re-boot.
 
-Another dev tip: Download React and Redux tools. It will make debugging loads easier!
+Another dev tip: Download React and Redux dev tools. It will make debugging loads easier!
 
 
 <h4>Robomongo</h4>
@@ -21,7 +21,7 @@ Profile picture(s) need to be better handled. We should *require* a profile pic?
 - Store profile images into S3 after local testing?
 - use graphicsmagick to make thumbnails, resize, optimize
     
-User Profile Page (editable) 
+User Profile Page (editable)
 - Give user option to add additional details 
     - Textarea for a little something about me
     - Favorite hobbies
@@ -50,6 +50,10 @@ Low priority
 - Set email, change pw, etc
 - Componentize the modals
 - Set toastr on success moving between components
+
+<h4>Bug Tracker</h4>
+- Need to handle onboarding behavior better - user can nagivate away without filling out required information
+- 
 
 <h4>Version Control</h4>
 Clone the repo. 

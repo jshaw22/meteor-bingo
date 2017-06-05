@@ -48,7 +48,7 @@ export default class ParagraphSection extends Component {
 			<div className="paragraph">
 				<button onClick={this.openEditing} className="paragraph-title profile-section-title">
 					<span>{this.props.sectionTitle}</span>
-					<span className="edit-title">Edit</span>
+					{!this.props.allowEdit ? <div></div> : <span className="edit-title">Edit</span>} 
 				</button>
 				<div className="paragraph-content">
 					{this.props.paragraphContent === '--' ? <i>Fill me out!</i> : `${this.props.paragraphContent}` }
@@ -81,4 +81,5 @@ export default class ParagraphSection extends Component {
 ParagraphSection.propTypes = {
 	sectionTitle: PropTypes.string.isRequired,
 	paragraphContent: PropTypes.string.isRequired,
+	allowEdit: PropTypes.bool
 };

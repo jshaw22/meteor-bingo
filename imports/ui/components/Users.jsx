@@ -3,6 +3,7 @@ import {browserHistory, Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../actions/authentication';
+import SendMessageModal from './SendMessageModal';
 
 /* Users page has very similar markup to "profile" page, but is used to display other
 users and has components like "message", etc and doesn't allow you to edit profile */
@@ -11,32 +12,43 @@ class Users extends Component {
 		super(props);
 		this.state = {
 			userExists: true,
-			homeUser: {},
+			homeUser: '',
 			messageCSS: 'row hide',
 			status: '',
-			message: ''
+			message: '',
+			avatar: '',
+			messageModal: false
 		}
-		this.sendMessage = this.sendMessage.bind(this);
-		this.showSendMessage = this.showSendMessage.bind(this);
-		this.closeSendMessage = this.closeSendMessage.bind(this);
+		this.openMessageModal = this.openMessageModal.bind(this);
+		this.closeMessageModal = this.closeMessageModal.bind(this);
 		this.setMessage = this.setMessage.bind(this);
 		const handle = Meteor.subscribe('userList');
 		
 		//Seems like the Tracker takes the place of componentWillMount
 		Tracker.autorun(() => {
-		  const isReady = handle.ready();
-		  if(isReady){
-		  	let userEnteredPage = Meteor.users.findOne({username: this.props.params.username});
-		  	if (userEnteredPage === undefined) // no user exists
-		  		this.setState({userExists:false})
+			const isReady = handle.ready();
+			if(isReady){
+				let userEnteredPage = Meteor.users.findOne({username: this.props.params.username});
+				if (userEnteredPage === undefined) // no user exists
+					this.setState({userExists:false})
 
-		  	if (userEnteredPage._id === Meteor.userId()) {
-		  		browserHistory.push('/profile')
-		  	} else {
-		  		this.setState({homeUser: userEnteredPage});
-		  	}
-		  }		
+				if (userEnteredPage._id === Meteor.userId()) {
+					browserHistory.push('/profile');
+				} else { //Save user object to local homeUser
+						this.setState({homeUser: userEnteredPage});
+						let avatar = Images.findOne({_id: userEnteredPage.profile.avatar}).url();
+						this.setState({avatar});
+					}
+			}		
 		});
+	}
+
+	openMessageModal () {
+		this.setState({messageModalOpen: true});
+	}
+
+	closeMessageModal () {
+		this.setState({messageModalOpen: false});
 	}
 
 	setMessage(e){
@@ -45,65 +57,31 @@ class Users extends Component {
 
 	}
 
-	closeSendMessage(e) {
-		e.preventDefault();
-		this.setState({messageCSS: "row hide"});
-	}
-
-	showSendMessage(e) {
-		e.preventDefault();
-		let messageCSS = "row";
-		console.log("state of message", this.state);
-		if (this.state.messageCSS.indexOf("hide") === -1) {
-			messageCSS = "row hide";
-		}
-		this.setState({messageCSS, status:''});
-	}
-
-	sendMessage(e) {
-		e.preventDefault();
-		Meteor.call('sendMessage', this.state.homeUser._id, this.state.message);
-		this.setState({messageCSS:"row hide", status: "Message Sent"});
-		console.log("Message sent with", this.state.message);
-	}
-
 	render(){
 		if(!this.state.userExists)
 			return (<h2>User doesn't exist!</h2>)
+		let homeUserProfile = this.state.homeUser.profile || 'loading...';
 		return (
 			<div>
-				<div className="panel-body">
-					<h2>{this.state.homeUser.username}</h2>
-					<hr/>
-					<button onClick={this.showSendMessage} type="button" className="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Send a message</button>
-				</div>
-				<h3>{this.state.status}</h3>
-			
-				<div className={this.state.messageCSS}>
-					<div className="col-md-8">
-						<div className="row">
-							<div className="col-md-12">
-								<div className="form-group">
-									<label>To:</label>
-									<div className="input-group">
-									<input readOnly type="to" id="to" name="to" className="form-control" placeholder="Send Message To" value={this.state.homeUser && this.state.homeUser.username} />
-								</div>
-								<div className="form-group">
-									<label>Message</label>
-									<textarea value={this.state.value} onChange={this.setMessage} name="message" id="message" className="form-control" required="required" placeholder="Message"></textarea>
-								</div>
-								</div>
+				<div className="profile-header">
+					<div className="inner-element">
+						<div className="userinfo">
+							<div className="userinfo-thumb">
+								<img className="img-rounded" src={this.state.avatar} />
 							</div>
-						<div className="col-md-12">
-							<div className="control-group">
-								<label className="control-label" htmlFor="button1id"></label>
-								<div className="btn-toolbar">
-									<button onClick={this.closeSendMessage} id="button2id" name="button2id" className="btn btn-default ">Close</button>
-									<button onClick={this.sendMessage} id="button1id" name="button1id" className="btn btn-success ">Send</button>
+							<div className="userinfo-basics">
+								<div className="userinfo-basics-username">{this.state.homeUser.username}</div>
+								<div className="userinfo-basics-asl">
+									<span className="userinfo-basics-asl-age">{homeUserProfile.age}</span>
+									<span className="userinfo-basics-asl-spacer">•</span>
+									<span className="userinfo-basics-asl-location">{homeUserProfile.location}</span>
 								</div>
 							</div>
 						</div>
-						</div>
+						<div className="user-actions">
+								<button onClick={this.openMessageModal} className="btn btn-info btn-md">Message</button>
+								<SendMessageModal toUser={this.state.homeUser} isOpen={this.state.messageModalOpen} closeModal={this.closeMessageModal} />
+							</div>
 					</div>
 				</div>
 			</div>

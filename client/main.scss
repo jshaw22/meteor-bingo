@@ -103,6 +103,11 @@
 			display:table;
 			clear:both;
 		}	
+
+		.user-actions {
+			float: right;
+			margin-top: 30px;
+		}
 	}
 	.inner-element:after {
 		content: '';

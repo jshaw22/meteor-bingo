@@ -119,11 +119,11 @@ class Profile extends Component {
 				<div className="profile-content">
 					<div className="profile-content-main">
 						<div className="profile-section">
-							<ParagraphSection dbObjectName="aboutMe" sectionTitle="About me" paragraphContent={user.profile.aboutMe} />
-							<ParagraphSection dbObjectName="whatILike" sectionTitle="What I like to do" paragraphContent={user.profile.whatILike} />
-							<ParagraphSection dbObjectName="favStuff" sectionTitle="Favorite books, movies, shows, etc" paragraphContent={user.profile.favStuff} />
-							<ParagraphSection dbObjectName="cfBecause" sectionTitle="I'm childfree because..." paragraphContent={user.profile.cfBecause} />
-							<ParagraphSection dbObjectName="messageMeIf" sectionTitle="You should message me if..." paragraphContent={user.profile.messageMeIf} />
+							<ParagraphSection allowEdit={true} dbObjectName="aboutMe" sectionTitle="About me" paragraphContent={user.profile.aboutMe} />
+							<ParagraphSection allowEdit={true} dbObjectName="whatILike" sectionTitle="What I like to do" paragraphContent={user.profile.whatILike} />
+							<ParagraphSection allowEdit={true} dbObjectName="favStuff" sectionTitle="Favorite books, movies, shows, etc" paragraphContent={user.profile.favStuff} />
+							<ParagraphSection allowEdit={true} dbObjectName="cfBecause" sectionTitle="I'm childfree because..." paragraphContent={user.profile.cfBecause} />
+							<ParagraphSection allowEdit={true} dbObjectName="messageMeIf" sectionTitle="You should message me if..." paragraphContent={user.profile.messageMeIf} />
 					</div>
 				</div>
 				<div className="profile-content-sidebar">
