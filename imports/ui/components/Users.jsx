@@ -82,7 +82,7 @@ class Users extends Component {
 							</div>
 						</div>
 						<div className="user-actions">
-								<button onClick={this.openMessageModal} className="btn btn-info btn-md">Message</button>
+								{Meteor.user() ? <button onClick={this.openMessageModal} className="btn btn-info btn-md">Message</button> : <div></div>}
 								<SendMessageModal toUser={this.state.homeUser} isOpen={this.state.messageModalOpen} closeModal={this.closeMessageModal} />
 						</div>
 					</div>
