@@ -133,10 +133,10 @@ class Profile extends Component {
 					</div>
 				</div>
 				<div className="profile-content-sidebar">
-						<button className="details-section-edit">
+						<div className="details-section-edit">
 							<UserinfoDetails user={user.profile} editDetailsClick={this.openDetailsModal} />
 							<UserinfoDetailsModal isOpen={this.state.detailsModalOpen} closeModal={this.closeDetailsModal} />			
-						</button>
+						</div>
 					</div>
 			</div>
 		</div>

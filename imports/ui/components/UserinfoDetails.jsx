@@ -1,6 +1,16 @@
 import React, {PropTypes } from 'react';
 
 const UserinfoDetails = (props) => {
+  
+  const formatEthnicity = (ethnicity) => {
+    if (ethnicity && ethnicity.length > 1) {
+      let formattedEthnicity = ethnicity.join(', ')
+      return formattedEthnicity;
+    } else {
+      return ethnicity;
+    }
+  }
+
   const user = props.user;
   return (
     <div className="details-section">
@@ -9,7 +19,7 @@ const UserinfoDetails = (props) => {
         <div className="details-block"><span className="fa fa-user-o" /><div className="details-element">{user.myGender}</div></div>
         <div className="details-block"><span className="fa fa-venus-mars" /><div className="details-element">Looking for: {user.matchGender}</div></div>
         <div className="details-block"><span className="fa fa-scissors"/><div className="details-element">Sterilized: {user.sterilized}</div></div>
-        <div className="details-block"><span className="fa fa-globe"/><div className="details-element">Ethnicity: {user.ethnicity.toString()}</div></div>
+        <div className="details-block"><span className="fa fa-globe"/><div className="details-element">Ethnicity: {formatEthnicity(user.ethnicity)}</div></div>
         <div className="details-block"><span className="fa fa-building-o"/><div className="details-element">Religion: {user.religion}</div></div>
         <div className="details-block"><span className="fa fa-heart"/><div className="details-element">Relationship status: {user.relationshipStatus}</div></div>
         <div className="details-block"><span className="fa fa-balance-scale"/><div className="details-element">Body Type: {user.bodyType}</div></div>

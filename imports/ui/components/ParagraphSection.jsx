@@ -44,10 +44,10 @@ export default class ParagraphSection extends Component {
 	renderNormal () {
 		return (
 			<div className="paragraph">
-				<button onClick={this.openEditing} className="paragraph-title profile-section-title">
+				<div onClick={this.openEditing} className="paragraph-title profile-section-title">
 					<span>{this.props.sectionTitle}</span>
 					{!this.props.allowEdit ? <div></div> : <span className="edit-title">Edit</span>} 
-				</button>
+				</div>
 				<div className="paragraph-content">
 					{this.props.paragraphContent === '--' ? <i>Fill me out!</i> : `${this.props.paragraphContent}` }
 				</div>

@@ -6,7 +6,7 @@ export default class SendMessageModal extends Component {
 		super(props);
 		this.state = {
 			messageBody: '',
-			status
+			status: ''
 		};
 		this.editText = this.editText.bind(this);
 		this.sendMessage = this.sendMessage.bind(this);
@@ -27,7 +27,7 @@ export default class SendMessageModal extends Component {
 				context.setState({status: "Message Sent!"});
 				setTimeout(()=> {
 					context.props.closeModal();
-					context.setState({messageBody: ''});
+					context.setState({messageBody: '', status: ''});
 				}, 1000);
 		});
 	}
