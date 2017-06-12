@@ -15,8 +15,9 @@ export default class UserinfoDetailsModal extends Component {
 		//TODO: Is there any way more efficient than copying over each prop? 
 		for (var key in Meteor.user().profile){
 			let value = Meteor.user().profile[key] === '' ? "--" : Meteor.user().profile[key];
-			if (key == 'ethnicity' && (value == "--"))
+			if (key == 'ethnicity' && (value == "--")) {
 				value = []
+			}
 			this.setState({
 				[key]: value
 			});
@@ -140,6 +141,37 @@ export default class UserinfoDetailsModal extends Component {
 							<option value="Sikh">Sikh</option>
 							<option value="Other">Other</option>
 						</select>
+					</div>
+					<div className="detailSection">
+						<div>Height</div>
+						<select name="heightFeet" value={this.state.heightFeet} onChange={this.onChange}>
+							<option value="--">--</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+						</select>
+						ft
+						<select name="heightInch" value={this.state.heightInch} onChange={this.onChange}>
+							<option value="--">--</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+						</select>
+						in
 					</div>
 				</div>
 				<div className="modal-footer">
