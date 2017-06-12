@@ -23,7 +23,7 @@ const UserinfoDetails = (props) => {
         <div className="details-block"><span className="fa fa-building-o"/><div className="details-element">Religion: {user.religion}</div></div>
         <div className="details-block"><span className="fa fa-heart"/><div className="details-element">Relationship status: {user.relationshipStatus}</div></div>
         <div className="details-block"><span className="fa fa-balance-scale"/><div className="details-element">Body Type: {user.bodyType}</div></div>
-        <div className="details-block"><span className="fa fa-level-up"/><div className="details-element">Height: {user.height}</div></div>
+        <div className="details-block"><span className="fa fa-level-up"/><div className="details-element">Height: {user.heightFeet} ft {user.heightInch} in</div></div>
         <div className="details-block"><span className="fa fa-cutlery"/><div className="details-element">Diet: {user.diet}</div></div>
         <div className="details-block"><span className="fa fa-graduation-cap"/><div className="details-element">Education: {user.diet}</div></div>
         <div className="details-block"><span className="fa fa-flask"/><div className="details-element">Drugs: {user.drugs}</div></div>

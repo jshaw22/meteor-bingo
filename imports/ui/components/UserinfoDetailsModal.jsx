@@ -15,8 +15,9 @@ export default class UserinfoDetailsModal extends Component {
 		//TODO: Is there any way more efficient than copying over each prop? 
 		for (var key in Meteor.user().profile){
 			let value = Meteor.user().profile[key] === '' ? "--" : Meteor.user().profile[key];
-			if (key == 'ethnicity' && (value == "--"))
+			if (key == 'ethnicity' && (value == "--")) {
 				value = []
+			}
 			this.setState({
 				[key]: value
 			});
@@ -127,7 +128,7 @@ export default class UserinfoDetailsModal extends Component {
 					</div>
 					<div className="detailSection">
 						<div>Religion</div>
-						<select name="sterilized" value={this.state.religion} onChange={this.onChange}>
+						<select name="religion" value={this.state.religion} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Agnostic">Agnostic</option>
 							<option value="Atheist">Atheist</option>
@@ -142,20 +143,35 @@ export default class UserinfoDetailsModal extends Component {
 						</select>
 					</div>
 					<div className="detailSection">
-						<div>Religion</div>
-						<select name="religion" value={this.state.religion} onChange={this.onChange}>
+						<div>Height</div>
+						<select name="heightFeet" value={this.state.heightFeet} onChange={this.onChange}>
 							<option value="--">--</option>
-							<option value="Agnostic">Agnostic</option>
-							<option value="Atheist">Atheist</option>
-							<option value="Christian">Christian</option>
-							<option value="Catholic">Catholic</option>
-							<option value="Islam">Islam</option>
-							<option value="Hindu">Hindu</option>
-							<option value="Buddhist">Buddhist</option>
-							<option value="Christian">Christian</option>
-							<option value="Sikh">Sikh</option>
-							<option value="Other">Other</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
 						</select>
+						ft
+						<select name="heightInch" value={this.state.heightInch} onChange={this.onChange}>
+							<option value="--">--</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+						</select>
+						in
 					</div>
 				</div>
 				<div className="modal-footer">
