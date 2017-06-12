@@ -168,10 +168,34 @@ export default class UserinfoDetailsModal extends Component {
 					</div>
 					<div className="form-group mt-2">
 						<div>Height</div>
-						<select className="form-control" name="height" value={this.state.height} onChange={this.onChange}>
+						<select name="heightFeet" value={this.state.heightFeet} onChange={this.onChange}>
 							<option value="--">--</option>
-							<option value="heightgoeshere">height goes here</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
 						</select>
+						ft
+						<select name="heightInch" value={this.state.heightInch} onChange={this.onChange}>
+							<option value="--">--</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+						</select>
+						in
 					</div>
 					<div className="form-group mt-2">
 						<div>Diet</div>
@@ -215,17 +239,17 @@ export default class UserinfoDetailsModal extends Component {
 					</div>
 					<div className="detailSection">
 						<div>Pets</div>
-							<div className="modal-edit-checkboxes">
-								<label className="modal-checkbox">
-									<input type="checkbox" name="pets" value="Cats" onChange={this.changeCheckbox} checked={this.state.pets.includes('Cats')} />
-									<span>Cats</span>
-								</label>
-								<label className="modal-checkbox">
-									<input type="checkbox" name="pets" value="Dogs" onChange={this.changeCheckbox} checked={this.state.pets.includes('Dogs')} />
-									<span>Dogs</span>
-								</label>
-							</div>
+						<div className="modal-edit-checkboxes">
+							<label className="modal-checkbox">
+								<input type="checkbox" name="pets" value="Cats" onChange={this.changeCheckbox} checked={this.state.pets.includes('Cats')} />
+								<span>Cats</span>
+							</label>
+							<label className="modal-checkbox">
+								<input type="checkbox" name="pets" value="Dogs" onChange={this.changeCheckbox} checked={this.state.pets.includes('Dogs')} />
+								<span>Dogs</span>
+							</label>
 						</div>
+					</div>
 				</div>
 				<div className="modal-footer">
 					<button className="btn btn-secondary" onClick={this.props.closeModal}>Close</button>
