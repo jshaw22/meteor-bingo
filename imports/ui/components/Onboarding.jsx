@@ -97,7 +97,7 @@ class Onboarding extends Component {
 			location: user.location,
 			aboutMe: '--',
 	 		whatILike: '--',
-	 		ethnicity:'--',
+	 		ethnicity:'',
 	 		favStuff: '--',
 	 		cfBecause: '--',
 	 		messageMeIf: '--',
@@ -109,7 +109,8 @@ class Onboarding extends Component {
 	 		education: '--',
 	 		drugs: '--',
 	 		drink: '--',
-	 		religion: '--'
+	 		religion: '--',
+	 		pets: ''
 		};
 		
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile": userInfo}}, function(err){
