@@ -141,22 +141,6 @@ export default class UserinfoDetailsModal extends Component {
 							<option value="Other">Other</option>
 						</select>
 					</div>
-					<div className="detailSection">
-						<div>Religion</div>
-						<select name="religion" value={this.state.religion} onChange={this.onChange}>
-							<option value="--">--</option>
-							<option value="Agnostic">Agnostic</option>
-							<option value="Atheist">Atheist</option>
-							<option value="Christian">Christian</option>
-							<option value="Catholic">Catholic</option>
-							<option value="Islam">Islam</option>
-							<option value="Hindu">Hindu</option>
-							<option value="Buddhist">Buddhist</option>
-							<option value="Christian">Christian</option>
-							<option value="Sikh">Sikh</option>
-							<option value="Other">Other</option>
-						</select>
-					</div>
 				</div>
 				<div className="modal-footer">
 					<button className="btn btn-secondary" onClick={this.props.closeModal}>Close</button>
