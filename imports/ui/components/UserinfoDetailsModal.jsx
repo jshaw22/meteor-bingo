@@ -127,7 +127,7 @@ export default class UserinfoDetailsModal extends Component {
 					</div>
 					<div className="detailSection">
 						<div>Religion</div>
-						<select name="sterilized" value={this.state.religion} onChange={this.onChange}>
+						<select name="religion" value={this.state.religion} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Agnostic">Agnostic</option>
 							<option value="Atheist">Atheist</option>
