@@ -14,11 +14,12 @@ export default class UserinfoDetailsModal extends Component {
 		//grab the props and populate the state. 
 		//TODO: Is there any way more efficient than copying over each prop? 
 		for (var key in Meteor.user().profile){
-			let value = Meteor.user().profile[key] === '' ? "--" : Meteor.user().profile[key];
-			console.log("key-value", key, value);
 			//If it's going to be something with a multi-select, need to set value as an array
+			let value = Meteor.user().profile[key]
 			if ((key === 'ethnicity' || key === 'pets') && (value.length === 0))
 				value = [];
+			else
+				value = Meteor.user().profile[key] === '' ? "--" : Meteor.user().profile[key];
 			this.setState({
 				[key]: value
 			});

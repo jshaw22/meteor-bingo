@@ -3,7 +3,6 @@ import React, {PropTypes } from 'react';
 const UserinfoDetails = (props) => {
   
   const formatCheckbox = (checkbox) => {
-    debugger;
     if (checkbox && checkbox.length > 1) {
       let formattedCheckbox = checkbox.join(', ')
       return formattedCheckbox;
