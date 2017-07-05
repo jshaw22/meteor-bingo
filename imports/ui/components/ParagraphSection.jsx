@@ -49,7 +49,7 @@ export default class ParagraphSection extends Component {
 					{!this.props.allowEdit ? <div></div> : <span className="edit-title">Edit</span>} 
 				</div>
 				<div className="paragraph-content">
-					{this.props.paragraphContent === '--' ? <i>Fill me out!</i> : `${this.props.paragraphContent}` }
+					{this.props.paragraphContent === '' ? <i>Fill me out!</i> : `${this.props.paragraphContent}` }
 				</div>
 			</div>
 		);

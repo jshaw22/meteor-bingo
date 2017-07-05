@@ -18,8 +18,6 @@ export default class UserinfoDetailsModal extends Component {
 			let value = Meteor.user().profile[key]
 			if ((key === 'ethnicity' || key === 'pets') && (value.length === 0))
 				value = [];
-			else
-				value = Meteor.user().profile[key] === '' ? "--" : Meteor.user().profile[key];
 			this.setState({
 				[key]: value
 			});
@@ -73,7 +71,7 @@ export default class UserinfoDetailsModal extends Component {
 				<div className="modal-body">
 					<div className="form-group mt-2">
 						<label htmlFor="matchGender">I am looking for a</label>
-						<select className="form-control" name="matchGender" value={this.state.matchGender} onChange={this.onChange}>
+						<select className="form-control" name="matchGender" value={this.state.matchGender || "--"} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Male">Male</option>
 							<option value="Female">Female</option>
@@ -81,7 +79,7 @@ export default class UserinfoDetailsModal extends Component {
 					</div>
 					<div className="form-group mt-2">
 						<label htmlFor="sterilized">Sterilization</label>
-						<select className="form-control" name="sterilized" value={this.state.sterilized} onChange={this.onChange}>
+						<select className="form-control" name="sterilized" value={this.state.sterilized || "--"} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
@@ -92,46 +90,46 @@ export default class UserinfoDetailsModal extends Component {
 						<div>Ethnicity</div>
 							<div className="modal-edit-checkboxes">
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Asian" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('Asian')} />
+									<input type="checkbox" name="ethnicity" value="Asian" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('Asian')} />
 									<span>Asian</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Indian" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('Indian')}/>
+									<input type="checkbox" name="ethnicity" value="Indian" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('Indian')}/>
 									<span>Indian</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Pacific Islander" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('Pacific Islander')}/>
+									<input type="checkbox" name="ethnicity" value="Pacific Islander" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('Pacific Islander')}/>
 									<span>Pacific Islander</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Black" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('Black')}/>
+									<input type="checkbox" name="ethnicity" value="Black" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('Black')}/>
 									<span>Black</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Middle Eastern" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('Middle Eastern')}/>
+									<input type="checkbox" name="ethnicity" value="Middle Eastern" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('Middle Eastern')}/>
 									<span>Middle Eastern</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="White" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('White')}/>
+									<input type="checkbox" name="ethnicity" value="White" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('White')}/>
 									<span>White</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Hispanic / Latin" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('Hispanic / Latin')}/>
+									<input type="checkbox" name="ethnicity" value="Hispanic / Latin" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('Hispanic / Latin')}/>
 									<span>Hispanic / Latin</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Native American" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('Native American')}/>
+									<input type="checkbox" name="ethnicity" value="Native American" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('Native American')}/>
 									<span>Native American</span>
 								</label>
 								<label className="modal-checkbox">
-									<input type="checkbox" name="ethnicity" value="Other" onChange={this.changeCheckbox} checked={this.state.ethnicity.includes('Other')}/>
+									<input type="checkbox" name="ethnicity" value="Other" onChange={this.changeCheckbox} checked={(this.state.ethnicity === undefined) ? false : this.state.ethnicity.includes('Other')}/>
 									<span>Other</span>
 								</label>
 							</div>
 					</div>
 					<div className="form-group mt-2">
 						<div>Religion</div>
-						<select className="form-control" name="religion" value={this.state.religion} onChange={this.onChange}>
+						<select className="form-control" name="religion" value={this.state.religion || "--"} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Agnostic">Agnostic</option>
 							<option value="Atheist">Atheist</option>
@@ -147,7 +145,7 @@ export default class UserinfoDetailsModal extends Component {
 					</div>
 					<div className="form-group mt-2">
 						<div>Relationship Status</div>
-						<select className="form-control" name="relationshipStatus" value={this.state.relationshipStatus} onChange={this.onChange}>
+						<select className="form-control" name="relationshipStatus" value={this.state.relationshipStatus || "--"} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Single">Single</option>
 							<option value="Taken">Taken</option>
@@ -156,7 +154,7 @@ export default class UserinfoDetailsModal extends Component {
 					</div>
 					<div className="form-group mt-2">
 						<div>Body type</div>
-						<select className="form-control" name="bodyType" value={this.state.bodyType} onChange={this.onChange}>
+						<select className="form-control" name="bodyType" value={this.state.bodyType || "--"} onChange={this.onChange}>
 							<option value="--">--</option>
 							<option value="Thin">Thin</option>
 							<option value="Average">Average</option>
@@ -241,11 +239,11 @@ export default class UserinfoDetailsModal extends Component {
 						<div>Pets</div>
 						<div className="modal-edit-checkboxes">
 							<label className="modal-checkbox">
-								<input type="checkbox" name="pets" value="Cats" onChange={this.changeCheckbox} checked={this.state.pets.includes('Cats')} />
+								<input type="checkbox" name="pets" value="Cats" onChange={this.changeCheckbox} checked={(this.state.pets === undefined) ? false : this.state.pets.includes('Cats')} />
 								<span>Cats</span>
 							</label>
 							<label className="modal-checkbox">
-								<input type="checkbox" name="pets" value="Dogs" onChange={this.changeCheckbox} checked={this.state.pets.includes('Dogs')} />
+								<input type="checkbox" name="pets" value="Dogs" onChange={this.changeCheckbox} checked={(this.state.pets === undefined) ? false : this.state.pets.includes('Dogs')} />
 								<span>Dogs</span>
 							</label>
 						</div>
