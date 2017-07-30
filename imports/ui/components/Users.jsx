@@ -102,18 +102,18 @@ class Users extends Component {
 							<div className="details-section">
 							  <span className="icon fa fa-id-card-o mr-2"/><div className="details-title">Profile Details</div>
 							  <div className="details-section-filled">
-							    <div className="details-block"><span className="fa fa-user-o" /><div className="details-element">{homeUserProfile.myGender}</div></div>
-							    <div className="details-block"><span className="fa fa-venus-mars" /><div className="details-element">Looking for: {homeUserProfile.matchGender}</div></div>
-							    <div className="details-block"><span className="fa fa-scissors"/><div className="details-element">Sterilized: {homeUserProfile.sterilized}</div></div>
+							    <div className="details-block"><span className="fa fa-user-o" /><div className="details-element">{homeUserProfile.myGender || "--"}</div></div>
+							    <div className="details-block"><span className="fa fa-venus-mars" /><div className="details-element">Looking for: {homeUserProfile.matchGender || "--"}</div></div>
+							    <div className="details-block"><span className="fa fa-scissors"/><div className="details-element">Sterilized: {homeUserProfile.sterilized || "--"}</div></div>
 							    <div className="details-block"><span className="fa fa-globe"/><div className="details-element">Ethnicity: {this.formatCheckbox(homeUserProfile.ethnicity)}</div></div>
-							    <div className="details-block"><span className="fa fa-building-o"/><div className="details-element">Religion: {homeUserProfile.religion}</div></div>
-							    <div className="details-block"><span className="fa fa-heart"/><div className="details-element">Relationship status: {homeUserProfile.relationshipStatus}</div></div>
-							    <div className="details-block"><span className="fa fa-balance-scale"/><div className="details-element">Body Type: {homeUserProfile.bodyType}</div></div>
-							    <div className="details-block"><span className="fa fa-level-up"/><div className="details-element">Height: {homeUserProfile.height}</div></div>
-							    <div className="details-block"><span className="fa fa-cutlery"/><div className="details-element">Diet: {homeUserProfile.diet}</div></div>
-							    <div className="details-block"><span className="fa fa-graduation-cap"/><div className="details-element">Education: {homeUserProfile.diet}</div></div>
-							    <div className="details-block"><span className="fa fa-flask"/><div className="details-element">Drugs: {homeUserProfile.drugs}</div></div>
-							    <div className="details-block"><span className="fa fa-glass"/><div className="details-element">Drinking: {homeUserProfile.drink}</div></div>
+							    <div className="details-block"><span className="fa fa-building-o"/><div className="details-element">Religion: {homeUserProfile.religion || "--" }</div></div>
+							    <div className="details-block"><span className="fa fa-heart"/><div className="details-element">Relationship status: {homeUserProfile.relationshipStatus || "--"}</div></div>
+							    <div className="details-block"><span className="fa fa-balance-scale"/><div className="details-element">Body Type: {homeUserProfile.bodyType || "--"}</div></div>
+							    <div className="details-block"><span className="fa fa-level-up"/><div className="details-element">Height: {homeUserProfile.height || "--"}</div></div>
+							    <div className="details-block"><span className="fa fa-cutlery"/><div className="details-element">Diet: {homeUserProfile.diet || "--"}</div></div>
+							    <div className="details-block"><span className="fa fa-graduation-cap"/><div className="details-element">Education: {homeUserProfile.diet || "--"}</div></div>
+							    <div className="details-block"><span className="fa fa-flask"/><div className="details-element">Drugs: {homeUserProfile.drugs || "--"}</div></div>
+							    <div className="details-block"><span className="fa fa-glass"/><div className="details-element">Drinking: {homeUserProfile.drink || "--"}</div></div>
 							    <div className="details-block"><span className="fa fa-paw"/><div className="details-element">Pets: {this.formatCheckbox(homeUserProfile.pets)}</div></div>
 							  </div>
 							</div>

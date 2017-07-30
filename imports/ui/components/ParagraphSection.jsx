@@ -42,6 +42,10 @@ export default class ParagraphSection extends Component {
 	}
 
 	renderNormal () {
+		let blankContent = 'User has not filled this section out';
+		if (this.props.allowEdit)
+			blankContent = "Fill me out!";
+
 		return (
 			<div className="paragraph">
 				<div onClick={this.openEditing} className="paragraph-title profile-section-title">
@@ -49,7 +53,7 @@ export default class ParagraphSection extends Component {
 					{!this.props.allowEdit ? <div></div> : <span className="edit-title">Edit</span>} 
 				</div>
 				<div className="paragraph-content">
-					{this.props.paragraphContent === '' ? <i>Fill me out!</i> : `${this.props.paragraphContent}` }
+					{this.props.paragraphContent === '' ? <i>{blankContent}</i> : `${this.props.paragraphContent}` }
 				</div>
 			</div>
 		);
@@ -78,6 +82,6 @@ export default class ParagraphSection extends Component {
 
 ParagraphSection.propTypes = {
 	sectionTitle: PropTypes.string.isRequired,
-	paragraphContent: PropTypes.string.isRequired,
+	paragraphContent: PropTypes.string,
 	allowEdit: PropTypes.bool
 };
