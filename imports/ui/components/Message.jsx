@@ -18,12 +18,30 @@ class Messages extends Component {
 		  const isReady = this.messageHandle.ready();
 		  if (isReady){
 		  	let messages = DBMessage.find({$or:[{'to._id':Meteor.userId()},{'fromuser':Meteor.userId()}]},{sort:{createdOn:-1}}).fetch();
+		  	this.transformMessages(messages)
 		  	this.setState({messages});
 		  }		
 		});
 	}
+
 	componentWillUnmount () {
 		this.messageHandle.stop();
+	}
+
+	transformMessages(messages) {
+		user_id = Meteor.userId();
+		toUsers = messages.map((message) => message.to._id ).filter((id) => id != user_id);
+		fromUsers = messages.map((message) => message.fromuser ).filter((id) => id != user_id);
+		contacts = new Set(fromUsers.concat(toUsers));
+		hash = {}
+		for (var contact_id of contacts) {
+			hash[contact_id] = 
+				messages.filter(
+					(message) => 
+						message.fromuser == contact_id || message.to._id == contact_id
+				)
+		}
+		this.setState({contactHash: hash})
 	}
 
 	render() {
