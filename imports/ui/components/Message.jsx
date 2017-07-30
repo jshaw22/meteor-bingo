@@ -38,48 +38,69 @@ class Messages extends Component {
 		for (var contact_id of contacts) {
 			contactMap.set(contact_id, this.messagesForContact(messages, contact_id) )
 		}
+		debugger
 		this.setState({contactMap: contactMap})
 	}
 
 	messagesForContact(messages, contact_id) {
-		messages.filter(
+		return messages.filter(
 			(message) => 
 				message.fromuser == contact_id || message.to._id == contact_id
 		)
 	}
 
-	render() {
-		let rows = this.state.messages.map((message) => {
-			let msgfrom = Meteor.users.findOne({_id: message.fromuser});
-			let timesince = moment(message.createdOn).fromNow();
-			let klass = "primary-font text-muted";
-			if(message.fromuser === Meteor.userId()) {
-				klass = "primary-font green text-muted";
-			}
-			let address = <strong className={klass}>{msgfrom && msgfrom.username} {message.fromuser === Meteor.userId()? ' -> ' + message.to.username + ' ':''}</strong>
-			return (
-				<li key={message._id} className="left clearfix">
-					<div className="chat-body clearfix">
-						<div className="header">
-							{address} <small className="pull-right text-muted">
-							{timesince} <span id={message._id}></span></small>
-						</div>
-						<p>{message.message}</p>
-					</div>
-				</li>
-			)
-		});
 
-		if(this.state.messages.length === 0) {
-			rows = <p>No messages</p>
+	renderConversations() {
+		let conversations = []
+		for (var conversation of this.state.contactMap) {
+			converstations.push(<Conversation {conversation} />)
 		}
 
-		return (
-			<div className= "column col-sm-7 col-xs-1">
-				{rows}
-			</div>
-		)
+		return conversations
 	}
+
+	render() {
+		if (this.state.contactMap == null) {
+			return null;
+		}
+
+		return {this.renderConversations()}
+
+	}
+
+
+	// render() {
+	// 	let rows = this.state.messages.map((message) => {
+	// 		let msgfrom = Meteor.users.findOne({_id: message.fromuser});
+	// 		let timesince = moment(message.createdOn).fromNow();
+	// 		let klass = "primary-font text-muted";
+	// 		if(message.fromuser === Meteor.userId()) {
+	// 			klass = "primary-font green text-muted";
+	// 		}
+	// 		let address = <strong className={klass}>{msgfrom && msgfrom.username} {message.fromuser === Meteor.userId()? ' -> ' + message.to.username + ' ':''}</strong>
+	// 		return (
+	// 			<li key={message._id} className="left clearfix">
+	// 				<div className="chat-body clearfix">
+	// 					<div className="header">
+	// 						{address} <small className="pull-right text-muted">
+	// 						{timesince} <span id={message._id}></span></small>
+	// 					</div>
+	// 					<p>{message.message}</p>
+	// 				</div>
+	// 			</li>
+	// 		)
+	// 	});
+
+	// 	if(this.state.messages.length === 0) {
+	// 		rows = <p>No messages</p>
+	// 	}
+
+	// 	return (
+	// 		<div className= "column col-sm-7 col-xs-1">
+	// 			{rows}
+	// 		</div>
+	// 	)
+	// }
 }
 
 export default Messages;
