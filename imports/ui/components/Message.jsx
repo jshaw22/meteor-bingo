@@ -34,14 +34,18 @@ class Messages extends Component {
 		fromUsers = messages.map((message) => message.fromuser ).filter((id) => id != user_id);
 		contacts = new Set(fromUsers.concat(toUsers));
 		hash = {}
+		contactMap = new Map();
 		for (var contact_id of contacts) {
-			hash[contact_id] = 
-				messages.filter(
-					(message) => 
-						message.fromuser == contact_id || message.to._id == contact_id
-				)
+			contactMap.set(contact_id, this.messagesForContact(messages, contact_id) )
 		}
-		this.setState({contactHash: hash})
+		this.setState({contactMap: contactMap})
+	}
+
+	messagesForContact(messages, contact_id) {
+		messages.filter(
+			(message) => 
+				message.fromuser == contact_id || message.to._id == contact_id
+		)
 	}
 
 	render() {
