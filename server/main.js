@@ -52,6 +52,7 @@ Meteor.startup(() => {
   		var msg = {
   			to: to,
   			fromuser: from._id,
+        fromUsername: from.username,
   			createdOn: new Date(),
         message: message
   		};
