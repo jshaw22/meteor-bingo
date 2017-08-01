@@ -12,18 +12,19 @@ class MessageThread extends Component {
 	}
 
 	render() {
-		const {thread} = this.props;
-		let timesince = moment(thread.createdOn).fromNow();
+		const {thread, index} = this.props;
+		let timesince = moment(thread.messagesWithContact[thread.messagesWithContact.length-1].createdOn).fromNow();
 		return (
 			<li>
-				<a onClick={this.props.threadClicked} data-id={thread.contactKey} className="inner">{thread.contactName} {thread.messagesWithContact[0].message} {timesince}</a>
+				<a onClick={()=>this.props.threadClicked(thread.contactKey)} className="inner">{thread.contactName} {thread.messagesWithContact[0].message} {timesince}</a>
 			</li>
 		);
 	}
 }
 
 MessageThread.PropTypes = {
-	thread: React.PropTypes.object.isRequired 
+	thread: React.PropTypes.object.isRequired,
+	threadClicked: React.PropTypes.func.isRequired
 }
 
 export default MessageThread;

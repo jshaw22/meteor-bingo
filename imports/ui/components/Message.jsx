@@ -4,15 +4,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import MessageThread from './MessageThread';
+import * as actions from '../actions/messageActions';
+
 
 class Messages extends Component {
 	constructor(props){
 		super(props);
-		this.state = {
-			contactsArray: [],
-			onePersonMessages: []
-		}
-		this.showThread = this.showThread.bind(this);
+
+		this.threadClicked = this.threadClicked.bind(this);
 		let data = {};
 		this.messageHandle = Meteor.subscribe('messageList');
 
@@ -23,7 +22,6 @@ class Messages extends Component {
 		  if (isReady){
 		  	let messages = DBMessage.find({$or:[{'to._id':Meteor.userId()},{'fromuser':Meteor.userId()}]},{sort:{createdOn:1}}).fetch();
 		  	this.transformMessages(messages)
-		  	//this.setState({messages});
 		  }		
 		});
 	}
@@ -36,6 +34,9 @@ class Messages extends Component {
 		const user_id = Meteor.userId();
 		let toUsers = messages.map((message) => message.to._id ).filter((id) => id != user_id);
 		let fromUsers = messages.map((message) => message.fromuser ).filter((id) => id != user_id);
+
+		/* group together toUsers and fromUsers as an object in the same array, then messages
+		for each contactsArray are iterated on to display conversation between the two users */
 		let uniqueContacts = [...new Set(fromUsers.concat(toUsers))]; // ES6 get unique values
 		let contactsArray = [];
 		for (let i = 0; i < uniqueContacts.length; i++) {
@@ -46,7 +47,7 @@ class Messages extends Component {
 			}
 			contactsArray.push(messageInfo);
 		}
-		this.setState({contactsArray}, ()=>console.log("state contactsarray", this.state.contactsArray));
+		this.props.actions.storeContactsArray(contactsArray);
 	}
 
 	contactUsername (messages, contact_id) {
@@ -70,36 +71,35 @@ class Messages extends Component {
 		)
 	}
 
-	showThread (evt) {
-		const contactKey = evt.currentTarget.dataset.id;
-		let array = this.state.contactsArray.find(item => {
-			return item.contactKey = contactKey;
-		});
-		this.setState({onePersonMessages: array});
+	threadClicked(contactKey) {
+		this.props.actions.setActiveThread(contactKey);
 	}
 
+	//render actual message thread between two users
 	renderMessageThread() {
-		if (this.state.onePersonMessages.length > 0){
-			return this.state.onePersonMessages.messagesWithContact.map(message => {
-				console.log("message message", message.message)
+		const activeThread = this.props.messages.activeThread;
+		if (activeThread && activeThread.messagesWithContact){
+			return this.props.messages.activeThread.messagesWithContact.map(message => {
 				return (
-					<div>{message.message}</div>
+					<div key={message._id}>{`${message.fromUsername}: ${message.message}`}</div>
 				)
 			});
 		}
 	}
 	
+	//Render thread previews on the side
 	renderMessageThreads() {
-		return this.state.contactsArray.map((thread, index) => {
+		const contactsArray = this.props.messages.contactsArray;
+		return contactsArray.map((thread) => {
 			return (
-				<MessageThread threadClicked={this.showThread} thread={this.state.contactsArray[index]} />
+				<MessageThread key={thread.contactKey} threadClicked={this.threadClicked} thread={thread} />
 			)
 		});
 	}
 
 	render() {
-		const contactMap = this.state.contactMap;
-		if (contactMap && contactMap.size === 0) {
+		const contactsArray = this.props.messages.contactsArray;
+		if (contactsArray && contactsArray.length === 0) {
 			return (<div>No messages to display</div>);
 		}
 		return (
@@ -109,40 +109,17 @@ class Messages extends Component {
 			</div>
 		)
 	}
-
-
-	// render() {
-	// 	let rows = this.state.messages.map((message) => {
-	// 		let msgfrom = Meteor.users.findOne({_id: message.fromuser});
-	// 		let timesince = moment(message.createdOn).fromNow();
-	// 		let klass = "primary-font text-muted";
-	// 		if(message.fromuser === Meteor.userId()) {
-	// 			klass = "primary-font green text-muted";
-	// 		}
-	// 		let address = <strong className={klass}>{msgfrom && msgfrom.username} {message.fromuser === Meteor.userId()? ' -> ' + message.to.username + ' ':''}</strong>
-	// 		return (
-	// 			<li key={message._id} className="left clearfix">
-	// 				<div className="chat-body clearfix">
-	// 					<div className="header">
-	// 						{address} <small className="pull-right text-muted">
-	// 						{timesince} <span id={message._id}></span></small>
-	// 					</div>
-	// 					<p>{message.message}</p>
-	// 				</div>
-	// 			</li>
-	// 		)
-	// 	});
-
-	// 	if(this.state.messages.length === 0) {
-	// 		rows = <p>No messages</p>
-	// 	}
-
-	// 	return (
-	// 		<div className= "column col-sm-7 col-xs-1">
-	// 			{rows}
-	// 		</div>
-	// 	)
-	// }
 }
 
-export default Messages;
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(actions, dispatch)
+	};
+}
+const mapStateToProps = (state) => {
+	return {
+		messages: state.messagesReducer
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messages);

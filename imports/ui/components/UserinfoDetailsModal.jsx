@@ -54,7 +54,6 @@ export default class UserinfoDetailsModal extends Component {
 	}
 
 	render () {
-		console.log("This current state", this.state);
 		return (
 			<Modal
 				isOpen={this.props.isOpen}
