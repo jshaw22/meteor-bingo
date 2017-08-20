@@ -16,7 +16,7 @@ class MessageThread extends Component {
 		let timesince = moment(thread.messagesWithContact[thread.messagesWithContact.length-1].createdOn).fromNow();
 		return (
 			<li>
-				<a onClick={()=>this.props.threadClicked(thread.contactKey)} className="inner">{thread.contactName} {thread.messagesWithContact[0].message} {timesince}</a>
+				<a onClick={()=>this.props.threadClicked(thread.contactKey)} className="inner">{thread.contactName} {thread.messagesWithContact[thread.messagesWithContact.length-1].message} {timesince}</a>
 			</li>
 		);
 	}
