@@ -15,8 +15,11 @@ class MessageThread extends Component {
 		const {thread, index} = this.props;
 		let timesince = moment(thread.messagesWithContact[thread.messagesWithContact.length-1].createdOn).fromNow();
 		return (
-			<li>
-				<a onClick={()=>this.props.threadClicked(thread.contactKey)} className="inner">{thread.contactName} {thread.messagesWithContact[thread.messagesWithContact.length-1].message} {timesince}</a>
+			<li className={"thread " + (this.props.active ? 'active' : '')} onClick={()=>this.props.threadClicked(thread.contactKey)}>
+				<div className="contactName">
+					{thread.contactName} {timesince}
+				</div>
+				{thread.messagesWithContact[0].message} 
 			</li>
 		);
 	}

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment';
 import MessageThread from './MessageThread';
+import Conversation from './Conversation';
 import * as actions from '../actions/messageActions';
 
 
@@ -79,11 +80,9 @@ class Messages extends Component {
 	renderMessageThread() {
 		const activeThread = this.props.messages.activeThread;
 		if (activeThread && activeThread.messagesWithContact){
-			return this.props.messages.activeThread.messagesWithContact.map(message => {
-				return (
-					<div key={message._id}>{`${message.fromUsername}: ${message.message}`}</div>
-				)
-			});
+			return (
+				<Conversation individualConversations={this.props.messages.activeThread.messagesWithContact} />
+			)
 		}
 	}
 	
@@ -91,8 +90,14 @@ class Messages extends Component {
 	renderMessageThreads() {
 		const contactsArray = this.props.messages.contactsArray;
 		return contactsArray.map((thread) => {
+			const active = this.props.messages.activeThread == null ? false : thread.contactKey === this.props.messages.activeThread.contactKey;
 			return (
-				<MessageThread key={thread.contactKey} threadClicked={this.threadClicked} thread={thread} />
+				<MessageThread 
+					key={thread.contactKey}
+					threadClicked={this.threadClicked}
+					thread={thread}
+					active={active}
+				/>
 			)
 		});
 	}
@@ -103,8 +108,10 @@ class Messages extends Component {
 			return (<div>No messages to display</div>);
 		}
 		return (
-			<div>
-				<ul>{this.renderMessageThreads()}</ul>
+			<div className="messageContainer">
+				<div className="threads">
+					<ul>{this.renderMessageThreads()}</ul>
+				</div>
 				{this.renderMessageThread()}
 			</div>
 		)

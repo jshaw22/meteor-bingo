@@ -1,0 +1,25 @@
+.messageContainer {
+  display: flex;
+  min-height: 500px;
+  border: 1px solid #e0e0eb;
+  .conversation {
+    margin-left: 10px;
+  }
+
+  .threads {
+    border-right: 1px solid #e0e0eb;
+    .thread {
+      cursor: pointer;
+      &.active {
+        background-color: #f0f0f5;
+      }
+    }
+    ul {
+      padding-left: 0px;
+      li {
+        border-bottom: 1px solid #e0e0eb;
+        padding: 10px;
+      }
+    }
+  }
+}
