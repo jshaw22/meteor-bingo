@@ -81,7 +81,7 @@ class Messages extends Component {
 		const activeThread = this.props.messages.activeThread;
 		if (activeThread && activeThread.messagesWithContact){
 			return (
-				<Conversation individualConversations={this.props.messages.activeThread.messagesWithContact} />
+				<Conversation individualConversations={this.props.messages.activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
 			)
 		}
 	}
@@ -125,7 +125,8 @@ function mapDispatchToProps(dispatch) {
 }
 const mapStateToProps = (state) => {
 	return {
-		messages: state.messagesReducer
+		messages: state.messagesReducer,
+		currentUser: state.authentication.currentUser
 	};
 };
 

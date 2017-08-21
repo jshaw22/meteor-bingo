@@ -8,7 +8,14 @@ class Conversation extends Component {
   renderConversations () {
     const {individualConversations} = this.props;
     let individualConvos = individualConversations.map((message) => {
-      return (<div key={message._id}>{`${message.fromUsername}: ${message.message}`}</div>)
+      return (
+        <div 
+          key={message._id}
+          className={'message' + (this.props.userId == message.fromuser ? ' fromMe' : '')}
+        >
+            {`${message.fromUsername}: ${message.message}`}
+        </div>
+      )
     });
     return individualConvos;
   }
