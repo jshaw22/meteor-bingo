@@ -13,8 +13,11 @@
       border-radius: 15px;
       border: 1px solid #e0e0eb;
       margin-bottom: 5px;
-      &.fromMe {
+      &.outgoing {
         float: right;
+      }
+      &.incoming {
+        background-color: #e0e0eb;
       }
     }
   }

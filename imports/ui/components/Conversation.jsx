@@ -11,7 +11,11 @@ class Conversation extends Component {
       return (
         <div 
           key={message._id}
-          className={'message' + (this.props.userId == message.fromuser ? ' fromMe' : '')}
+          className=
+            {
+              'message ' + 
+                (this.props.userId == message.fromuser ? 'outgoing' : 'incoming')
+            }
         >
             {`${message.fromUsername}: ${message.message}`}
         </div>
