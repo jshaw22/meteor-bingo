@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment'; 
 import * as actions from '../actions/authentication';
+import AvatarCropper from "react-avatar-cropper";
+import FileUpload from './FileUpload';
 
 class Onboarding extends Component {
 	constructor(props){
@@ -16,11 +18,16 @@ class Onboarding extends Component {
 			bdayYear: null,
 			sterilized: null,
 			zipCode: null,
-			error: ''
+			error: '',
+			cropperOpen: false,
+			img: "http://via.placeholder.com/750x500.jpg",
+			croppedImg: null
 		}
 		this.formChange = this.formChange.bind(this);
 		this.submitForm = this.submitForm.bind(this);
 		this.uploadFile = this.uploadFile.bind(this);
+		this.handleRequestHide = this.handleRequestHide.bind(this);
+		this.handleFileChange = this.handleFileChange.bind(this);
 	}
 
 	renderDays() {
@@ -136,22 +143,47 @@ class Onboarding extends Component {
 		else
 			return;
 	}
+
+	handleFileChange (dataURI) {
+		this.setState({
+			img: dataURI,
+			croppedImg: this.state.croppedImg,
+			cropperOpen: true
+		});
+	}
+
+	handleCrop (dataURI) {
+		debugger;
+		this.setState({
+			img: dataURI,
+			croppedImg: this.state.croppedImg,
+			cropperOpen: true
+		});
+	}
 	
 	uploadFile(e) {
 		e.preventDefault();
-		FS.Utility.eachFile(e, function (file) {
-			Images.insert(file, function (err, fileObj) {
-				if(err)
-					Meteor.error("Unable to upload picture");
-				Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
-			});
-		});
+		this.setState({cropperOpen: true});
+		const that = this; //we lose context to 'this' inside the FS scopes 
+		// FS.Utility.eachFile(e, function (file) {
+		// 	that.setState({cropperOpen: true}, ()=>console.log("cropper open?", that.state.cropperOpen));
+		// 	that.handleFileChange(file);
+		// 	Images.insert(file, function (err, fileObj) {
+		// 		if(err)
+		// 			Meteor.error("Unable to upload picture");
+		// 		Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
+		// 	});
+		// });
 	}
 
 	renderErrors () {
 		if (this.state.error) {
 			return <div className="alert alert-danger">Sorry, all form fields must be filled out</div>
 		}
+	}
+
+	handleRequestHide () {
+		this.setState({cropperOpen: false});
 	}
 
 	render() {
@@ -222,9 +254,18 @@ class Onboarding extends Component {
 					</div>
 					<p>{this.showLocation()}</p>
 					Lastly, upload your beautiful mug(s)
-					<div className="form-group"><input id="avatar" onChange={this.uploadFile} type="file" /></div>
+					<FileUpload handleFileChange={this.handleFileChange} />
 					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>
-					
+					{this.state.cropperOpen ? 
+						<AvatarCropper
+							onRequestHide={this.handleRequestHide}
+							cropperOpen={this.state.cropperOpen}
+							onCrop={this.handleCrop}
+							image={this.state.img}
+							width={400}
+							height={400}
+							/> : ''
+					}
 				</div>
 						
 			</div>
