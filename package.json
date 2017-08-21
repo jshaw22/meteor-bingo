@@ -12,6 +12,8 @@
     "moment": "^2.18.1",
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
+    "react-avatar-cropper": "^0.1.3",
+    "react-bootstrap": "^0.31.2",
     "react-dom": "^15.4.2",
     "react-modal": "^1.7.7",
     "react-redux": "^5.0.3",
