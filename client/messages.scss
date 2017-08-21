@@ -28,6 +28,11 @@
       &.active {
         background-color: #f0f0f5;
       }
+      .message {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
     ul {
       padding-left: 0px;

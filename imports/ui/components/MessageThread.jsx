@@ -19,7 +19,9 @@ class MessageThread extends Component {
 				<div className="contactName">
 					{thread.contactName} {timesince}
 				</div>
-				{thread.messagesWithContact[0].message} 
+				<div className="message">
+					{thread.messagesWithContact[0].message} 
+				</div>
 			</li>
 		);
 	}
