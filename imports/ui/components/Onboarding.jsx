@@ -20,14 +20,28 @@ class Onboarding extends Component {
 			zipCode: null,
 			error: '',
 			cropperOpen: false,
-			img: "http://via.placeholder.com/750x500.jpg",
-			croppedImg: null
+			img: "",
+			wholePicture: null
 		}
 		this.formChange = this.formChange.bind(this);
 		this.submitForm = this.submitForm.bind(this);
-		this.uploadFile = this.uploadFile.bind(this);
 		this.handleRequestHide = this.handleRequestHide.bind(this);
 		this.handleFileChange = this.handleFileChange.bind(this);
+		this.handleCrop = this.handleCrop.bind(this);
+		this.imageHandle = Meteor.subscribe('imageList');
+
+		Tracker.autorun(() => {
+			const isReady = this.imageHandle.ready();
+			if (isReady) {
+			let wholePicture = Images.findOne({_id: Meteor.user().profile.picture}).url();
+			if (wholePicture)
+				this.setState({wholePicture});
+			}
+		});
+	}
+
+	componentWillUnmount () {
+		this.imageHandle.stop();
 	}
 
 	renderDays() {
@@ -147,34 +161,51 @@ class Onboarding extends Component {
 	handleFileChange (dataURI) {
 		this.setState({
 			img: dataURI,
-			croppedImg: this.state.croppedImg,
 			cropperOpen: true
 		});
 	}
 
 	handleCrop (dataURI) {
-		debugger;
 		this.setState({
-			img: dataURI,
-			croppedImg: this.state.croppedImg,
-			cropperOpen: true
+			cropperOpen: false
+		});
+		//insert the cropped avatar
+		Images.insert(dataURI, function (err, fileObj) {
+			if(err)
+				Meteor.error("Unable to upload picture");
+			Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
+		});
+		//insert the actual full size picture so viewers can view it in its full glory
+		const context = this;
+		Images.insert(this.state.img, function (err, fileObj) {
+			if(err) {
+				Meteor.error("Unable to upload picture");
+				this.setState({error: err})
+			}
+			Meteor.call("changePicture", Meteor.user(), fileObj._id)
 		});
 	}
-	
-	uploadFile(e) {
-		e.preventDefault();
-		this.setState({cropperOpen: true});
-		const that = this; //we lose context to 'this' inside the FS scopes 
-		// FS.Utility.eachFile(e, function (file) {
-		// 	that.setState({cropperOpen: true}, ()=>console.log("cropper open?", that.state.cropperOpen));
-		// 	that.handleFileChange(file);
-		// 	Images.insert(file, function (err, fileObj) {
-		// 		if(err)
-		// 			Meteor.error("Unable to upload picture");
-		// 		Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
-		// 	});
-		// });
+
+	displayWholePicture () {
+		if (this.state.wholePicture)
+			return <img src={this.state.wholePicture} />
 	}
+	
+	// uploadFile(e) {
+	// 	e.preventDefault();
+	// 	this.setState({cropperOpen: true});
+	// 	const that = this; //we lose context to 'this' inside the FS scopes 
+	// 	FS.Utility.eachFile(e, function (file) {
+	// 		that.setState({cropperOpen: true}, ()=>console.log("cropper open?", that.state.cropperOpen));
+	// 		that.handleFileChange(file);
+	// 		Images.insert(file, function (err, fileObj) {
+	// 			if(err)
+	// 				Meteor.error("Unable to upload picture");
+	// 			Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
+	// 		});
+	// 	});
+
+	// }
 
 	renderErrors () {
 		if (this.state.error) {
@@ -267,7 +298,7 @@ class Onboarding extends Component {
 							/> : ''
 					}
 				</div>
-						
+				{this.displayWholePicture()}		
 			</div>
 		);
 	}

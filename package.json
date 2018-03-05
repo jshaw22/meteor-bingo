@@ -6,10 +6,11 @@
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "^4.0.0",
     "jquery": "^2.2.4",
     "meteor-node-stubs": "^0.2.6",
     "moment": "^2.18.1",
+    "popper.js": "^1.12.9",
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-avatar-cropper": "^0.1.3",

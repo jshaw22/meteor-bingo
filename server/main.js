@@ -46,6 +46,17 @@ Meteor.startup(() => {
           throw new Meteor.Error("There was an error changing the avatar", err);
       });
   	},
+    changePicture: function(user, fileId) {
+      var file = "http://placehold.it/300x300";
+      if (fileId){
+        file = Images.findOne({_id: fileId});
+      }
+      var data = file._id;
+      Meteor.users.update(this.userId, {$set: {"profile.picture": data}}, function(err){
+        if (err)
+          throw new Meteor.Error("There was an error changing the avatar", err);
+      });
+    },
   	sendMessage: function (person, message) {
   		var to = Meteor.users.findOne({_id: person});
   		var from = Meteor.users.findOne({_id: this.userId});

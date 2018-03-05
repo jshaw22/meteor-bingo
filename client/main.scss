@@ -4,6 +4,21 @@ ul {
 	list-style: none;
 }
 
+/*overwrite styles for bootsrap v4.6alpha */
+.fade.in {
+  opacity: 1;
+}
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.modal-backdrop.in {
+  opacity: 0.5;
+}
+/*overwrite end*/
+
 .form-inline {
 	.form-group, .input-group {
 		margin-right:5px;
