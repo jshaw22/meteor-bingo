@@ -100,8 +100,10 @@ class App extends Component {
 		console.log("User logged in?", loggedIn);
 		return (
 			<div>
-				<nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-				  <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+
+				<nav className="navbar navbar-expand-lg navbar-light bg-light">
+				  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				    <span className="navbar-toggler-icon"></span>
 				  </button>
 
@@ -114,6 +116,23 @@ class App extends Component {
 
 				  </div>
 				</nav>
+
+
+
+{/*				<nav className="navbar navbar-toggleable-md navbar-light bg-faded">
+				  <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				    <span className="navbar-toggler-icon"></span>
+				  </button>
+
+				  <div className="navbar-brand"><Link to="/">Bingo Smashers</Link></div>
+
+				  <div className="collapse navbar-collapse" id="navbarSupportedContent">
+
+				            {this.displayLinksForUser(loggedIn)}
+				            {this.loginLogOut(loggedIn)}
+
+				  </div>
+				</nav>*/}
 				{this.props.children}
 			</div>
 		);
