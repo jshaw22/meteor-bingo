@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import moment from 'moment'; 
 import * as actions from '../actions/authentication';
+import AvatarCropper from "react-avatar-cropper";
+import FileUpload from './FileUpload';
 
 class Onboarding extends Component {
 	constructor(props){
@@ -16,11 +18,30 @@ class Onboarding extends Component {
 			bdayYear: null,
 			sterilized: null,
 			zipCode: null,
-			error: ''
+			error: '',
+			cropperOpen: false,
+			img: "",
+			wholePicture: null
 		}
 		this.formChange = this.formChange.bind(this);
 		this.submitForm = this.submitForm.bind(this);
-		this.uploadFile = this.uploadFile.bind(this);
+		this.handleRequestHide = this.handleRequestHide.bind(this);
+		this.handleFileChange = this.handleFileChange.bind(this);
+		this.handleCrop = this.handleCrop.bind(this);
+		this.imageHandle = Meteor.subscribe('imageList');
+
+		Tracker.autorun(() => {
+			const isReady = this.imageHandle.ready();
+			if (isReady) {
+			let wholePicture = Images.findOne({_id: Meteor.user().profile.picture}).url();
+			if (wholePicture)
+				this.setState({wholePicture});
+			}
+		});
+	}
+
+	componentWillUnmount () {
+		this.imageHandle.stop();
 	}
 
 	renderDays() {
@@ -95,21 +116,22 @@ class Onboarding extends Component {
 			...this.state, 
 			avatar: user.profile.avatar,
 			location: user.location,
-			aboutMe: '--',
-	 		whatILike: '--',
-	 		ethnicity:'--',
-	 		favStuff: '--',
-	 		cfBecause: '--',
-	 		messageMeIf: '--',
-	 		relationshipStatus: '--',
-	 		bodyType: '--',
-	 		height: '--',
-	 		diet: '--',
-	 		astrology: '--',
-	 		education: '--',
-	 		drugs: '--',
-	 		drink: '--',
-	 		religion: '--'
+			aboutMe: '',
+	 		whatILike: '',
+	 		ethnicity:'',
+	 		favStuff: '',
+	 		cfBecause: '',
+	 		messageMeIf: '',
+	 		relationshipStatus: '',
+	 		bodyType: '',
+	 		height: '',
+	 		diet: '',
+	 		astrology: '',
+	 		education: '',
+	 		drugs: '',
+	 		drink: '',
+	 		religion: '',
+	 		pets: ''
 		};
 		
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile": userInfo}}, function(err){
@@ -135,22 +157,64 @@ class Onboarding extends Component {
 		else
 			return;
 	}
-	
-	uploadFile(e) {
-		e.preventDefault();
-		FS.Utility.eachFile(e, function (file) {
-			Images.insert(file, function (err, fileObj) {
-				if(err)
-					Meteor.error("Unable to upload picture");
-				Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
-			});
+
+	handleFileChange (dataURI) {
+		this.setState({
+			img: dataURI,
+			cropperOpen: true
 		});
 	}
+
+	handleCrop (dataURI) {
+		this.setState({
+			cropperOpen: false
+		});
+		//insert the cropped avatar
+		Images.insert(dataURI, function (err, fileObj) {
+			if(err)
+				Meteor.error("Unable to upload picture");
+			Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
+		});
+		//insert the actual full size picture so viewers can view it in its full glory
+		const context = this;
+		Images.insert(this.state.img, function (err, fileObj) {
+			if(err) {
+				Meteor.error("Unable to upload picture");
+				this.setState({error: err})
+			}
+			Meteor.call("changePicture", Meteor.user(), fileObj._id)
+		});
+	}
+
+	displayWholePicture () {
+		if (this.state.wholePicture)
+			return <img src={this.state.wholePicture} />
+	}
+	
+	// uploadFile(e) {
+	// 	e.preventDefault();
+	// 	this.setState({cropperOpen: true});
+	// 	const that = this; //we lose context to 'this' inside the FS scopes 
+	// 	FS.Utility.eachFile(e, function (file) {
+	// 		that.setState({cropperOpen: true}, ()=>console.log("cropper open?", that.state.cropperOpen));
+	// 		that.handleFileChange(file);
+	// 		Images.insert(file, function (err, fileObj) {
+	// 			if(err)
+	// 				Meteor.error("Unable to upload picture");
+	// 			Meteor.call("changeAvatar", Meteor.user(), fileObj._id);
+	// 		});
+	// 	});
+
+	// }
 
 	renderErrors () {
 		if (this.state.error) {
 			return <div className="alert alert-danger">Sorry, all form fields must be filled out</div>
 		}
+	}
+
+	handleRequestHide () {
+		this.setState({cropperOpen: false});
 	}
 
 	render() {
@@ -221,11 +285,20 @@ class Onboarding extends Component {
 					</div>
 					<p>{this.showLocation()}</p>
 					Lastly, upload your beautiful mug(s)
-					<div className="form-group"><input id="avatar" onChange={this.uploadFile} type="file" /></div>
+					<FileUpload handleFileChange={this.handleFileChange} />
 					<button onClick={this.submitForm} className="btn btn-primary">Submit</button>
-					
+					{this.state.cropperOpen ? 
+						<AvatarCropper
+							onRequestHide={this.handleRequestHide}
+							cropperOpen={this.state.cropperOpen}
+							onCrop={this.handleCrop}
+							image={this.state.img}
+							width={400}
+							height={400}
+							/> : ''
+					}
 				</div>
-						
+				{this.displayWholePicture()}		
 			</div>
 		);
 	}

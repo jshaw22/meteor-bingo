@@ -30,28 +30,30 @@ export default class ParagraphSection extends Component {
 	onSave () {
 		let update = {$set: {}};
 		update.$set['profile.' + this.props.dbObjectName] = this.state.text;
-		Meteor.users.update({_id: Meteor.userId()}, update, function(err){
-			if(err){
-				console.log("There was an error", err);
-			}
+		Meteor.call('saveParagraph', update, (err, response)=> {
+			if (err)
+				console.error("There was an error saving the paragraph", err);
+			this.setState({isEditing: false});
 		});
-		this.setState({isEditing: false});
 	}
 
 	editText (e) {
-		console.log("log me text", e.target.value);
 		this.setState({text: e.target.value});
 	}
 
 	renderNormal () {
+		let blankContent = 'User has not filled this section out';
+		if (this.props.allowEdit)
+			blankContent = "Fill me out!";
+
 		return (
 			<div className="paragraph">
-				<button onClick={this.openEditing} className="paragraph-title profile-section-title">
+				<div onClick={this.openEditing} className="paragraph-title profile-section-title">
 					<span>{this.props.sectionTitle}</span>
-					<span className="edit-title">Edit</span>
-				</button>
+					{!this.props.allowEdit ? <div></div> : <span className="edit-title">Edit</span>} 
+				</div>
 				<div className="paragraph-content">
-					{this.props.paragraphContent === '--' ? <i>Fill me out!</i> : `${this.props.paragraphContent}` }
+					{this.props.paragraphContent === '' ? <i>{blankContent}</i> : `${this.props.paragraphContent}` }
 				</div>
 			</div>
 		);
@@ -80,5 +82,6 @@ export default class ParagraphSection extends Component {
 
 ParagraphSection.propTypes = {
 	sectionTitle: PropTypes.string.isRequired,
-	paragraphContent: PropTypes.string.isRequired,
+	paragraphContent: PropTypes.string,
+	allowEdit: PropTypes.bool
 };

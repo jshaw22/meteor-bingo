@@ -1,5 +1,24 @@
 @import "{}/node_modules/bootstrap/scss/bootstrap.scss";
 
+ul {
+	list-style: none;
+}
+
+/*overwrite styles for bootsrap v4.6alpha */
+.fade.in {
+  opacity: 1;
+}
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.modal-backdrop.in {
+  opacity: 0.5;
+}
+/*overwrite end*/
+
 .form-inline {
 	.form-group, .input-group {
 		margin-right:5px;
@@ -103,6 +122,11 @@
 			display:table;
 			clear:both;
 		}	
+
+		.user-actions {
+			float: right;
+			margin-top: 30px;
+		}
 	}
 	.inner-element:after {
 		content: '';
@@ -198,7 +222,6 @@
 	.details-section-edit {
 		border: 0;
 		background: transparent;
-		cursor: pointer;
 		text-align: left;
 		border-radius: 3px;
 		margin-bottom:10px;
@@ -246,5 +269,10 @@
 		flex-wrap: wrap;
 		-webkit-box-lines: multiple;
 		-webkit-box-orient: vertical;
+	}
+
+	input[type='checkbox'] {
+		margin-right: 5px;
+		margin-left: 5px;
 	}
 }
