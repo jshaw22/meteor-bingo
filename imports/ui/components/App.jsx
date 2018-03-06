@@ -65,7 +65,7 @@ class App extends Component {
 			return (
 				<div className="navbar-nav ml-auto">
 					<div className="p-1" ><Link to="/signup">Sign Up</Link></div>
-				    <form className="form-inline my-2 my-lg-0  ml-3">
+				    <form className="form-inline">
 				      <input type="text" ref="username" placeholder="username" id="username" className="form-control ml-2" />
 				      <input type="password" ref="password" placeholder="password" id="password" className="form-control ml-2"/>
 				      <button onClick={this.handleLogin} className="btn btn-primary ml-2">Log in</button>
@@ -100,8 +100,8 @@ class App extends Component {
 		console.log("User logged in?", loggedIn);
 		return (
 			<div>
-				<nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-				  <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<nav className="navbar navbar-expand-md navbar-light bg-light flex-row-reverse flex-md-row">
+				  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				    <span className="navbar-toggler-icon"></span>
 				  </button>
 
@@ -114,6 +114,7 @@ class App extends Component {
 
 				  </div>
 				</nav>
+
 				{this.props.children}
 			</div>
 		);
