@@ -81,7 +81,10 @@ class Messages extends Component {
 		const activeThread = this.props.messages.activeThread;
 		if (activeThread && activeThread.messagesWithContact){
 			return (
-				<Conversation individualConversations={this.props.messages.activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
+				<div className='conversation-container'>
+					<Conversation individualConversations={this.props.messages.activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
+					<input type="text"/>
+				</div>
 			)
 		}
 	}

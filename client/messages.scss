@@ -3,22 +3,31 @@
   min-height: 500px;
   max-width: 800px;
   border: 1px solid #e0e0eb;
-  .conversation {
-    margin-left: 10px;
-    flex-grow: 1;
-    margin: 10px;
-    .message {
-      width: 300px;
-      padding: 10px;
-      border-radius: 15px;
-      border: 1px solid #e0e0eb;
-      margin-bottom: 5px;
-      &.outgoing {
-        float: right;
+  .conversation-container {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    .conversation {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin: 10px;
+      .message {
+        width: 300px;
+        padding: 10px;
+        border-radius: 15px;
+        border: 1px solid #e0e0eb;
+        margin-bottom: 5px;
+        &.outgoing {
+          margin-left: auto;
+        }
+        &.incoming {
+          background-color: #e0e0eb;
+        }
       }
-      &.incoming {
-        background-color: #e0e0eb;
-      }
+    }
+    input {
+      width: 100%;
     }
   }
 
