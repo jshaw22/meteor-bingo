@@ -83,11 +83,34 @@ class Messages extends Component {
 			return (
 				<div className='conversation-container'>
 					<Conversation individualConversations={this.props.messages.activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
-					<input type="text"/>
+					<input type="text" onKeyDown={this.inputKeyPress}/>
 				</div>
 			)
 		}
 	}
+
+	inputKeyPress(e){
+	   if (e.keyCode == 13){
+	   		const activeThread = this.props.messages.activeThread
+	      const context = this; //Need to retain this.setState context because it will be lost in Meteor.call function
+	      Meteor.call(
+	      	'sendMessage',
+	      	activeThread.contactKey,
+	      	e.target.value,
+	      	(error, response)=> {
+		      	if(error)
+		      		console.log('message send error')
+		      	else
+		      		console.log('message sent')
+		      		setTimeout(()=> {
+		      			
+		      		}, 1000);
+	      	}
+	      );
+	   }
+	}
+
+
 	
 	//Render thread previews on the side
 	renderMessageThreads() {
