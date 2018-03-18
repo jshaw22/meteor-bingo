@@ -14,7 +14,7 @@ class Messages extends Component {
 
 		this.threadClicked = this.threadClicked.bind(this);
 		this.inputKeyPress = this.inputKeyPress.bind(this);
-
+		
 		let data = {};
 		this.messageHandle = Meteor.subscribe('messageList');
 		this.state = {
@@ -102,15 +102,6 @@ class Messages extends Component {
 	      	'sendMessage',
 	      	this.state.activeThreadKey,
 	      	e.target.value,
-	      	(error, response)=> {
-		      	if(error)
-		      		console.log('message send error')
-		      	else
-		      		console.log('message sent')
-		      		setTimeout(()=> {
-		      			
-		      		}, 1000);
-	      	}
 	      );
 	   }
 	}

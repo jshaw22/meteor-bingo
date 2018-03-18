@@ -8,6 +8,8 @@
     display: flex;
     flex-direction: column;
     .conversation {
+      height: 400px;
+      overflow: auto;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
