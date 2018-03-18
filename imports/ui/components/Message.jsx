@@ -97,7 +97,6 @@ class Messages extends Component {
 
 	inputKeyPress(e){
 	   if (e.keyCode == 13){
-	      const context = this; //Need to retain this.setState context because it will be lost in Meteor.call function
 	      Meteor.call(
 	      	'sendMessage',
 	      	this.state.activeThreadKey,
