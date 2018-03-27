@@ -13,9 +13,12 @@ class Messages extends Component {
 		super(props);
 
 		this.threadClicked = this.threadClicked.bind(this);
+		this.inputKeyPress = this.inputKeyPress.bind(this);
 		let data = {};
 		this.messageHandle = Meteor.subscribe('messageList');
-
+		this.state = {
+		  activeThreadKey: ""
+		}
 
 		//Seems like the Tracker takes the place of componentWillMount
 		Tracker.autorun(() => {
@@ -73,24 +76,39 @@ class Messages extends Component {
 	}
 
 	threadClicked(contactKey) {
-		this.props.actions.setActiveThread(contactKey);
+		this.setState({
+		  activeThreadKey: contactKey
+		})
 	}
 
 	//render actual message thread between two users
 	renderMessageThread() {
-		const activeThread = this.props.messages.activeThread;
-		if (activeThread && activeThread.messagesWithContact){
+		if (this.state.activeThreadKey != ""){
+			const activeThread = this.props.messages.contactsArray.find((a)=> {return a.contactKey === this.state.activeThreadKey});
 			return (
-				<Conversation individualConversations={this.props.messages.activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
+				<div className='conversation-container'>
+					<Conversation individualConversations={activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
+					<input type="text" onKeyDown={this.inputKeyPress}/>
+				</div>
 			)
 		}
+	}
+
+	inputKeyPress(e){
+	   if (e.keyCode == 13){
+	      Meteor.call(
+	      	'sendMessage',
+	      	this.state.activeThreadKey,
+	      	e.target.value,
+	      );
+	   }
 	}
 	
 	//Render thread previews on the side
 	renderMessageThreads() {
 		const contactsArray = this.props.messages.contactsArray;
 		return contactsArray.map((thread) => {
-			const active = this.props.messages.activeThread == null ? false : thread.contactKey === this.props.messages.activeThread.contactKey;
+			const active = this.state.activeThreadKey === thread.contactKey;
 			return (
 				<MessageThread 
 					key={thread.contactKey}
