@@ -14,7 +14,6 @@ class Messages extends Component {
 
 		this.threadClicked = this.threadClicked.bind(this);
 		this.inputKeyPress = this.inputKeyPress.bind(this);
-		
 		let data = {};
 		this.messageHandle = Meteor.subscribe('messageList');
 		this.state = {
@@ -85,7 +84,7 @@ class Messages extends Component {
 	//render actual message thread between two users
 	renderMessageThread() {
 		if (this.state.activeThreadKey != ""){
-			const activeThread = this.props.messages.contactsArray.find((a)=> {return a.contactKey == this.state.activeThreadKey})
+			const activeThread = this.props.messages.contactsArray.find((a)=> {return a.contactKey === this.state.activeThreadKey});
 			return (
 				<div className='conversation-container'>
 					<Conversation individualConversations={activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
@@ -104,14 +103,12 @@ class Messages extends Component {
 	      );
 	   }
 	}
-
-
 	
 	//Render thread previews on the side
 	renderMessageThreads() {
 		const contactsArray = this.props.messages.contactsArray;
 		return contactsArray.map((thread) => {
-			const active = this.state.activeThreadKey == thread.contactKey
+			const active = this.state.activeThreadKey === thread.contactKey;
 			return (
 				<MessageThread 
 					key={thread.contactKey}
