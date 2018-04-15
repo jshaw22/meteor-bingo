@@ -88,7 +88,7 @@ class Messages extends Component {
 			return (
 				<div className='conversations-container'>
 					<Conversation individualConversations={activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
-					<input type="text" onKeyDown={this.inputKeyPress}/>
+					<input type="text" ref={el => this.messageInput = el} onKeyDown={this.inputKeyPress}/>
 				</div>
 			)
 		}
@@ -101,6 +101,7 @@ class Messages extends Component {
 	      	this.state.activeThreadKey,
 	      	e.target.value,
 	      );
+	      this.messageInput.value = "";
 	   }
 	}
 	
