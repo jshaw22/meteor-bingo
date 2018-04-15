@@ -14,11 +14,13 @@ class Messages extends Component {
 
 		this.threadClicked = this.threadClicked.bind(this);
 		this.inputKeyPress = this.inputKeyPress.bind(this);
+		this.inputKeyChange = this.inputKeyChange.bind(this);
 		let data = {};
 		this.messageHandle = Meteor.subscribe('messageList');
 		this.state = {
-		  activeThreadKey: ""
-		}
+		  activeThreadKey: "",
+		  messagesInputText: "",
+		};
 
 		//Seems like the Tracker takes the place of componentWillMount
 		Tracker.autorun(() => {
@@ -88,21 +90,32 @@ class Messages extends Component {
 			return (
 				<div className='conversations-container'>
 					<Conversation individualConversations={activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
-					<input type="text" ref={el => this.messageInput = el} onKeyDown={this.inputKeyPress}/>
+					<input
+						type="text"
+						value={this.state.messagesInputText}
+						ref={el => this.messageInput = el}
+						onKeyDown={this.inputKeyPress}
+						onChange={this.inputKeyChange}
+					/>
+
 				</div>
-			)
+			);
 		}
 	}
 
+	inputKeyChange(e){
+		this.setState({messagesInputText: e.target.value});
+	}
+
 	inputKeyPress(e){
-	   if (e.keyCode == 13){
-	      Meteor.call(
-	      	'sendMessage',
-	      	this.state.activeThreadKey,
-	      	e.target.value,
-	      );
-	      this.messageInput.value = "";
-	   }
+	  if (e.keyCode == 13){
+	     Meteor.call(
+	      'sendMessage',
+	      this.state.activeThreadKey,
+	      e.target.value,
+	     );
+	     this.setState({messagesInputText: ""});
+	  }
 	}
 	
 	//Render thread previews on the side

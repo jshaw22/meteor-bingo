@@ -7,7 +7,7 @@ class Conversation extends Component {
   }
 
   scrollToBottom() {
-    this.refs.conversation.scrollTop = this.refs.conversation.scrollHeight
+    this.refs.conversation.scrollTop = this.refs.conversation.scrollHeight;
   }
 
   componentDidMount() {
