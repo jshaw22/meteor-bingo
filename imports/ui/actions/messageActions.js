@@ -6,10 +6,3 @@ export const storeContactsArray = (contactsArray) =>{
 		contactsArray
 	};
 }
-
-export const setActiveThread = (contactKey) => {
-	return {
-		type: types.SET_ACTIVE_THREAD,
-		contactKey
-	};
-}
