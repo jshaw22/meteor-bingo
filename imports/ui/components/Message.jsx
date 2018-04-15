@@ -86,7 +86,7 @@ class Messages extends Component {
 		if (this.state.activeThreadKey != ""){
 			const activeThread = this.props.messages.contactsArray.find((a)=> {return a.contactKey === this.state.activeThreadKey});
 			return (
-				<div className='conversation-container'>
+				<div className='conversations-container'>
 					<Conversation individualConversations={activeThread.messagesWithContact} userId={this.props.currentUser._id}/>
 					<input type="text" onKeyDown={this.inputKeyPress}/>
 				</div>
