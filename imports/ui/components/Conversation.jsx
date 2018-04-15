@@ -3,6 +3,19 @@ import React, { Component, PropTypes } from 'react';
 class Conversation extends Component {
   constructor(props){
     super(props);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
+  }
+
+  scrollToBottom() {
+    this.refs.conversation.scrollTop = this.refs.conversation.scrollHeight
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
   }
 
   renderConversations () {
@@ -26,7 +39,9 @@ class Conversation extends Component {
 
   render() {
     return (
-      <div className="conversation">{this.renderConversations()}</div>
+      <div className="conversation" ref="conversation">
+        {this.renderConversations()}
+      </div>
     )
   }
 }
