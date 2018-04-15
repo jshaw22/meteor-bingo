@@ -20,7 +20,7 @@ class MessageThread extends Component {
 					{thread.contactName} {timesince}
 				</div>
 				<div className="message">
-					{thread.messagesWithContact[0].message} 
+					{thread.messagesWithContact[thread.messagesWithContact.length-1].message} 
 				</div>
 			</li>
 		);
