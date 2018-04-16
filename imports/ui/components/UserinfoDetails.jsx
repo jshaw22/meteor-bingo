@@ -7,7 +7,7 @@ const UserinfoDetails = (props) => {
       let formattedCheckbox = checkbox.join(', ')
       return formattedCheckbox;
     } else {
-      return checkbox || '--';
+      return checkbox.length === 1 ? checkbox : '--';
     }
   }
 

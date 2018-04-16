@@ -13,9 +13,9 @@ class Onboarding extends Component {
 		this.state = {
 			myGender: null,
 			matchGender: null,
-			bdayDay: null,
-			bdayMonth: null,
-			bdayYear: null,
+			bdayDay: "",
+			bdayMonth: "",
+			bdayYear: "",
 			sterilized: null,
 			zipCode: null,
 			error: '',
@@ -54,7 +54,7 @@ class Onboarding extends Component {
 		}
 		return daysOptions.map((val)=>{
 			if(val.value === 0){
-				return (<option key="default" value="" selected disabled>Day</option>)
+				return (<option key="default" value="" disabled>Day</option>)
 			}
 			return (
 				<option key={val.value} value={val.value}>{val.text}</option>
@@ -72,7 +72,7 @@ class Onboarding extends Component {
 		}
 		return yearOptions.map((val)=>{
 			if( val.value === 1999) // TODO change this to be more dynamic with Moment
-				return (<option key="default" value="" selected disabled>Year</option>)
+				return (<option key="default" value="" disabled>Year</option>)
 			return (
 				<option key={val.value} value={val.value}>{val.text}</option>
 			)
@@ -96,8 +96,8 @@ class Onboarding extends Component {
 	}
 
 	checkAge() {
-		if (this.state.bdayYear !==null && this.state.bdayMonth !== null && this.state.bdayDay !== null) {
-			let dateOfBirth = `${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`;
+		if (this.state.bdayYear !== null && this.state.bdayMonth !== null && this.state.bdayDay !== null) {
+			let dateOfBirth = moment(`${this.state.bdayYear}-${this.state.bdayMonth}-${this.state.bdayDay}`, "YYYY-MM-DD");
 			this.setState({ age: moment().diff(dateOfBirth, 'years') });
 		}
 	} 
@@ -226,8 +226,8 @@ class Onboarding extends Component {
 					When's your birthday?
 					<form className="form-inline">
 					    <div className="form-group">
-					    	<select name="bdayMonth" selected={this.state.bdayMonth} className="form-control" id="bdayMonth">
-						        <option value="" selected disabled>Month</option>
+							<select name="bdayMonth" defaultValue="" selected={this.state.bdayMonth} className="form-control" id="bdayMonth">
+						        <option value="" disabled>Month</option>
 						        <option value='1'>Jan</option>
 						        <option value='2'>Feb</option>
 						        <option value='3'>Mar</option>
@@ -243,14 +243,14 @@ class Onboarding extends Component {
 					     	</select>
 					    </div>
 					    <div className="form-group">
-					    	<select name="bdayDay" selected={this.state.bdayDay} className="form-control" id="bdayDay">
+							<select name="bdayDay" defaultValue="" selected={this.state.bdayDay} className="form-control" id="bdayDay">
 					    		{this.renderDays()}
 					    	</select>
 					    </div>
 					    <div className="form-group">
-					    	<select name="bdayYear" selected={this.state.bdayYear} className="form-control" id="bdayYear">
+							<select name="bdayYear" defaultValue="" selected={this.state.bdayYear} className="form-control" id="bdayYear">
 					    		{this.renderYears()}
-					    	</select>
+							</select>
 					    </div>
 					 </form>
 					 <p>{this.showAge()}</p>
